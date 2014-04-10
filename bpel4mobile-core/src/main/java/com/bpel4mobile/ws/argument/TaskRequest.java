@@ -1,4 +1,4 @@
-package com.bpmn4mobile.ws.argument;
+package com.bpel4mobile.ws.argument;
 
 import java.util.List;
 

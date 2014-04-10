@@ -1,4 +1,4 @@
-package com.bpmn4mobile.ws.argument;
+package com.bpel4mobile.ws.argument;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
