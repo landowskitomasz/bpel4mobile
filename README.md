@@ -1,2 +1,2 @@
-bpmn4mobile
+BPEL 4 MOBILE
 ===========
