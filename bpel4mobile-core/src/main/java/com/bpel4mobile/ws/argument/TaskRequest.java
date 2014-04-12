@@ -29,7 +29,6 @@ public class TaskRequest<T> {
 		this.callbackUrl = callbackUrl;
 	}
 
-	//@XmlElement(name = REQUEST_ELEMENT, namespace = B4MNamespace.URL)
 	@XmlElementWrapper(name = REQUEST_ELEMENT, namespace = B4MNamespace.URL)
     @XmlAnyElement(lax=true)
 	public List<T> getRequest() {
