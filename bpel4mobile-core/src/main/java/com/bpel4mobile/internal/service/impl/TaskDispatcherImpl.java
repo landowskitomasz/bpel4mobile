@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.bpel4mobile.internal.definition.TaskDefinition;
 import com.bpel4mobile.internal.model.Task;
+import com.bpel4mobile.internal.model.Task.State;
 import com.bpel4mobile.internal.service.DefinitionProvider;
 import com.bpel4mobile.internal.service.TaskDispatcher;
 import com.bpel4mobile.internal.service.TaskRepository;
@@ -42,6 +43,9 @@ public class TaskDispatcherImpl implements TaskDispatcher {
 		task.setPriority(resolvePriority(definition.getPriority(), request));
 		task.setRequest(request);
 		task.setResult(tryToCreateInstance(resultType));
+		task.setState(State.ready);
+		
+		taskRepository.createTask(task);
 		
 		return uuid;
 	}

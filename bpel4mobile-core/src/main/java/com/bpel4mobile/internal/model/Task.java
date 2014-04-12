@@ -11,12 +11,14 @@ public class Task <T, R> {
 	public enum State {
 		ready, climed, completed, failed
 	}
-
+	
 	public static final String COLLECTION_NAME = "tasks";
 
 	public static final String NAME_FIELD = "name";
 
 	public static final String UUID_FIELD = "_id";
+
+	public static final String STATE_FIELD = "state";
 
 	private String name;
 	
