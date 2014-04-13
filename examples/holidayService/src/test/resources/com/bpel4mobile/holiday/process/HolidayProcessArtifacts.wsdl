@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:p="http://www.w3.org/2001/XMLSchema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://bpel4mobile.holiday.process" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://bpel4mobile.com/schemas" xmlns:wsdl2="http://schemas.xmlsoap.org/wsdl/" name="HolidayProcess" targetNamespace="http://bpel4mobile.holiday.process">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of services participating in this BPEL process 
+     The default output of the BPEL designer uses strings as input and 
+     output to the BPEL Process. But you can define or import any XML 
+     Schema type and us them as part of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="HolidayMobilePL">
+    <plnk:role name="HolidayRole" portType="wsdl:HumanResource"/>
+  </plnk:partnerLinkType>
+    <vprop:property name="taskUUID" type="p:string"/>
+    <vprop:propertyAlias messageType="wsdl:TaskResponse" part="TaskResponse" propertyName="tns:taskUUID">
+    <vprop:query><![CDATA[/wsdl:taskUUID]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="tns:mobileTaskCallbackRequest" part="parameters" propertyName="tns:taskUUID">
+    <vprop:query><![CDATA[/tns:taskUUID]]></vprop:query>
+  </vprop:propertyAlias>
+    <wsdl2:import location="HolidayMobileService.wsdl" namespace="http://bpel4mobile.com/schemas"/>
+    <types>  
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bpel4mobile.holiday.process">
+                
+            <element name="HolidayProcessRequest">
+                <complexType>
+                    <sequence>
+                        <element name="input" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+                  
+            <element name="HolidayProcessResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            
+            <element name="TaskResult">
+            	<complexType>
+            		<sequence>
+            			<element name="taskUUID" type="string" />
+            			<element name="result" type="tns:HolidayResultType"></element>
+            		</sequence>
+            	</complexType>
+            </element>
+        
+            <complexType name="HolidayResultType">
+            	<sequence>
+            		<element name="Approved" type="boolean"></element>
+            	</sequence>
+            </complexType>
+        </schema>
+    </types>
+  
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="HolidayProcessRequestMessage">
+        <part element="tns:HolidayProcessRequest" name="payload"/>
+    </message>
+    
+    <message name="HolidayProcessResponseMessage">
+        <part element="tns:HolidayProcessResponse" name="payload"/>
+    </message>
+
+    <message name="mobileTaskCallbackRequest">
+    	<part element="tns:TaskResult" name="parameters"/>
+    </message>
+    
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+    <portType name="HolidayProcess">
+        <operation name="initiate">
+            <input message="tns:HolidayProcessRequestMessage"/>
+        </operation>
+        <operation name="mobileTaskCallback">
+        	<input message="tns:mobileTaskCallbackRequest"/>
+        </operation>
+    </portType>
+
+    <!-- portType implemented by the requester of HolidayProcess BPEL process 
+         for asynchronous callback purposes
+         -->
+    <portType name="HolidayProcessCallback">
+        <operation name="onResult">
+            <input message="tns:HolidayProcessResponseMessage"/>
+        </operation>
+    </portType>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+         the HolidayProcess partnerLinkType binds the provider and
+         requester portType into an asynchronous conversation.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="HolidayProcess">
+        <plnk:role name="HolidayProcessProvider" portType="tns:HolidayProcess"/>
+        <plnk:role name="HolidayProcessRequester" portType="tns:HolidayProcessCallback"/>
+    </plnk:partnerLinkType>   
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="HolidayProcessBinding" type="tns:HolidayProcess">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="initiate">
+    		<soap:operation
+    			soapAction="http://bpel4mobile.holiday.process/initiate" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    	</operation>
+    	<operation name="mobileTaskCallback">
+    		<soap:operation
+    			soapAction="http://bpel4mobile.holiday.process/mobileTaskCallback" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    	</operation>
+    </binding>
+
+    <binding name="HolidayProcessCallbackBinding" type="tns:HolidayProcessCallback">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="onResult">
+            <soap:operation soapAction="http://bpel4mobile.holiday.process/onResult"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+        </operation>
+    </binding>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="HolidayProcessService">
+        <port binding="tns:HolidayProcessBinding" name="HolidayProcessPort">
+    		<soap:address location="http://localhost:8080/ode/processes/HolidayProcess"/>
+        </port>
+    </service>
+
+    <service name="HolidayProcessServiceCallback">
+        <port binding="tns:HolidayProcessCallbackBinding" name="HolidayProcessPortCallbackPort">
+    		<soap:address location="http://tomek-komputer:8282/soupUIMock"/>
+        </port>
+    </service>
+</definitions>

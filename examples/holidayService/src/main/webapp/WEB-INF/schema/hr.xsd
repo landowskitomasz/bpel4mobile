@@ -1,0 +1,27 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:b4m="http://bpel4mobile.com/schemas"
+        elementFormDefault="qualified"
+        targetNamespace="http://bpel4mobile.com/schemas">
+        
+    <xs:element name="TaskRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="callbackUrl" type="xs:string"/>  
+                <xs:element name="request" type="b4m:HolidayRequestType"/>     
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="TaskResponse" >
+    	<xs:complexType>
+    	 	<xs:element name="taskUUID" type="xs:string"/>
+    	</xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="HolidayRequestType">
+        <xs:sequence>
+            <xs:element name="Holiday" type="xs:string"/>                       
+            <xs:element name="Employee" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
