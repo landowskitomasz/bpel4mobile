@@ -1,4 +1,4 @@
-package com.bpel4mobile.ws.argument;
+package com.bpel4mobile.ws.service;
 
 public final class B4MNamespace {
 

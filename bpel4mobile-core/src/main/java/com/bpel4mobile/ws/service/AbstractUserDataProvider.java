@@ -5,8 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bpel4mobile.internal.bean.UserData;
 import com.bpel4mobile.internal.definition.LogicalPeopleGroups;
 import com.bpel4mobile.internal.service.DefinitionProvider;
+import com.bpel4mobile.internal.service.UserDataProvider;
 
-public abstract class UserDataProvider {
+public abstract class AbstractUserDataProvider implements UserDataProvider {
 
 	@Autowired
 	private DefinitionProvider definitionProvider;
@@ -15,8 +16,8 @@ public abstract class UserDataProvider {
 		return definitionProvider.getLogicalPeopleGroups();
 	}
 	
-	public abstract UserData getUserData(String username, String password) throws IllegalAccessException;
+	public abstract UserData getUserData(String username, String password);
 	 
-	public abstract boolean authorize(String username, String password);
+	public abstract boolean authenticate(String username, String password);
 	
 }

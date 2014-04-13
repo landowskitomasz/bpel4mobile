@@ -1,4 +1,4 @@
-package com.bpel4mobile.ws.argument;
+package com.bpel4mobile.internal.bean;
 
 
 public class TaskRequest<T> {

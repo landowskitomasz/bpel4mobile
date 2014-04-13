@@ -16,10 +16,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.bpel4mobile.config.TaskServiceConfig;
+import com.bpel4mobile.internal.bean.TaskRequest;
 import com.bpel4mobile.internal.service.TaskDispatcher;
 import com.bpel4mobile.internal.service.impl.TaskResultResolverImpl;
-import com.bpel4mobile.ws.argument.B4MNamespace;
-import com.bpel4mobile.ws.argument.TaskRequest;
 import com.google.common.base.Preconditions;
 
 public class TaskService implements InitializingBean {

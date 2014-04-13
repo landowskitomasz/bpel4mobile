@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		   http://www.springframework.org/schema/security  http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<security:http auto-config='true'>
+	     <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+	     <security:http-basic />
+	</security:http>
+	
+	<bean id="bpel4mobileAuthenticationProvider" 
+	    class="com.bpel4mobile.internal.service.impl.Bpel4MobileAuthenticationProvider"></bean>
+	
+	<security:authentication-manager>
+	     <security:authentication-provider ref="bpel4mobileAuthenticationProvider">
+	     </security:authentication-provider>
+	</security:authentication-manager>
+</beans>
