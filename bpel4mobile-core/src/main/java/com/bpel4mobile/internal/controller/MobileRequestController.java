@@ -19,7 +19,7 @@ import com.bpel4mobile.internal.bean.UserGroupData;
 import com.bpel4mobile.internal.service.MobileRequestDispatcher;
 
 @Controller
-@RequestMapping("blep4mobile/rest/")
+@RequestMapping("bpel4mobile/rest/")
 public class MobileRequestController {
 	
 	@Autowired

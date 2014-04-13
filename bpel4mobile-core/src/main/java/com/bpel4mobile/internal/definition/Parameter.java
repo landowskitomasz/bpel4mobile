@@ -5,12 +5,11 @@ import javax.xml.namespace.QName;
 
 public class Parameter {
 
-    @XmlAttribute(name = "name", required = true)
     protected String name;
     
-    @XmlAttribute(name = "type", required = true)
     protected QName type;
 
+    @XmlAttribute(name = "name", required = true)
     public String getName() {
         return name;
     }
@@ -19,6 +18,7 @@ public class Parameter {
         this.name = value;
     }
 
+    @XmlAttribute(name = "type", required = true)
     public QName getType() {
         return type;
     }

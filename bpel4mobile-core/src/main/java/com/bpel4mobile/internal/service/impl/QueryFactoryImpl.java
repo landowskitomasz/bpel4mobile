@@ -58,7 +58,7 @@ public class QueryFactoryImpl implements QueryFactory {
 	private Criteria preparePossibleAssigementCriteria(
 			PeopleAssignments peopleAssignments, UserData userData) {
 		List<Criteria> groupsCriteria = Lists.newArrayList();
-		for(PeopleAssignment peopleAssignment : peopleAssignments.getPotentialOwners().getPeopleAssigment()){
+		for(PeopleAssignment peopleAssignment : peopleAssignments.getPotentialOwners()){
 			if(peopleAssignment.getFrom().getArguments().isEmpty()){
 				continue;
 			}
@@ -116,7 +116,7 @@ public class QueryFactoryImpl implements QueryFactory {
 		for(String task : posibbleAssigments.keySet()){
 			PeopleAssignments peopleAssignments = posibbleAssigments.get(task);
 			
-			for(final PeopleAssignment peopleAssignment : peopleAssignments.getPotentialOwners().getPeopleAssigment()){
+			for(final PeopleAssignment peopleAssignment : peopleAssignments.getPotentialOwners()){
 				Object any = CollectionUtils.find(userData.getGroups(), new Predicate() {
 					public boolean evaluate(Object object) {
 						return ((UserGroupData)object).getName().equals(peopleAssignment.getFrom().getLogicalPeopleGroup());

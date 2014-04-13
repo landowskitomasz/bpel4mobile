@@ -1,17 +1,23 @@
 package com.bpel4mobile.internal.definition;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 
 public class PeopleAssignments {
 
-	private PotentialOwners potentialOwners;
+	private List<PeopleAssignment> potentialOwners;;
 
-	public PotentialOwners getPotentialOwners() {
+	@XmlElement(name="potentialOwners", namespace = WS_HT_Namespace.URL)
+	public List<PeopleAssignment> getPotentialOwners() {
+		if (potentialOwners == null) {
+        	potentialOwners = new ArrayList<PeopleAssignment>();
+        }
 		return potentialOwners;
 	}
 
-	@XmlElement(name="potentialOwners", namespace = WS_HT_Namespace.URL)
-	public void setPotentialOwners(PotentialOwners potentialOwners) {
+	public void setPotentialOwners(List<PeopleAssignment> potentialOwners) {
 		this.potentialOwners = potentialOwners;
 	}
 

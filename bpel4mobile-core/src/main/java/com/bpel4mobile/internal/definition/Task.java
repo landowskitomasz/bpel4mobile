@@ -20,7 +20,7 @@ public class Task {
         this.priority = value;
     }
 
-    @XmlElement(name="peopleAssignments", namespace=WS_HT_Namespace.URL)
+    @XmlElement(name="peopleAssignments", namespace = WS_HT_Namespace.URL)
     public PeopleAssignments getPeopleAssignments() {
         return peopleAssignments;
     }

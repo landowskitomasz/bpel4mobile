@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<htd:humanInteractions xmlns:htd="http://docs.oasis-open.org/bpel4people/ws-humantask" 	>
+
+	<htd:logicalPeopleGroups>
+		<htd:logicalPeopleGroup name="projectManagers">
+			<htd:parameter name="username" type="string"></htd:parameter>
+		</htd:logicalPeopleGroup>
+	</htd:logicalPeopleGroups>
+	
+	<htd:tasks>
+		<htd:task name="holidayRequestTask">
+			<htd:priority>1</htd:priority>
+			<htd:peopleAssignments>
+				<htd:potentialOwners>
+					<htd:from logicalPeopleGroup="projectManagers">
+						<htd:argument name="username">eq:request/employee</htd:argument>
+					</htd:from>
+				</htd:potentialOwners>
+			</htd:peopleAssignments>
+		</htd:task>
+	</htd:tasks>
+</htd:humanInteractions>

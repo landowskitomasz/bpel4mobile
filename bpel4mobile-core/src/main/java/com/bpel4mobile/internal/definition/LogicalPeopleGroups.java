@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 public class LogicalPeopleGroups {
 
-    @XmlElement(required = true)
+    @XmlElement(name="logicalPeopleGroup", required = true, namespace=WS_HT_Namespace.URL)
     protected List<LogicalPeopleGroup> logicalPeopleGroup;
 
     public List<LogicalPeopleGroup> getLogicalPeopleGroup() {

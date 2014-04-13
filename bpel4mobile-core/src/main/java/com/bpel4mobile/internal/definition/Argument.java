@@ -1,7 +1,7 @@
 package com.bpel4mobile.internal.definition;
 
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlValue;
 
 public class Argument {
 
@@ -18,7 +18,7 @@ public class Argument {
 		this.name = name;
 	}
 
-	@XmlAnyElement
+	@XmlValue
 	public String getExpression() {
 		return expression;
 	}
