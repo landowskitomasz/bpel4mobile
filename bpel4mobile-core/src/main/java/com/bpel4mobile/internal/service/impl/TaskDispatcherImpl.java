@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bpel4mobile.internal.definition.TaskDefinition;
 import com.bpel4mobile.internal.model.Task;
 import com.bpel4mobile.internal.model.Task.State;
 import com.bpel4mobile.internal.service.DefinitionProvider;
@@ -30,7 +29,7 @@ public class TaskDispatcherImpl implements TaskDispatcher {
 	@Override
 	public <T, R> String createNewTask(String taskName, String callbackUrl, T request, Class<R> resultType) {
 
-		TaskDefinition definition = definitionProvider.getTaskDefinition(taskName);
+		com.bpel4mobile.internal.definition.Task definition = definitionProvider.getTaskDefinition(taskName);
 		Preconditions.checkNotNull(definition, "Can't find task definition.");
 		
 		String uuid = UUID.randomUUID().toString();

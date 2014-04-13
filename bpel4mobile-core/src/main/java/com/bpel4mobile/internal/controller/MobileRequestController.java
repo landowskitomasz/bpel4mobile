@@ -1,49 +1,103 @@
 package com.bpel4mobile.internal.controller;
 
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
+import javax.annotation.PostConstruct;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bpel4mobile.internal.bean.UserData;
-import com.bpel4mobile.internal.model.Task;
+import com.bpel4mobile.internal.bean.UserGroupData;
 import com.bpel4mobile.internal.service.MobileRequestDispatcher;
 
-@Service
+@Controller
+@RequestMapping("blep4mobile/rest/")
 public class MobileRequestController {
-
-	private static final ScheduledExecutorService worker = 
-			  Executors.newSingleThreadScheduledExecutor();
 	
 	@Autowired
 	private MobileRequestDispatcher mobileRequestDispatcher;
 	
-	public void scheduleMobileUserRequests(){
+	private ObjectMapper mapper = new ObjectMapper();
+	
+	@PostConstruct
+	public void postConstructor(){
+		mapper.setSerializationInclusion(Inclusion.NON_NULL);
+	}
+	
+	private UserData getTestUserData(){
+		UserData user = new UserData();
+		user.setUsername("Tomasz");
+		UserGroupData userGroupData = new UserGroupData();
+		userGroupData.setName("projectManagers");
+		userGroupData.getArguments().put("username", "Tomasz");
+		user.getGroups().add(userGroupData);
+		return user;
+	}
+	
+	@RequestMapping(value="tasks")
+	@ResponseBody
+	public String getTaskForUser() throws JsonGenerationException, JsonMappingException, IOException{
 		
-		Runnable resolveTaskComment = new Runnable() {
-			@Override
-			public void run() {
-				try{
-					UserData user = new UserData();
-					user.setUsername("tlandowski");
-					
-					System.out.println("Looking for tasks to complete.");
-					List<Task> tasksToComplete = mobileRequestDispatcher.findUserTasks(new UserData());
-					System.out.println("Found "+tasksToComplete.size());
-					
-					for(Task task : tasksToComplete){
-						System.out.println("Resolving task "+task.getName()+ " "+ task.getUuid());
-						mobileRequestDispatcher.resolve(task.getName(), task.getUuid(), "", user);
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-		};
-		worker.schedule(resolveTaskComment, 10, TimeUnit.SECONDS);
+		UserData user = getTestUserData();
+		
+		return mapper.writeValueAsString(mobileRequestDispatcher.findUserTasks(user));
+	}
+	
+
+	@RequestMapping(value="clime", method=RequestMethod.POST)
+	@ResponseBody
+	public void clime(@RequestBody String requestBody) {
+		
+		TaskRequest request;
+		try {
+			request = mapper.readValue(requestBody, TaskRequest.class);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e);
+		}
+		
+		UserData user = getTestUserData();
+		
+		mobileRequestDispatcher.clime(request.getTaskName(), request.getTaskUUID(), user);
+	}
+	
+	@RequestMapping(value="release", method=RequestMethod.POST)
+	@ResponseBody
+	public void release(@RequestBody String requestBody) {
+		System.out.println(requestBody);
+		TaskRequest request;
+		try {
+			request = mapper.readValue(requestBody, TaskRequest.class);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e);
+		}
+		
+		UserData user = getTestUserData();
+		
+		mobileRequestDispatcher.release(request.getTaskName(), request.getTaskUUID(), user);
+	}
+	
+	@RequestMapping(value="resolve", method=RequestMethod.POST)
+	@ResponseBody
+	public void resolve(@RequestBody String requestBody) {
+		
+		ResolveTaskRequest request;
+		try {
+			request = mapper.readValue(requestBody, ResolveTaskRequest.class);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e);
+		}
+		
+		UserData user = getTestUserData();
+		
+		mobileRequestDispatcher.resolve(request.getTaskName(), request.getTaskUUID(), request.getResult(), user);
 	}
 	
 }

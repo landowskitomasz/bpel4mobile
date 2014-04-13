@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.bpel4mobile.internal.definition.LogicalPeopleGroups;
 import com.bpel4mobile.internal.definition.PeopleAssignments;
-import com.bpel4mobile.internal.definition.TaskDefinition;
+import com.bpel4mobile.internal.definition.Task;
 
 public interface DefinitionProvider {
 
@@ -12,6 +12,6 @@ public interface DefinitionProvider {
 	
 	Map<String, PeopleAssignments> getTaskPosibleAssignments();
 
-	TaskDefinition getTaskDefinition(String taskName);
+	Task getTaskDefinition(String taskName);
 
 }

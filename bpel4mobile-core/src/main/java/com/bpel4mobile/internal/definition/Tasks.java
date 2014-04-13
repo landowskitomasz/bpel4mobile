@@ -8,11 +8,11 @@ import javax.xml.bind.annotation.XmlElement;
 public class Tasks {
 
     @XmlElement(name="task", namespace=WS_HT_Namespace.URL, required = true)
-    protected List<TaskDefinition> task;
+    protected List<Task> task;
 
-    public List<TaskDefinition> getTask() {
+    public List<Task> getTask() {
         if (task == null) {
-            task = new ArrayList<TaskDefinition>();
+            task = new ArrayList<Task>();
         }
         return this.task;
     }

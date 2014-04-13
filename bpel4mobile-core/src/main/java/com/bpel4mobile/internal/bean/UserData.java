@@ -1,13 +1,14 @@
 package com.bpel4mobile.internal.bean;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 public class UserData {
 
 	private String username;
 	
-	private List<UserGroupData> groups = new ArrayList<UserGroupData>();
+	private List<UserGroupData> groups;
 
 	public String getUsername() {
 		return username;
@@ -18,6 +19,9 @@ public class UserData {
 	}
 
 	public List<UserGroupData> getGroups() {
+		if(groups == null){
+			groups = Lists.newArrayList();
+		}
 		return groups;
 	}
 

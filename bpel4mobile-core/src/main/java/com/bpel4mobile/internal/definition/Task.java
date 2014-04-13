@@ -3,14 +3,12 @@ package com.bpel4mobile.internal.definition;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-public class TaskDefinition {
+public class Task {
     
     protected String priority;
     
     protected PeopleAssignments peopleAssignments;
-    
-    protected Deadlines deadlines;
-   
+
     protected String name;
   
     @XmlElement(name="priority", namespace=WS_HT_Namespace.URL)
@@ -29,15 +27,6 @@ public class TaskDefinition {
 
     public void setPeopleAssignments(PeopleAssignments value) {
         this.peopleAssignments = value;
-    }
-
-    @XmlElement(name="deadlines", namespace=WS_HT_Namespace.URL)
-    public Deadlines getDeadlines() {
-        return deadlines;
-    }
-
-    public void setDeadlines(Deadlines value) {
-        this.deadlines = value;
     }
 
     @XmlAttribute(name = "name", required = true)

@@ -20,6 +20,8 @@ public class Task <T, R> {
 
 	public static final String STATE_FIELD = "state";
 
+	public static final String ASSIGNEEE_FIELD = "assignee";
+
 	private String name;
 	
 	@Id
@@ -32,6 +34,8 @@ public class Task <T, R> {
 	private Date createDate;
 	
 	private Date climeDate;
+	
+	private Date completeDate;
 	
 	private int priority;
 	
@@ -119,5 +123,13 @@ public class Task <T, R> {
 
 	public void setAssignee(String assignee) {
 		this.assignee = assignee;
+	}
+
+	public Date getCompleteDate() {
+		return completeDate;
+	}
+
+	public void setCompleteDate(Date completeDate) {
+		this.completeDate = completeDate;
 	}
 }

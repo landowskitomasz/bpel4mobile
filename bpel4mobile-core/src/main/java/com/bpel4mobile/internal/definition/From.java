@@ -8,25 +8,20 @@
 
 package com.bpel4mobile.internal.definition;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.bind.annotation.XmlElement;
 
+import com.google.common.collect.Lists;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "tFrom")
-public class TFrom {
+public class From {
 
-    @XmlAttribute(name = "logicalPeopleGroup")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "NCName")
     protected String logicalPeopleGroup;
     
-  
+    private List<Argument> arguments;
+
+    @XmlAttribute(name = "logicalPeopleGroup")
     public String getLogicalPeopleGroup() {
         return logicalPeopleGroup;
     }
@@ -34,5 +29,17 @@ public class TFrom {
     public void setLogicalPeopleGroup(String value) {
         this.logicalPeopleGroup = value;
     }
+
+    @XmlElement(name="argument", namespace=WS_HT_Namespace.URL)
+	public List<Argument> getArguments() {
+    	if(arguments == null){
+    		arguments = Lists.newArrayList();
+    	}
+		return arguments;
+	}
+
+	public void setArguments(List<Argument> arguments) {
+		this.arguments = arguments;
+	}
 
 }
