@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_bpel4mobile_example_hotel_entity_RoomReservation" items="${roomreservations}" z="iB12Tmoka1ym6sAKFKvM7VNLfuU=">
+        <table:table data="${roomreservations}" id="l_com_bpel4mobile_example_hotel_entity_RoomReservation" path="/roomreservations" z="F68iK7rwjKtfy4sum8XiCnfpkM0=">
+            <table:column id="c_com_bpel4mobile_example_hotel_entity_RoomReservation_room" property="room" z="s0iDEyn4a83pA17SNHZjgXVnShg="/>
+            <table:column id="c_com_bpel4mobile_example_hotel_entity_RoomReservation_customerFirstName" property="customerFirstName" z="D/SxqIkbZuK6J7hm92N+VR/nkW4="/>
+            <table:column id="c_com_bpel4mobile_example_hotel_entity_RoomReservation_customerLastName" property="customerLastName" z="JDxgqUWecJUNibDssGqhxX9MLNA="/>
+            <table:column date="true" dateTimePattern="${roomReservation_startdate_date_format}" id="c_com_bpel4mobile_example_hotel_entity_RoomReservation_startDate" property="startDate" z="mismUTc15TUHetkKJPacy3czsg0="/>
+            <table:column date="true" dateTimePattern="${roomReservation_enddate_date_format}" id="c_com_bpel4mobile_example_hotel_entity_RoomReservation_endDate" property="endDate" z="KFrEP0zFu9E58+Jz91XW1cid97w="/>
+        </table:table>
+    </page:list>
+</div>

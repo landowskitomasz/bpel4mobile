@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_bpel4mobile_example_hotel_entity_Room" object="${room}" path="/rooms" z="+fBdd5aeKsj8ABiawHYHZz6zIbM=">
+        <field:display field="number" id="s_com_bpel4mobile_example_hotel_entity_Room_number" object="${room}" z="DCjF9o/9XmT2QwpXDBm+5y50JMc="/>
+        <field:display field="floor" id="s_com_bpel4mobile_example_hotel_entity_Room_floor" object="${room}" z="UWqtVDfjlPPH1lgKNktBpGCIVLs="/>
+        <field:display field="category" id="s_com_bpel4mobile_example_hotel_entity_Room_category" object="${room}" z="NfsWhSzot7xV38xcTRhzL+n47mk="/>
+        <field:display field="state" id="s_com_bpel4mobile_example_hotel_entity_Room_state" object="${room}" z="4ETsWzMD5IbTPRqUKYIz+5pe8N0="/>
+    </page:show>
+</div>

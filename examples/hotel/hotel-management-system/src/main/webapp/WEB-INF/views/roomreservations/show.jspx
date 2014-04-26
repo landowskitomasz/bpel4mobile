@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_com_bpel4mobile_example_hotel_entity_RoomReservation" object="${roomreservation}" path="/roomreservations" z="iC7hwhqiI5VftInrzWJ3Ru2YzEA=">
+        <field:display field="room" id="s_com_bpel4mobile_example_hotel_entity_RoomReservation_room" object="${roomreservation}" z="m5A989DEHAmLCE6lh8ssvwseJ0o="/>
+        <field:display field="customerFirstName" id="s_com_bpel4mobile_example_hotel_entity_RoomReservation_customerFirstName" object="${roomreservation}" z="794l6oziLjmhaNWi9srFwZBcSZQ="/>
+        <field:display field="customerLastName" id="s_com_bpel4mobile_example_hotel_entity_RoomReservation_customerLastName" object="${roomreservation}" z="2zeqeIJgsVPFEDGJZXEZEibCuVs="/>
+        <field:display date="true" dateTimePattern="${roomReservation_startdate_date_format}" field="startDate" id="s_com_bpel4mobile_example_hotel_entity_RoomReservation_startDate" object="${roomreservation}" z="k5CFQ7pZHii8m9ynVVSApX3XMfw="/>
+        <field:display date="true" dateTimePattern="${roomReservation_enddate_date_format}" field="endDate" id="s_com_bpel4mobile_example_hotel_entity_RoomReservation_endDate" object="${roomreservation}" z="WKgJ44wyil3RI/G9DHusX41pblI="/>
+    </page:show>
+</div>

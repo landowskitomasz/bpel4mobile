@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_com_bpel4mobile_example_hotel_entity_Room" items="${rooms}" z="iA285V57hdN66Ogw1rWfEc1oDfY=">
+        <table:table data="${rooms}" id="l_com_bpel4mobile_example_hotel_entity_Room" path="/rooms" z="P/ncjAwAsl3hy4QvqX43yynS3XY=">
+            <table:column id="c_com_bpel4mobile_example_hotel_entity_Room_number" property="number" z="drrbnYHoB/4BHo/Q5bSOkZ+hGPk="/>
+            <table:column id="c_com_bpel4mobile_example_hotel_entity_Room_floor" property="floor" z="qxZO/tQ2vHb6XTPq9F9IYntR9/Q="/>
+            <table:column id="c_com_bpel4mobile_example_hotel_entity_Room_category" property="category" z="UNWJofW7ZAf9cdbi7IGmkKGMjc8="/>
+            <table:column id="c_com_bpel4mobile_example_hotel_entity_Room_state" property="state" z="ZBrEdWMBwSbsUZL6zTcjKNrKBZQ="/>
+        </table:table>
+    </page:list>
+</div>

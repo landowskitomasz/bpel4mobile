@@ -1,0 +1,37 @@
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2014-04-26 19:43:49
+project --topLevelPackage com.bpel4mobile.example.hotel
+jpa setup --provider HIBERNATE --database HYPERSONIC_IN_MEMORY 
+entity jpa --class ~.entity.Category
+field string --fieldName name --notNull 
+field number --type int --fieldName standard
+entity jpa --class ~.entity.Room
+// [failed] field number --type int --fieldName number
+field number --type int --fieldName number --permitReservedWords 
+field number --type int --fieldName floor
+field reference --fieldName category --type ~.entity.Category
+enum type --class ~.entity.RoomState
+enum constant --name occupied
+enum constant --name ready
+enum constant --name toCleanUp
+focus --class ~.entity.Room
+// [failed] field enum --type ~.entity.RoomState --fieldName state
+field enum --type ~.entity.RoomState --fieldName state --permitReservedWords 
+entity jpa --class ~.entity.RoomReservation
+field reference --fieldName room --type ~.entity.Room
+field string --fieldName customerFirstName
+field string --fieldName customerLastName
+field date --type java.util.Date --fieldName startDate 
+field date --type java.util.Date --fieldName endDate 
+web mvc setup
+web mvc all --package ~.web
+perform eclipse
+exit
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2014-04-26 20:57:03
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2014-04-26 20:58:27
+jpa setup --provider HIBERNATE --database HYPERSONIC_IN_MEMORY 
+jpa setup --provider HIBERNATE --database H2_IN_MEMORY 
+jpa setup --provider HIBERNATE --database POSTGRES --userName postgres --password postgres123 --databaseName hotel
+jpa setup --provider OPENJPA --database H2_IN_MEMORY 
+jpa setup --provider HIBERNATE --database H2_IN_MEMORY 
+jpa setup --provider OPENJPA --database H2_IN_MEMORY 
+jpa setup --provider DATANUCLEUS --database H2_IN_MEMORY 

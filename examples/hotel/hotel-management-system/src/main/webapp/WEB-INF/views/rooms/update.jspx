@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_com_bpel4mobile_example_hotel_entity_Room" modelAttribute="room" path="/rooms" versionField="Version" z="E42sIILyGqe2SFbqTZLZ0ZW/BW4=">
+        <field:input field="number" id="c_com_bpel4mobile_example_hotel_entity_Room_number" z="e6Auy1pgfYb3WTwWkr8GoswUNlw="/>
+        <field:input field="floor" id="c_com_bpel4mobile_example_hotel_entity_Room_floor" z="L1jdaiVRGmJuzpE26R5wNZuRHhQ="/>
+        <field:select field="category" id="c_com_bpel4mobile_example_hotel_entity_Room_category" itemValue="id" items="${categorys}" path="/categorys" z="DLHzGmgCtKDL61Wyx8CFzcdV0x4="/>
+        <field:select field="state" id="c_com_bpel4mobile_example_hotel_entity_Room_state" items="${roomstates}" path="roomstates" z="DyleWUD32TIkPJLbEGNOB/El3Eg="/>
+    </form:update>
+</div>
