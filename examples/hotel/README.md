@@ -18,8 +18,27 @@ This process is quite simple. There are four actors in this process: Hotel manag
 
 ### BPEL 
 
-BPMN is not implementations, this is only graphical description of the system. I this section we will extract from this description all sub-systems required to implement our concept, we will desing web services of that systems and preprare BPEL process that will comunicate with all of them. 
+BPMN is not implementations, this is only graphical description of the system. In this section we will extract from this description all sub-systems required to implement our concept, we will desing web services of that systems and preprare BPEL process that will comunicate with all of them. 
 
-* Hotel management system - because customer and recptionist interactions are not realy interesting for as in this example, the first system will be Hotel managemrnt system. It will be responsible for room management and when room need to be cleaned will start clean up process. This system will have user interface for receptionist. Receptionis will have posibility to change room state and create room reservations. 
+* Hotel management system - because customer and recptionist interactions are not realy interesting for us in this example, the first system will be Hotel managemrnt system. It will be responsible for room management and when room need to be cleaned will start clean up process and recive result. This system will have user interface for receptionist. Receptionis will have posibility to change room state and create room reservations. 
 
-* BPEL process engine - 
+* BPEL process engine - communication beetwen all systems will occur while web services, we will use bepl to coordinate that comunication and to implement main concepts of our BPMN process. 
+
+* BPEL 4 PEOPLE middleware - this sub system is responsible for reciving mobile requests from bpel process and distribute this request to mobile application users. This is description how to use BPEL 4 MOBILE as a middleware beetwen bpel and mobile apps. 
+
+* Android application - this is Supervisor and Cleaning lady application. It will recive list of rooms to clean up and allove users to perform clean up or verify operations. 
+
+What about web services? 
+
+* Hotel management system - will start clean up process calling BPEL start event web service, and will recive result using callback web service. Services: 
+..* cleanUpRoomCallback
+* BPEL process engine - will recive clean up request, send request to cleaning lady and recive callback then send request to supervisor and recive callback. As a output will call callback from \
+Hotem management system. Services:
+..* startProcess
+..* cleanUpRoomCallback
+..* verifyCleanUpCallback
+* BPEL 4 PEOPLE middleware - will recive clean up request for cleanning laydy and verify clean up for supervisor. When mobile users finishes tasks will call back to process. Services: 
+..* cleanUp
+..* verify
+* Mobile applications will comunicate with middle ware via REST API, will not provide any web service. 
+
