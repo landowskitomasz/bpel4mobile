@@ -30,15 +30,18 @@ BPMN is not implementations, this is only graphical description of the system. I
 
 What about web services? 
 
-1. Hotel management system - will start clean up process calling BPEL start event web service, and will recive result using callback web service. Services: 
+Hotel management system - will start clean up process calling BPEL start event web service, and will recive result using callback web service. Services: 
 * cleanUpRoomCallback
-2. BPEL process engine - will recive clean up request, send request to cleaning lady and recive callback then send request to supervisor and recive callback. As a output will call callback from \
+
+BPEL process engine - will recive clean up request, send request to cleaning lady and recive callback then send request to supervisor and recive callback. As a output will call callback from \
 Hotem management system. Services:
 * startProcess
 * cleanUpRoomCallback
 * verifyCleanUpCallback
-3. BPEL 4 PEOPLE middleware - will recive clean up request for cleanning laydy and verify clean up for supervisor. When mobile users finishes tasks will call back to process. Services: 
+
+BPEL 4 PEOPLE middleware - will recive clean up request for cleanning laydy and verify clean up for supervisor. When mobile users finishes tasks will call back to process. Services: 
 * cleanUp
 * verify
-4. Mobile applications will comunicate with middle ware via REST API, will not provide any web service. 
+
+Mobile applications will comunicate with middle ware via REST API, will not provide any web service. 
 
