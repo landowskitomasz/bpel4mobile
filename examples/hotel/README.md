@@ -24,21 +24,21 @@ BPMN is not implementations, this is only graphical description of the system. I
 
 * BPEL process engine - communication beetwen all systems will occur while web services, we will use bepl to coordinate that comunication and to implement main concepts of our BPMN process. 
 
-* BPEL 4 PEOPLE middleware - this sub system is responsible for reciving mobile requests from bpel process and distribute this request to mobile application users. This is description how to use BPEL 4 MOBILE as a middleware beetwen bpel and mobile apps. 
+* BPEL 4 PEOPLE middleware - this sub system is responsible for reciving mobile requests from bpel process and distribute this request to mobile application users. This is demonstration how to use BPEL 4 MOBILE as a middleware beetwen BPEL and mobile apps. 
 
 * Android application - this is Supervisor and Cleaning lady application. It will recive list of rooms to clean up and allove users to perform clean up or verify operations. 
 
 What about web services? 
 
-* Hotel management system - will start clean up process calling BPEL start event web service, and will recive result using callback web service. Services: 
+1 Hotel management system - will start clean up process calling BPEL start event web service, and will recive result using callback web service. Services: 
 ..* cleanUpRoomCallback
-* BPEL process engine - will recive clean up request, send request to cleaning lady and recive callback then send request to supervisor and recive callback. As a output will call callback from \
+2 BPEL process engine - will recive clean up request, send request to cleaning lady and recive callback then send request to supervisor and recive callback. As a output will call callback from \
 Hotem management system. Services:
 ..* startProcess
 ..* cleanUpRoomCallback
 ..* verifyCleanUpCallback
-* BPEL 4 PEOPLE middleware - will recive clean up request for cleanning laydy and verify clean up for supervisor. When mobile users finishes tasks will call back to process. Services: 
+3 BPEL 4 PEOPLE middleware - will recive clean up request for cleanning laydy and verify clean up for supervisor. When mobile users finishes tasks will call back to process. Services: 
 ..* cleanUp
 ..* verify
-* Mobile applications will comunicate with middle ware via REST API, will not provide any web service. 
+4 Mobile applications will comunicate with middle ware via REST API, will not provide any web service. 
 
