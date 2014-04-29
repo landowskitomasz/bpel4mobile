@@ -1,0 +1,21 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:b4m="http://bpel4mobile.com/example/hotel/schemas"
+        elementFormDefault="qualified"
+        targetNamespace="http://bpel4mobile.com/example/hotel/schemas">
+        
+    <xs:element name="cleanUpResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>  
+                <xs:element name="room" type="b4m:Room"/>     
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+   <xs:complexType name="Room">
+    	<xs:sequence>
+    	 	<xs:element name="id" type="xs:integer"/>
+    	</xs:sequence>
+   </xs:complexType>
+   
+</xs:schema>

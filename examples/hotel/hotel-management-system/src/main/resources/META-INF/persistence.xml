@@ -3,12 +3,12 @@
 <persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>
         <properties>
-            <property name="datanucleus.ConnectionDriverName" value="org.h2.Driver"/>
+            <property name="datanucleus.ConnectionDriverName" value="org.postgresql.Driver"/>
             <property name="datanucleus.autoCreateSchema" value="true"/>
             <property name="datanucleus.storeManagerType" value="rdbms"/>
-            <property name="datanucleus.ConnectionURL" value="jdbc:h2:mem:hotel;DB_CLOSE_DELAY=-1"/>
-            <property name="datanucleus.ConnectionUserName" value="sa"/>
-            <property name="datanucleus.ConnectionPassword" value=""/>
+            <property name="datanucleus.ConnectionURL" value="jdbc:postgresql://localhost:5432/hotel"/>
+            <property name="datanucleus.ConnectionUserName" value="postgres"/>
+            <property name="datanucleus.ConnectionPassword" value="postgres123"/>
             <property name="datanucleus.autoCreateTables" value="true"/>
             <property name="datanucleus.autoCreateColumns" value="false"/>
             <property name="datanucleus.autoCreateConstraints" value="false"/>

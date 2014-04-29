@@ -3,13 +3,15 @@
 
 package com.bpel4mobile.example.hotel.web;
 
-import com.bpel4mobile.example.hotel.entity.Room;
 import com.bpel4mobile.example.hotel.entity.RoomReservation;
+import com.bpel4mobile.example.hotel.repository.RoomReservationRepository;
+import com.bpel4mobile.example.hotel.service.RoomService;
 import com.bpel4mobile.example.hotel.web.RoomReservationController;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,12 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect RoomReservationController_Roo_Controller {
     
+    @Autowired
+    RoomReservationRepository RoomReservationController.roomReservationRepository;
+    
+    @Autowired
+    RoomService RoomReservationController.roomService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String RoomReservationController.create(@Valid RoomReservation roomReservation, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -29,7 +37,7 @@ privileged aspect RoomReservationController_Roo_Controller {
             return "roomreservations/create";
         }
         uiModel.asMap().clear();
-        roomReservation.persist();
+        roomReservationRepository.save(roomReservation);
         return "redirect:/roomreservations/" + encodeUrlPathSegment(roomReservation.getId().toString(), httpServletRequest);
     }
     
@@ -42,7 +50,7 @@ privileged aspect RoomReservationController_Roo_Controller {
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String RoomReservationController.show(@PathVariable("id") Long id, Model uiModel) {
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("roomreservation", RoomReservation.findRoomReservation(id));
+        uiModel.addAttribute("roomreservation", roomReservationRepository.findOne(id));
         uiModel.addAttribute("itemId", id);
         return "roomreservations/show";
     }
@@ -52,11 +60,11 @@ privileged aspect RoomReservationController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("roomreservations", RoomReservation.findRoomReservationEntries(firstResult, sizeNo));
-            float nrOfPages = (float) RoomReservation.countRoomReservations() / sizeNo;
+            uiModel.addAttribute("roomreservations", roomReservationRepository.findAll(new org.springframework.data.domain.PageRequest(firstResult / sizeNo, sizeNo)).getContent());
+            float nrOfPages = (float) roomReservationRepository.count() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("roomreservations", RoomReservation.findAllRoomReservations());
+            uiModel.addAttribute("roomreservations", roomReservationRepository.findAll());
         }
         addDateTimeFormatPatterns(uiModel);
         return "roomreservations/list";
@@ -69,20 +77,20 @@ privileged aspect RoomReservationController_Roo_Controller {
             return "roomreservations/update";
         }
         uiModel.asMap().clear();
-        roomReservation.merge();
+        roomReservationRepository.save(roomReservation);
         return "redirect:/roomreservations/" + encodeUrlPathSegment(roomReservation.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String RoomReservationController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, RoomReservation.findRoomReservation(id));
+        populateEditForm(uiModel, roomReservationRepository.findOne(id));
         return "roomreservations/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String RoomReservationController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        RoomReservation roomReservation = RoomReservation.findRoomReservation(id);
-        roomReservation.remove();
+        RoomReservation roomReservation = roomReservationRepository.findOne(id);
+        roomReservationRepository.delete(roomReservation);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
@@ -97,7 +105,7 @@ privileged aspect RoomReservationController_Roo_Controller {
     void RoomReservationController.populateEditForm(Model uiModel, RoomReservation roomReservation) {
         uiModel.addAttribute("roomReservation", roomReservation);
         addDateTimeFormatPatterns(uiModel);
-        uiModel.addAttribute("rooms", Room.findAllRooms());
+        uiModel.addAttribute("rooms", roomService.findAllRooms());
     }
     
     String RoomReservationController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

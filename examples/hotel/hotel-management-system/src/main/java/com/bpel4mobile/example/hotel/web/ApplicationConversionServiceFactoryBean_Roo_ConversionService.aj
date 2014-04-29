@@ -6,7 +6,11 @@ package com.bpel4mobile.example.hotel.web;
 import com.bpel4mobile.example.hotel.entity.Category;
 import com.bpel4mobile.example.hotel.entity.Room;
 import com.bpel4mobile.example.hotel.entity.RoomReservation;
+import com.bpel4mobile.example.hotel.repository.CategoryRepository;
+import com.bpel4mobile.example.hotel.repository.RoomReservationRepository;
+import com.bpel4mobile.example.hotel.service.RoomService;
 import com.bpel4mobile.example.hotel.web.ApplicationConversionServiceFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
@@ -14,6 +18,15 @@ import org.springframework.format.FormatterRegistry;
 privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService {
     
     declare @type: ApplicationConversionServiceFactoryBean: @Configurable;
+    
+    @Autowired
+    CategoryRepository ApplicationConversionServiceFactoryBean.categoryRepository;
+    
+    @Autowired
+    RoomService ApplicationConversionServiceFactoryBean.roomService;
+    
+    @Autowired
+    RoomReservationRepository ApplicationConversionServiceFactoryBean.roomReservationRepository;
     
     public Converter<Category, String> ApplicationConversionServiceFactoryBean.getCategoryToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<com.bpel4mobile.example.hotel.entity.Category, java.lang.String>() {
@@ -26,7 +39,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Category> ApplicationConversionServiceFactoryBean.getIdToCategoryConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.bpel4mobile.example.hotel.entity.Category>() {
             public com.bpel4mobile.example.hotel.entity.Category convert(java.lang.Long id) {
-                return Category.findCategory(id);
+                return categoryRepository.findOne(id);
             }
         };
     }
@@ -50,7 +63,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, Room> ApplicationConversionServiceFactoryBean.getIdToRoomConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.bpel4mobile.example.hotel.entity.Room>() {
             public com.bpel4mobile.example.hotel.entity.Room convert(java.lang.Long id) {
-                return Room.findRoom(id);
+                return roomService.findRoom(id);
             }
         };
     }
@@ -74,7 +87,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Long, RoomReservation> ApplicationConversionServiceFactoryBean.getIdToRoomReservationConverter() {
         return new org.springframework.core.convert.converter.Converter<java.lang.Long, com.bpel4mobile.example.hotel.entity.RoomReservation>() {
             public com.bpel4mobile.example.hotel.entity.RoomReservation convert(java.lang.Long id) {
-                return RoomReservation.findRoomReservation(id);
+                return roomReservationRepository.findOne(id);
             }
         };
     }

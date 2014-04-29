@@ -35,3 +35,16 @@ jpa setup --provider OPENJPA --database H2_IN_MEMORY
 jpa setup --provider HIBERNATE --database H2_IN_MEMORY 
 jpa setup --provider OPENJPA --database H2_IN_MEMORY 
 jpa setup --provider DATANUCLEUS --database H2_IN_MEMORY 
+service --interface ~.service.RoomService --entity ~.entity.Room
+exit
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2014-04-27 17:35:22
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2014-04-27 17:35:27
+exit
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2014-04-29 21:35:55
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2014-04-29 21:36:00
+jpa setup --provider DATANUCLEUS --database POSTGRES --userName postgres --password postgres123 --databaseName hotel
+jpa setup --database POSTGRES --userName postgres --password postgres123 --databaseName hotel --provider HIBERNATE 
+jpa setup --database POSTGRES --userName postgres --password postgres123 --databaseName hotel --provider DATANUCLEUS 
+repository jpa --entity ~.entity.Room --interface RoomRepository
+repository jpa --entity ~.entity.Category --interface ~.repository.CategoryRepository
+repository jpa --entity ~.entity.RoomReservation --interface ~.repository.roomReservationRepository

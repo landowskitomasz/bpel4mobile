@@ -6,11 +6,13 @@ package com.bpel4mobile.example.hotel.web;
 import com.bpel4mobile.example.hotel.entity.Category;
 import com.bpel4mobile.example.hotel.entity.Room;
 import com.bpel4mobile.example.hotel.entity.RoomState;
+import com.bpel4mobile.example.hotel.service.RoomService;
 import com.bpel4mobile.example.hotel.web.RoomController;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,9 @@ import org.springframework.web.util.WebUtils;
 
 privileged aspect RoomController_Roo_Controller {
     
+    @Autowired
+    RoomService RoomController.roomService;
+    
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String RoomController.create(@Valid Room room, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
@@ -29,7 +34,7 @@ privileged aspect RoomController_Roo_Controller {
             return "rooms/create";
         }
         uiModel.asMap().clear();
-        room.persist();
+        roomService.saveRoom(room);
         return "redirect:/rooms/" + encodeUrlPathSegment(room.getId().toString(), httpServletRequest);
     }
     
@@ -41,7 +46,7 @@ privileged aspect RoomController_Roo_Controller {
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String RoomController.show(@PathVariable("id") Long id, Model uiModel) {
-        uiModel.addAttribute("room", Room.findRoom(id));
+        uiModel.addAttribute("room", roomService.findRoom(id));
         uiModel.addAttribute("itemId", id);
         return "rooms/show";
     }
@@ -51,11 +56,11 @@ privileged aspect RoomController_Roo_Controller {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("rooms", Room.findRoomEntries(firstResult, sizeNo));
-            float nrOfPages = (float) Room.countRooms() / sizeNo;
+            uiModel.addAttribute("rooms", roomService.findRoomEntries(firstResult, sizeNo));
+            float nrOfPages = (float) roomService.countAllRooms() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("rooms", Room.findAllRooms());
+            uiModel.addAttribute("rooms", roomService.findAllRooms());
         }
         return "rooms/list";
     }
@@ -67,20 +72,20 @@ privileged aspect RoomController_Roo_Controller {
             return "rooms/update";
         }
         uiModel.asMap().clear();
-        room.merge();
+        roomService.updateRoom(room);
         return "redirect:/rooms/" + encodeUrlPathSegment(room.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String RoomController.updateForm(@PathVariable("id") Long id, Model uiModel) {
-        populateEditForm(uiModel, Room.findRoom(id));
+        populateEditForm(uiModel, roomService.findRoom(id));
         return "rooms/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
     public String RoomController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
-        Room room = Room.findRoom(id);
-        room.remove();
+        Room room = roomService.findRoom(id);
+        roomService.deleteRoom(room);
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
