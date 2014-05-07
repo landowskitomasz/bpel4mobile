@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<htd:humanInteractions
+	xmlns:htd="http://docs.oasis-open.org/bpel4people/ws-humantask"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xsi:schemaLocation="http://docs.oasis-open.org/bpel4people/ws-humantask http://docs.oasis-open.org/bpel4people/ws-humantask.xsd">
+
+	<htd:logicalPeopleGroups>
+		<htd:logicalPeopleGroup name="cleaningLadies">
+			<htd:parameter name="correspondingFloor" type="xsd:int"></htd:parameter>
+		</htd:logicalPeopleGroup>
+		<htd:logicalPeopleGroup name="supervisors" />
+	</htd:logicalPeopleGroups>
+	<htd:tasks>
+		<htd:task name="cleanUpTask">
+			<htd:priority>1</htd:priority>
+			<htd:peopleAssignments>
+				<htd:potentialOwners>
+					<htd:from logicalPeopleGroup="cleaningLadies">
+						<htd:argument name="correspondingFloor">eq:request/room/floor</htd:argument>
+					</htd:from>
+				</htd:potentialOwners>
+			</htd:peopleAssignments>
+		</htd:task>
+		
+		<htd:task name="verifyTask">
+			<htd:priority>1</htd:priority>
+			<htd:peopleAssignments>
+				<htd:potentialOwners>
+					<htd:from logicalPeopleGroup="supervisors" />
+				</htd:potentialOwners>
+			</htd:peopleAssignments>
+		</htd:task>
+	</htd:tasks>
+</htd:humanInteractions>

@@ -1,0 +1,26 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:b4m="http://bpel4mobile.com/schemas"
+        elementFormDefault="qualified"
+        targetNamespace="http://bpel4mobile.com/schemas">
+        
+    <xs:include schemaLocation="commons.xsd"/>
+    
+    <xs:element name="VerifyTaskRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="callbackUrl" type="xs:string"/>  
+                <xs:element name="request" type="b4m:verifyRequestType"/>     
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+   
+    
+    <xs:complexType name="verifyRequestType">
+       <xs:sequence>
+           <xs:element name="deadline" type="xs:dateTime" />
+           <xs:element name="cleanUpPerformer" type="xs:string" />
+           <xs:element name="room" type="b4m:roomComplexType"></xs:element>
+       </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
