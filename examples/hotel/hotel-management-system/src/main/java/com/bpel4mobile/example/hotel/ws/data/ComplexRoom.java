@@ -11,6 +11,8 @@ public class ComplexRoom {
 	private int number;
 	
 	private int floor;
+	
+	private Category category;
 
 	@XmlElement(namespace=CleanUpServiceCallbackEndpoint.NAMESPACE, name="id")
 	public long getId() {
@@ -37,6 +39,15 @@ public class ComplexRoom {
 
 	public void setFloor(int floor) {
 		this.floor = floor;
+	}
+
+	@XmlElement(namespace=CleanUpServiceCallbackEndpoint.NAMESPACE, name="category")
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 	
