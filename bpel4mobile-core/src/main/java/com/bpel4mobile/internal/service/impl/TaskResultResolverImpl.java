@@ -1,14 +1,19 @@
 package com.bpel4mobile.internal.service.impl;
 
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
@@ -21,10 +26,14 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
 
 @Service
 public class TaskResultResolverImpl implements TaskResultResolver {
 
+	private static Logger log = Logger.getLogger(TaskResultResolverImpl.class.getName());
+	
 	private Map<String, Jaxb2Marshaller> resultMarshalers = new HashMap<String, Jaxb2Marshaller>();
 	
 	private WebServiceTemplate wsTemplate;
@@ -36,6 +45,7 @@ public class TaskResultResolverImpl implements TaskResultResolver {
 	
 	@Override
 	public void registerTask(final String taskIdentifier, final Class<?>[] resultTypes) {
+		log.info("Task "+ taskIdentifier + "registered.");
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		marshaller.setClassesToBeBound(resultTypes);
 		
@@ -50,10 +60,13 @@ public class TaskResultResolverImpl implements TaskResultResolver {
 		
 		DOMResult domResult = new DOMResult();
 		taskResultMarshaller.marshal(result.getResult(), domResult);
-		
 		domResult = wrapResultWithTaskData(domResult, result.getTaskUUID());
+		
+		log.info("Responding to process callback: " + result.getCallbackUrl());
 		wsTemplate.sendSourceAndReceiveToResult(result.getCallbackUrl(), new DOMSource(domResult.getNode()), new DOMResult());
 	}
+	
+
 
 	private DOMResult wrapResultWithTaskData(DOMResult domResult, String taskUUID) {
 		

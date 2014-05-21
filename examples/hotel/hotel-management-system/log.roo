@@ -48,3 +48,5 @@ jpa setup --database POSTGRES --userName postgres --password postgres123 --datab
 repository jpa --entity ~.entity.Room --interface RoomRepository
 repository jpa --entity ~.entity.Category --interface ~.repository.CategoryRepository
 repository jpa --entity ~.entity.RoomReservation --interface ~.repository.roomReservationRepository
+quit
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2014-05-08 23:04:04

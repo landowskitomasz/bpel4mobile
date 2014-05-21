@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:schemas="http://bpel4mobile.com/example/hotel/schemas">
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:schemas="http://bpel4mobile.com/example/hotel/schemas" xmlns:schemas_1="http://bpel4mobile.com/schemas">
   <process name="schemas:cleanUpProcess">
     <active>true</active>
     <retired>false</retired>
@@ -9,6 +9,9 @@
     </provide>
     <invoke partnerLink="client">
       <service name="schemas:cleanUpProcessServiceCallback" port="cleanUpProcessPortCallbackPort"/>
+    </invoke>
+    <invoke partnerLink="cleanUpServicePL">
+      <service name="schemas_1:cleanUpServicePortService" port="cleanUpServicePortSoap11"/>
     </invoke>
   </process>
 </deploy>

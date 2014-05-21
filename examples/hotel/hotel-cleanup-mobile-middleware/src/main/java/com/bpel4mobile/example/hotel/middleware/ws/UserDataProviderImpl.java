@@ -20,8 +20,8 @@ public class UserDataProviderImpl extends AbstractUserDataProvider {
 		UserData user = new UserData();
 		user.setUsername("Tomasz");
 		UserGroupData userGroupData = new UserGroupData();
-		userGroupData.setName("projectManagers");
-		userGroupData.getArguments().put("username", "Tomasz");
+		userGroupData.setName("cleaningLadies");
+		userGroupData.getArguments().put("correspondingFloor", 1);
 		user.getGroups().add(userGroupData);
 		return user;
 	}

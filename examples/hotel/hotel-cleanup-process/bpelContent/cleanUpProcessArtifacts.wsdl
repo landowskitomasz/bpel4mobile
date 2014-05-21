@@ -1,11 +1,5 @@
-<?xml version="1.0"?>
-<definitions name="cleanUpProcess"
-        targetNamespace="http://bpel4mobile.com/example/hotel/schemas"
-        xmlns:tns="http://bpel4mobile.com/example/hotel/schemas"
-        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
-        xmlns="http://schemas.xmlsoap.org/wsdl/"
-        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-        >
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://bpel4mobile.com/example/hotel/schemas" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://bpel4mobile.com/schemas" xmlns:wsdl2="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="cleanUpProcess" targetNamespace="http://bpel4mobile.com/example/hotel/schemas">
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      TYPE DEFINITION - List of services participating in this BPEL process 
@@ -13,18 +7,25 @@
      output to the BPEL Process. But you can define or import any XML 
      Schema type and us them as part of the message types.
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="cleanUpServicePL">
+    <plnk:role name="cleanUpServiceRole" portType="wsdl:cleanUpServicePort"/>
+  </plnk:partnerLinkType>
+    <vprop:property name="taskUUID" type="xsd:string"/>
+    <vprop:propertyAlias messageType="wsdl:TaskResponse" part="TaskResponse" propertyName="tns:taskUUID">
+        <vprop:query><![CDATA[/wsdl:taskUUID]]></vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="tns:cleanUpTaskCallbackRequest" part="parameters" propertyName="tns:taskUUID">
+        <vprop:query><![CDATA[/tns:taskUUID]]></vprop:query>
+    </vprop:propertyAlias>
+    <wsdl2:import location="cleanUpService.wsdl" namespace="http://bpel4mobile.com/schemas"/>
     <types>  
-        <schema attributeFormDefault="unqualified" 
-                elementFormDefault="qualified" 
-                targetNamespace="http://bpel4mobile.com/example/hotel/schemas" 
-                xmlns="http://www.w3.org/2001/XMLSchema"
-                >
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bpel4mobile.com/example/hotel/schemas">
                 
             <element name="cleanUpRequest">
                 <complexType>
                     <sequence>
-                    	<element name="deadline" type="dateTime" />
-                    	<element name="room" type="tns:roomComplexType"></element>
+                    	<element name="deadline" type="dateTime"/>
+                    	<element name="room" type="tns:roomComplexType"/>
                     </sequence>
                 </complexType>
             </element>
@@ -32,8 +33,8 @@
             <element name="cleanUpResponse">
                 <complexType>
                     <sequence>
-                    	<element name="status" type="string" />
-                    	<element name="room" type="tns:room"></element>
+                    	<element name="status" type="string"/>
+                    	<element name="room" type="tns:room"/>
                     </sequence>
                 </complexType>
             </element>
@@ -41,24 +42,46 @@
         
             <complexType name="room">
             	<sequence>
-            		<element name="id" type="int"></element>
+            		<element name="id" type="int"/>
             	</sequence>
             </complexType>
         
         
             <complexType name="roomComplexType">
             	<sequence>
-            		<element name="id" type="int"></element>
-            		<element name="number" type="int"></element>
-            		<element name="floor" type="int"></element>
-            		<element name="category" type="tns:roomCategory"></element>
+            		<element name="id" type="int"/>
+            		<element name="number" type="int"/>
+            		<element name="floor" type="int"/>
+            		<element name="category" type="tns:roomCategory"/>
             	</sequence>
             </complexType>
         
             <complexType name="roomCategory">
             	<sequence>
-            		<element name="name" type="string"></element>
-            		<element name="standard" type="int"></element>
+            		<element name="name" type="string"/>
+            		<element name="standard" type="int"/>
+            	</sequence>
+            </complexType>
+            <element name="TaskResult">
+            	<complexType>
+            		<sequence>
+            			<element name="taskUUID" type="string"/>
+            			<element name="result" type="tns:cleanUpResult"/>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="cleanUpTaskCallbackResponse">
+            	<complexType>
+            		<sequence>
+
+            			<element name="out" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+        
+            <complexType name="cleanUpResult">
+            	<sequence>
+            		<element name="success" type="boolean"/>
             	</sequence>
             </complexType>
         </schema>
@@ -69,11 +92,11 @@
      part of the port type defintions
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
     <message name="cleanUpProcessRequestMessage">
-        <part name="payload" element="tns:cleanUpRequest"/>
+        <part element="tns:cleanUpRequest" name="payload"/>
     </message>
     
     <message name="cleanUpProcessResponseMessage">
-        <part name="payload" element="tns:cleanUpResponse"/>
+        <part element="tns:cleanUpResponse" name="payload"/>
     </message>
 
 
@@ -82,10 +105,20 @@
      a logical service unit.
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- portType implemented by the cleanUpProcess BPEL process -->
+    <wsdl2:message name="cleanUpTaskCallbackRequest">
+    	<wsdl2:part element="tns:TaskResult" name="parameters"/>
+    </wsdl2:message>
+    <wsdl2:message name="cleanUpTaskCallbackResponse">
+    	<wsdl2:part element="tns:cleanUpTaskCallbackResponse" name="parameters"/>
+    </wsdl2:message>
     <portType name="cleanUpProcess">
         <operation name="initiate">
             <input message="tns:cleanUpProcessRequestMessage"/>
         </operation>
+        <wsdl2:operation name="cleanUpTaskCallback">
+        	<wsdl2:input message="tns:cleanUpTaskCallbackRequest"/>
+
+        </wsdl2:operation>
     </portType>
 
     <!-- portType implemented by the requester of cleanUpProcess BPEL process 
@@ -113,40 +146,49 @@
      for a web service.
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <binding name="cleanUpProcessBinding" type="tns:cleanUpProcess">
-        <soap:binding style="document"
-    		transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="initiate">
-            <soap:operation
-    			soapAction="http://bpel4mobile.com/example/hotel/schemas/initiate"/>
-            <input>
-                <soap:body use="literal"/>
-            </input>
-        </operation>
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="initiate">
+    		<soap:operation
+    			soapAction="http://bpel4mobile.com/example/hotel/schemas/initiate" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    	</operation>
+    	<wsdl2:operation name="cleanUpTaskCallback">
+    		<soap:operation
+    			soapAction="http://bpel4mobile.com/example/hotel/schemas/cleanUpTaskCallback" />
+    		<wsdl2:input>
+    			<soap:body use="literal" />
+    		</wsdl2:input>
+    	</wsdl2:operation>
     </binding>
 
-    <binding name="cleanUpProcessCallbackBinding" type="tns:cleanUpProcessCallback">
-        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="onResult">
-            <soap:operation
-    			soapAction="http://bpel4mobile.com/example/hotel/schemas/onResult"/>
-            <input>
-                <soap:body use="literal"/>
-            </input>
-        </operation>
+    <binding name="cleanUpProcessCallbackBinding"
+    	type="tns:cleanUpProcessCallback">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="onResult">
+    		<soap:operation
+    			soapAction="http://bpel4mobile.com/example/hotel/schemas/onResult" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    	</operation>
     </binding>
 
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      SERVICE DEFINITION - A service groups a set of ports into
      a service unit.
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <service name="cleanUpProcessService">
-        <port name="cleanUpProcessPort" binding="tns:cleanUpProcessBinding">
+        <port binding="tns:cleanUpProcessBinding" name="cleanUpProcessPort">
     		<soap:address location="http://localhost:8080/ode/processes/cleanUpProcess"/>
         </port>
     </service>
 
     <service name="cleanUpProcessServiceCallback">
-        <port name="cleanUpProcessPortCallbackPort" binding="tns:cleanUpProcessCallbackBinding">
+        <port binding="tns:cleanUpProcessCallbackBinding" name="cleanUpProcessPortCallbackPort">
     		<soap:address location="http://localhost:8181/hotel/ws/cleanUpServiceCallback"/>
         </port>
     </service>
