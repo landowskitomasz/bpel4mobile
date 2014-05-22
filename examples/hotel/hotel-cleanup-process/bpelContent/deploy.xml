@@ -13,5 +13,8 @@
     <invoke partnerLink="cleanUpServicePL">
       <service name="schemas_1:cleanUpServicePortService" port="cleanUpServicePortSoap11"/>
     </invoke>
+    <invoke partnerLink="verifyTaskPL">
+      <service name="schemas_1:verifyServicePortService" port="verifyServicePortSoap11"/>
+    </invoke>
   </process>
 </deploy>

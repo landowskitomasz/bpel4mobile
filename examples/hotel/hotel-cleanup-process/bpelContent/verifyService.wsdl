@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://bpel4mobile.com/schemas" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://bpel4mobile.com/schemas" targetNamespace="http://bpel4mobile.com/schemas">
+  <wsdl:types>
+    <xs:schema xmlns:b4m="http://bpel4mobile.com/schemas" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bpel4mobile.com/schemas">
+	    <xs:element name="VerifyTaskRequest">
+		    <xs:complexType>
+			    <xs:sequence>
+				    <xs:element name="callbackUrl" type="xs:string"/>
+				    <xs:element name="request" type="b4m:verifyRequestType"/>
+			    </xs:sequence>
+		    </xs:complexType>
+	    </xs:element>
+	    <xs:complexType name="verifyRequestType">
+		    <xs:sequence><xs:element name="deadline" type="xs:dateTime"/>
+			    <xs:element name="cleanUpPerformer" type="xs:string"/>
+			    <xs:element name="room" type="b4m:roomComplexType"/>
+		    </xs:sequence>
+	    </xs:complexType>
+	    <xs:element name="TaskResponse">
+		    <xs:complexType>
+			    <xs:sequence>
+			    	<xs:element name="taskUUID" type="xs:string"/>
+			    </xs:sequence>
+		    </xs:complexType>
+	    </xs:element>
+	    <xs:complexType name="roomComplexType">
+		    <xs:sequence><xs:element name="id" type="xs:int"/>
+			    <xs:element name="number" type="xs:int"/>
+			    <xs:element name="floor" type="xs:int"/>
+			    <xs:element name="category" type="b4m:roomCategory"/>
+		    </xs:sequence>
+	    </xs:complexType>
+	    <xs:complexType name="roomCategory">
+		    <xs:sequence>
+			    <xs:element name="name" type="xs:string"/>
+			    <xs:element name="standard" type="xs:int"/>
+		    </xs:sequence>
+	    </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="TaskResponse">
+    <wsdl:part element="tns:TaskResponse" name="TaskResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="VerifyTaskRequest">
+    <wsdl:part element="tns:VerifyTaskRequest" name="VerifyTaskRequest">
+    </wsdl:part>
+  </wsdl:message>
+  
+  <wsdl:portType name="verifyServicePort">
+    <wsdl:operation name="VerifyTask">
+      <wsdl:input message="tns:VerifyTaskRequest" name="VerifyTaskRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:TaskResponse" name="TaskResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="verifyServicePortSoap11"
+  	type="sch:verifyServicePort">
+  	<soap:binding style="document"
+  		transport="http://schemas.xmlsoap.org/soap/http" />
+  	<wsdl:operation name="VerifyTask">
+  		<soap:operation soapAction="" />
+  		<wsdl:input name="VerifyTaskRequest">
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output name="TaskResponse">
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="verifyServicePortService">
+    <wsdl:port binding="tns:verifyServicePortSoap11" name="verifyServicePortSoap11">
+      <soap:address location="http://localhost:8282/hotel-cleanup-mobile-middleware/ws/verifyService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -17,7 +17,11 @@
     <vprop:propertyAlias messageType="tns:cleanUpTaskCallbackRequest" part="parameters" propertyName="tns:taskUUID">
         <vprop:query><![CDATA[/tns:taskUUID]]></vprop:query>
     </vprop:propertyAlias>
+    <plnk:partnerLinkType name="verifyTaskPL">
+    <plnk:role name="verifyTaskPort" portType="wsdl:verifyServicePort"/>
+  </plnk:partnerLinkType>
     <wsdl2:import location="cleanUpService.wsdl" namespace="http://bpel4mobile.com/schemas"/>
+    <wsdl2:import location="verifyService.wsdl" namespace="http://bpel4mobile.com/schemas"/>
     <types>  
         <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bpel4mobile.com/example/hotel/schemas">
                 
@@ -146,33 +150,27 @@
      for a web service.
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <binding name="cleanUpProcessBinding" type="tns:cleanUpProcess">
-    	<soap:binding style="document"
-    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     	<operation name="initiate">
-    		<soap:operation
-    			soapAction="http://bpel4mobile.com/example/hotel/schemas/initiate" />
+    		<soap:operation soapAction="http://bpel4mobile.com/example/hotel/schemas/initiate"/>
     		<input>
-    			<soap:body use="literal" />
+    			<soap:body use="literal"/>
     		</input>
     	</operation>
     	<wsdl2:operation name="cleanUpTaskCallback">
-    		<soap:operation
-    			soapAction="http://bpel4mobile.com/example/hotel/schemas/cleanUpTaskCallback" />
+    		<soap:operation soapAction="http://bpel4mobile.com/example/hotel/schemas/cleanUpTaskCallback"/>
     		<wsdl2:input>
-    			<soap:body use="literal" />
+    			<soap:body use="literal"/>
     		</wsdl2:input>
     	</wsdl2:operation>
     </binding>
 
-    <binding name="cleanUpProcessCallbackBinding"
-    	type="tns:cleanUpProcessCallback">
-    	<soap:binding style="document"
-    		transport="http://schemas.xmlsoap.org/soap/http" />
+    <binding name="cleanUpProcessCallbackBinding" type="tns:cleanUpProcessCallback">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     	<operation name="onResult">
-    		<soap:operation
-    			soapAction="http://bpel4mobile.com/example/hotel/schemas/onResult" />
+    		<soap:operation soapAction="http://bpel4mobile.com/example/hotel/schemas/onResult"/>
     		<input>
-    			<soap:body use="literal" />
+    			<soap:body use="literal"/>
     		</input>
     	</operation>
     </binding>
