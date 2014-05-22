@@ -72,21 +72,21 @@
         <bpel:assign validate="no" name="prepareCleanUpTaskRequest">
             <bpel:copy>
                 <bpel:from><bpel:literal><tns:CleanUpTaskRequest xmlns:tns="http://bpel4mobile.com/schemas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <tns:callbackUrl>tns:callbackUrl</tns:callbackUrl>
-  <tns:request>
-    <tns:deadline>2001-12-31T12:00:00</tns:deadline>
-    <tns:room>
-      <tns:id>0</tns:id>
-      <tns:number>0</tns:number>
-      <tns:floor>0</tns:floor>
-      <tns:category>
-        <tns:name>tns:name</tns:name>
-        <tns:standard>0</tns:standard>
-      </tns:category>
-    </tns:room>
-  </tns:request>
-</tns:CleanUpTaskRequest>
-</bpel:literal></bpel:from>
+					  <tns:callbackUrl>tns:callbackUrl</tns:callbackUrl>
+					  <tns:request>
+					    <tns:deadline>2001-12-31T12:00:00</tns:deadline>
+					    <tns:room>
+					      <tns:id>0</tns:id>
+					      <tns:number>0</tns:number>
+					      <tns:floor>0</tns:floor>
+					      <tns:category>
+					        <tns:name>tns:name</tns:name>
+					        <tns:standard>0</tns:standard>
+					      </tns:category>
+					    </tns:room>
+					  </tns:request>
+					</tns:CleanUpTaskRequest>
+					</bpel:literal></bpel:from>
                 <bpel:to variable="cleanUpServicePLRequest" part="CleanUpTaskRequest"></bpel:to>
             </bpel:copy>
             <bpel:copy>
@@ -160,22 +160,22 @@
         <bpel:assign validate="no" name="prepareVerifyTaskRequest">
             <bpel:copy>
                 <bpel:from><bpel:literal><tns:VerifyTaskRequest xmlns:tns="http://bpel4mobile.com/schemas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <tns:callbackUrl>tns:callbackUrl</tns:callbackUrl>
-  <tns:request>
-    <tns:deadline>2001-12-31T12:00:00</tns:deadline>
-    <tns:cleanUpPerformer>tns:cleanUpPerformer</tns:cleanUpPerformer>
-    <tns:room>
-      <tns:id>0</tns:id>
-      <tns:number>0</tns:number>
-      <tns:floor>0</tns:floor>
-      <tns:category>
-        <tns:name>tns:name</tns:name>
-        <tns:standard>0</tns:standard>
-      </tns:category>
-    </tns:room>
-  </tns:request>
-</tns:VerifyTaskRequest>
-</bpel:literal></bpel:from>
+					  <tns:callbackUrl>tns:callbackUrl</tns:callbackUrl>
+					  <tns:request>
+					    <tns:deadline>2001-12-31T12:00:00</tns:deadline>
+					    <tns:cleanUpPerformer>tns:cleanUpPerformer</tns:cleanUpPerformer>
+					    <tns:room>
+					      <tns:id>0</tns:id>
+					      <tns:number>0</tns:number>
+					      <tns:floor>0</tns:floor>
+					      <tns:category>
+					        <tns:name>tns:name</tns:name>
+					        <tns:standard>0</tns:standard>
+					      </tns:category>
+					    </tns:room>
+					  </tns:request>
+					</tns:VerifyTaskRequest>
+					</bpel:literal></bpel:from>
                 <bpel:to variable="verifyTaskPLRequest" part="VerifyTaskRequest"></bpel:to>
             </bpel:copy>
             <bpel:copy>
@@ -226,6 +226,14 @@
                 </bpel:from>
                 <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[ns:request/ns:room/ns:category/ns:standard]]></bpel:query>
+                </bpel:to>
+            </bpel:copy>
+             <bpel:copy>
+                <bpel:from partnerLink="client" endpointReference="myRole"></bpel:from>
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[ns:callbackUrl]]>
+                    </bpel:query>
                 </bpel:to>
             </bpel:copy>
         </bpel:assign>
