@@ -11,6 +11,7 @@ public class TaskServiceConfig  implements InitializingBean {
 	
 	private Class<?>[] resultTypes;
 	
+	
 	public String getName() {
 		return name;
 	}
@@ -26,6 +27,7 @@ public class TaskServiceConfig  implements InitializingBean {
 	public void setResultTypes(Class<?>[] resultTypes) {
 		this.resultTypes = resultTypes;
 	}
+
 
 	@Override
 	public void afterPropertiesSet() throws Exception {

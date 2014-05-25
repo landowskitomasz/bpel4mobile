@@ -1,8 +1,8 @@
-package com.bpel4mobile.example.hotel.middleware.model;
+package com.bpel4mobile.example.hotel.middleware.cleanUpTask;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import com.bpel4mobile.ws.service.B4MNamespace;
+import com.bpel4mobile.example.hotel.middleware.constants.XMLNamespace;
 
 public class Category {
 
@@ -10,7 +10,7 @@ public class Category {
 	
 	private int standard;
 
-	@XmlElement(name="name",namespace=B4MNamespace.URL)
+	@XmlElement(name="name",namespace=XMLNamespace.CLEAN_UP)
 	public String getName() {
 		return name;
 	}
@@ -19,7 +19,7 @@ public class Category {
 		this.name = name;
 	}
 	
-	@XmlElement(name="standard",namespace=B4MNamespace.URL)
+	@XmlElement(name="standard",namespace=XMLNamespace.CLEAN_UP)
 	public int getStandard() {
 		return standard;
 	}

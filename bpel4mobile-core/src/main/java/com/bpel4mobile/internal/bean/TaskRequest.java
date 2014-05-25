@@ -3,6 +3,8 @@ package com.bpel4mobile.internal.bean;
 
 public class TaskRequest<T> {
 
+	private String namespace;
+	
 	private String callbackUrl;
 	
 	private T request;
@@ -21,6 +23,14 @@ public class TaskRequest<T> {
 
 	public void setRequest(T request) {
 		this.request = request;
+	}
+
+	public String getNamespace() {
+		return namespace;
+	}
+
+	public void setNamespace(String namespace) {
+		this.namespace = namespace;
 	}
 
 }

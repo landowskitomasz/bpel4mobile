@@ -11,15 +11,22 @@
     <plnk:role name="cleanUpServiceRole" portType="wsdl:cleanUpServicePort"/>
   </plnk:partnerLinkType>
     <vprop:property name="taskUUID" type="xsd:string"/>
-    <vprop:propertyAlias messageType="wsdl:TaskResponse" part="TaskResponse" propertyName="tns:taskUUID">
-        <vprop:query><![CDATA[/wsdl:taskUUID]]></vprop:query>
-    </vprop:propertyAlias>
     <vprop:propertyAlias messageType="tns:cleanUpTaskCallbackRequest" part="parameters" propertyName="tns:taskUUID">
         <vprop:query><![CDATA[/tns:taskUUID]]></vprop:query>
     </vprop:propertyAlias>
     <plnk:partnerLinkType name="verifyTaskPL">
     <plnk:role name="verifyTaskPort" portType="wsdl:verifyServicePort"/>
   </plnk:partnerLinkType>
+    <vprop:property name="verifyTaskUUID" type="xsd:string"/>
+    <vprop:propertyAlias messageType="wsdl:TaskResponse" part="TaskResponse" propertyName="tns:verifyTaskUUID">
+    <vprop:query><![CDATA[/wsdl:taskUUID]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="tns:verifyTaskCallbackRequest" part="parameters" propertyName="tns:verifyTaskUUID">
+    <vprop:query><![CDATA[/tns:taskUUID]]></vprop:query>
+  </vprop:propertyAlias>
+    <vprop:propertyAlias messageType="wsdl:TaskResponse" part="TaskResponse" propertyName="tns:taskUUID">
+    <vprop:query><![CDATA[/wsdl:taskUUID]]></vprop:query>
+  </vprop:propertyAlias>
     <wsdl2:import location="cleanUpService.wsdl" namespace="http://bpel4mobile.com/schemas"/>
     <wsdl2:import location="verifyService.wsdl" namespace="http://bpel4mobile.com/schemas"/>
     <types>  
@@ -66,7 +73,7 @@
             		<element name="standard" type="int"/>
             	</sequence>
             </complexType>
-            <element name="TaskResult">
+            <element name="cleanUpTaskResult">
             	<complexType>
             		<sequence>
             			<element name="taskUUID" type="string"/>
@@ -86,6 +93,29 @@
             <complexType name="cleanUpResult">
             	<sequence>
             		<element name="success" type="boolean"/>
+            	</sequence>
+            </complexType>
+            <element name="verifyTaskResult">
+            	<complexType>
+            		<sequence>
+
+            			<element name="taskUUID" type="string"/>
+            			<element name="result" type="tns:verifyResult"/>
+            		</sequence>
+            	</complexType>
+            </element>
+            <element name="verifyTaskCallbackResponse">
+            	<complexType>
+            		<sequence>
+
+            			<element name="out" type="string"/>
+            		</sequence>
+            	</complexType>
+            </element>
+        
+            <complexType name="verifyResult">
+            	<sequence>
+            		<element name="status" type="string"/>
             	</sequence>
             </complexType>
         </schema>
@@ -110,10 +140,16 @@
      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- portType implemented by the cleanUpProcess BPEL process -->
     <wsdl2:message name="cleanUpTaskCallbackRequest">
-    	<wsdl2:part element="tns:TaskResult" name="parameters"/>
+    	<wsdl2:part element="tns:cleanUpTaskResult" name="parameters"/>
     </wsdl2:message>
     <wsdl2:message name="cleanUpTaskCallbackResponse">
     	<wsdl2:part element="tns:cleanUpTaskCallbackResponse" name="parameters"/>
+    </wsdl2:message>
+    <wsdl2:message name="verifyTaskCallbackRequest">
+    	<wsdl2:part element="tns:verifyTaskResult" name="parameters"/>
+    </wsdl2:message>
+    <wsdl2:message name="verifyTaskCallbackResponse">
+    	<wsdl2:part element="tns:verifyTaskCallbackResponse" name="parameters"/>
     </wsdl2:message>
     <portType name="cleanUpProcess">
         <operation name="initiate">
@@ -121,6 +157,10 @@
         </operation>
         <wsdl2:operation name="cleanUpTaskCallback">
         	<wsdl2:input message="tns:cleanUpTaskCallbackRequest"/>
+
+        </wsdl2:operation>
+        <wsdl2:operation name="verifyTaskCallback">
+        	<wsdl2:input message="tns:verifyTaskCallbackRequest"/>
 
         </wsdl2:operation>
     </portType>
@@ -159,6 +199,12 @@
     	</operation>
     	<wsdl2:operation name="cleanUpTaskCallback">
     		<soap:operation soapAction="http://bpel4mobile.com/example/hotel/schemas/cleanUpTaskCallback"/>
+    		<wsdl2:input>
+    			<soap:body use="literal"/>
+    		</wsdl2:input>
+    	</wsdl2:operation>
+    	<wsdl2:operation name="verifyTaskCallback">
+    		<soap:operation soapAction="http://bpel4mobile.com/example/hotel/schemas/verifyTaskCallback"/>
     		<wsdl2:input>
     			<soap:body use="literal"/>
     		</wsdl2:input>

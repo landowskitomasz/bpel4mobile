@@ -1,4 +1,4 @@
-package com.bpel4mobile.example.hotel.middleware.model;
+package com.bpel4mobile.example.hotel.middleware.cleanUpTask;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

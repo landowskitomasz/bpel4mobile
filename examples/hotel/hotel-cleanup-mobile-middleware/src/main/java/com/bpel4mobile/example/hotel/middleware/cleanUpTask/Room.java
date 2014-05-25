@@ -1,8 +1,8 @@
-package com.bpel4mobile.example.hotel.middleware.model;
+package com.bpel4mobile.example.hotel.middleware.cleanUpTask;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import com.bpel4mobile.ws.service.B4MNamespace;
+import com.bpel4mobile.example.hotel.middleware.constants.XMLNamespace;
 
 public class Room {
 
@@ -14,7 +14,7 @@ public class Room {
 	
 	private Category category;
 	
-	@XmlElement(name="id",namespace=B4MNamespace.URL)
+	@XmlElement(name="id",namespace=XMLNamespace.CLEAN_UP)
 	public long getId() {
 		return id;
 	}
@@ -23,7 +23,7 @@ public class Room {
 		this.id = id;
 	}
 
-	@XmlElement(name="number",namespace=B4MNamespace.URL)
+	@XmlElement(name="number",namespace=XMLNamespace.CLEAN_UP)
 	public int getNumber() {
 		return number;
 	}
@@ -32,7 +32,7 @@ public class Room {
 		this.number = number;
 	}
 
-	@XmlElement(name="floor",namespace=B4MNamespace.URL)
+	@XmlElement(name="floor",namespace=XMLNamespace.CLEAN_UP)
 	public int getFloor() {
 		return floor;
 	}
@@ -41,7 +41,7 @@ public class Room {
 		this.floor = floor;
 	}
 
-	@XmlElement(name="category",namespace=B4MNamespace.URL)
+	@XmlElement(name="category",namespace=XMLNamespace.CLEAN_UP)
 	public Category getCategory() {
 		return category;
 	}

@@ -19,7 +19,7 @@
 				<property name="name" value="cleanUpTask" />
 				<property name="resultTypes" >
 					<list>
-						<value>com.bpel4mobile.example.hotel.middleware.model.CleanUpResponse</value>
+						<value>com.bpel4mobile.example.hotel.middleware.cleanUpTask.CleanUpResponse</value>
 					</list>
 				</property>
 			</bean>
@@ -32,7 +32,7 @@
 				<property name="name" value="verifyTask" />
 				<property name="resultTypes" >
 					<list>
-						<value>com.bpel4mobile.example.hotel.middleware.model.VerifyResponse</value>
+						<value>com.bpel4mobile.example.hotel.middleware.verifyTask.VerifyResponse</value>
 					</list>
 				</property>
 			</bean>

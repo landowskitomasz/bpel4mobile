@@ -1,21 +1,21 @@
-package com.bpel4mobile.example.hotel.middleware.model;
+package com.bpel4mobile.example.hotel.middleware.cleanUpTask;
 
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.bpel4mobile.ws.service.B4MNamespace;
+import com.bpel4mobile.example.hotel.middleware.constants.XMLNamespace;
 
 
-@XmlRootElement(name="request", namespace= B4MNamespace.URL)
+@XmlRootElement(name="request", namespace= XMLNamespace.CLEAN_UP)
 public class CleanUpRequest {
 	
 	private Date deadline;
 	 
 	private Room room;
 
-	@XmlElement(name="deadline",namespace=B4MNamespace.URL)
+	@XmlElement(name="deadline",namespace=XMLNamespace.CLEAN_UP)
 	public Date getDeadline() {
 		return deadline;
 	}
@@ -24,7 +24,7 @@ public class CleanUpRequest {
 		this.deadline = deadline;
 	}
 
-	@XmlElement(name="room", namespace=B4MNamespace.URL)
+	@XmlElement(name="room", namespace=XMLNamespace.CLEAN_UP)
 	public Room getRoom() {
 		return room;
 	}

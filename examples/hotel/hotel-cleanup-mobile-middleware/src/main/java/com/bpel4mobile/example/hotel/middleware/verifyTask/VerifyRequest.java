@@ -1,13 +1,13 @@
-package com.bpel4mobile.example.hotel.middleware.model;
+package com.bpel4mobile.example.hotel.middleware.verifyTask;
 
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.bpel4mobile.ws.service.B4MNamespace;
+import com.bpel4mobile.example.hotel.middleware.constants.XMLNamespace;
 
-@XmlRootElement(name="request", namespace= B4MNamespace.URL)
+@XmlRootElement(name="request", namespace= XMLNamespace.VERIFY)
 public class VerifyRequest {
 
 	private Date deadline;
@@ -16,7 +16,7 @@ public class VerifyRequest {
 	 
 	private Room room;
 
-	@XmlElement(name="deadline",namespace=B4MNamespace.URL)
+	@XmlElement(name="deadline",namespace=XMLNamespace.VERIFY)
 	public Date getDeadline() {
 		return deadline;
 	}
@@ -25,7 +25,7 @@ public class VerifyRequest {
 		this.deadline = deadline;
 	}
 
-	@XmlElement(name="cleanUpPerformer", namespace=B4MNamespace.URL)
+	@XmlElement(name="cleanUpPerformer", namespace=XMLNamespace.VERIFY)
 	public String getCleanUpPerformer() {
 		return cleanUpPerformer;
 	}
@@ -34,7 +34,7 @@ public class VerifyRequest {
 		this.cleanUpPerformer = cleanUpPerformer;
 	}
 	
-	@XmlElement(name="room", namespace=B4MNamespace.URL)
+	@XmlElement(name="room", namespace=XMLNamespace.VERIFY)
 	public Room getRoom() {
 		return room;
 	}

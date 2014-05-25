@@ -1,5 +1,8 @@
 package com.bpel4mobile.ws.service;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -22,6 +25,8 @@ import com.bpel4mobile.internal.service.impl.TaskResultResolverImpl;
 import com.google.common.base.Preconditions;
 
 public class TaskService implements InitializingBean {
+	
+	private static Logger logger = Logger.getLogger(TaskService.class.getName());
 	
 	private TaskServiceConfig config;
 	
@@ -48,12 +53,17 @@ public class TaskService implements InitializingBean {
 		String taskUUID = taskDispatcher.createNewTask(config.getName(), taskRequest.getCallbackUrl(), 
 				taskRequest.getRequest(), resultClazz);
 
-		Element response = prepareResponse(taskUUID);
+		Element response = prepareResponse(taskUUID, taskRequest.getNamespace());
 	
 		return response;
 	}
 
-	private Element prepareResponse(String taskUUID) {
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		Preconditions.checkState(config!=null, "Service require configuration property to be set.");
+	}
+	
+	private Element prepareResponse(String taskUUID, String namespace) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
 		try {
@@ -62,27 +72,23 @@ public class TaskService implements InitializingBean {
 			throw new IllegalStateException("Unable to create xml document builder.", e);
 		}
 		Document document = builder.newDocument();
-		Element taskResultElement = document.createElementNS(B4MNamespace.URL,"TaskResponse");
-		Element taskUUIDElement = document.createElementNS(B4MNamespace.URL, "taskUUID");
+		Element taskResultElement = document.createElementNS(namespace,"TaskResponse");
+		Element taskUUIDElement = document.createElementNS(namespace, "taskUUID");
 		
 		taskUUIDElement.setTextContent(taskUUID);
 		taskResultElement.appendChild(taskUUIDElement);
 		document.appendChild(taskResultElement);
 		return document.getDocumentElement();
 	}
-
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		Preconditions.checkState(config!=null, "Service require configuration property to be set.");
-	}
 	
 	private <T> TaskRequest<T> converToObject(Element requestData, Class<T> requestClass){
 		
 		TaskRequest<T> requestObject = new TaskRequest<T>();
 		
-		NodeList requestNode = requestData.getElementsByTagNameNS(requestData.getNamespaceURI(), "request");
+		requestObject.setNamespace(requestData.getNamespaceURI());
+		NodeList requestNode = requestData.getElementsByTagNameNS(requestObject.getNamespace(), "request");
 		Preconditions.checkArgument(requestNode != null && requestNode.getLength() > 0, "Web service request must contains 'request' element.");
-		NodeList callbackUrlNode = requestData.getElementsByTagNameNS(requestData.getNamespaceURI(), "callbackUrl");
+		NodeList callbackUrlNode = requestData.getElementsByTagNameNS(requestObject.getNamespace(), "callbackUrl");
 		Preconditions.checkArgument(callbackUrlNode != null && callbackUrlNode.getLength() > 0, "Web service request must contains 'callbackUrl' element.");
 		requestObject.setCallbackUrl(callbackUrlNode.item(0).getTextContent());
 		
@@ -94,10 +100,10 @@ public class TaskService implements InitializingBean {
 			requestObject.setRequest(request);
 		 
 		} catch (XmlMappingException e) {
-			e.printStackTrace();
+			logger.log(Level.FINEST, "Can't convert request data to given reqest type.", e);
 			throw new IllegalStateException("Can't convert request data to given reqest type.",e);
 		} catch (JAXBException e) {
-			e.printStackTrace();
+			logger.log(Level.FINEST, "Can't convert request data to given reqest type.", e);
 			throw new IllegalStateException("Can't convert request data to given reqest type.",e);
 		}
 		return requestObject;

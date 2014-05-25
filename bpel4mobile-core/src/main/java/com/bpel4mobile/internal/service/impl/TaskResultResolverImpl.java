@@ -1,6 +1,5 @@
 package com.bpel4mobile.internal.service.impl;
 
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -9,11 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
@@ -26,8 +22,6 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSSerializer;
 
 @Service
 public class TaskResultResolverImpl implements TaskResultResolver {
@@ -60,15 +54,13 @@ public class TaskResultResolverImpl implements TaskResultResolver {
 		
 		DOMResult domResult = new DOMResult();
 		taskResultMarshaller.marshal(result.getResult(), domResult);
-		domResult = wrapResultWithTaskData(domResult, result.getTaskUUID());
+		domResult = wrapResultWithTaskData(domResult, result.getTaskUUID(), taskIdentifier);
 		
 		log.info("Responding to process callback: " + result.getCallbackUrl());
 		wsTemplate.sendSourceAndReceiveToResult(result.getCallbackUrl(), new DOMSource(domResult.getNode()), new DOMResult());
 	}
 	
-
-
-	private DOMResult wrapResultWithTaskData(DOMResult domResult, String taskUUID) {
+	private DOMResult wrapResultWithTaskData(DOMResult domResult, String taskUUID, String taskIdentifier) {
 		
 		Node nodeToWrap = domResult.getNode().getFirstChild();
 		
@@ -81,7 +73,7 @@ public class TaskResultResolverImpl implements TaskResultResolver {
 			throw new IllegalStateException("Unable to create xml document builder.", e);
 		}
 		Document document = builder.newDocument();
-		Element taskResultElement = document.createElementNS(namespace,"TaskResult");
+		Element taskResultElement = document.createElementNS(namespace, taskIdentifier + "Result");
 		Element taskUUIDElement = document.createElementNS(namespace, "taskUUID");
 		Element resultElement = document.createElementNS(namespace, "result");
 		
