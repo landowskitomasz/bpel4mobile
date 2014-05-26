@@ -3,8 +3,6 @@ package com.bpel4mobile.internal.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,8 +17,10 @@ import com.bpel4mobile.internal.model.Task;
 import com.bpel4mobile.internal.model.Task.State;
 import com.bpel4mobile.internal.service.DefinitionProvider;
 import com.bpel4mobile.internal.service.QueryFactory;
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 @Service
 public class QueryFactoryImpl implements QueryFactory {
@@ -33,10 +33,12 @@ public class QueryFactoryImpl implements QueryFactory {
 		
 		Map<String, PeopleAssignments> posibbleAssigments = definitionProvider.getTaskPosibleAssignments();
 		
-		posibbleAssigments = restrictTaskByUserGroup(posibbleAssigments, userData);
-		
 		List<Criteria> findTaskCriterias = Lists.newArrayList();
 		for(String task : posibbleAssigments.keySet()){
+			if(!isUserInTaskPosibleAssigmentGroups(posibbleAssigments.get(task), userData.getGroups())){
+				continue;
+			}
+			
 			Criteria findTaskCriteria = Criteria.where(Task.NAME_FIELD).is(task).and(Task.STATE_FIELD).is(State.ready);
 			
 			Criteria posibleAssigmentCriteria = preparePossibleAssigementCriteria(posibbleAssigments.get(task), userData);
@@ -55,24 +57,39 @@ public class QueryFactoryImpl implements QueryFactory {
 		return query;
 	}
 
+	private boolean isUserInTaskPosibleAssigmentGroups(
+			final PeopleAssignments peopleAssignments, final List<UserGroupData> groups) {
+		return Iterables.find(peopleAssignments.getPotentialOwners(), new Predicate<PeopleAssignment>() {
+			@Override
+			public boolean apply(PeopleAssignment assigment) {
+				return findUserGroupData(groups, assigment.getFrom().getLogicalPeopleGroup()) != null;
+			}
+		}, null) != null;
+	}
+
+	private UserGroupData findUserGroupData(List<UserGroupData> groups,final String group){
+		return Iterables.find(groups, new Predicate<UserGroupData>() {
+			@Override
+			public boolean apply(UserGroupData groupData) {
+				return Objects.equal(groupData.getName(), group);
+			}
+		}, null);
+	}
+	
 	private Criteria preparePossibleAssigementCriteria(
 			PeopleAssignments peopleAssignments, UserData userData) {
 		List<Criteria> groupsCriteria = Lists.newArrayList();
 		for(PeopleAssignment peopleAssignment : peopleAssignments.getPotentialOwners()){
-			if(peopleAssignment.getFrom().getArguments().isEmpty()){
-				continue;
-			}
-			final String group = peopleAssignment.getFrom().getLogicalPeopleGroup();
-			UserGroupData groupData = (UserGroupData)CollectionUtils.find(userData.getGroups(), new Predicate() {
-				public boolean evaluate(Object object) {
-					return ((UserGroupData)object).getName().equals(group);
-				}
-			});
+			
+			UserGroupData groupData = findUserGroupData(userData.getGroups(), peopleAssignment.getFrom().getLogicalPeopleGroup());
 			
 			List<Criteria> groupArgumentCriteria = Lists.newArrayList();
-			for(Argument argument : peopleAssignment.getFrom().getArguments()){
-				groupArgumentCriteria.add(evaluateExpression(argument.getExpression().trim(),
-						groupData.getArguments().get(argument.getName())));
+			if(peopleAssignment.getFrom().getArguments().isEmpty()){
+				
+				for(Argument argument : peopleAssignment.getFrom().getArguments()){
+					groupArgumentCriteria.add(evaluateExpression(argument.getExpression().trim(),
+							groupData.getArguments().get(argument.getName())));
+				}
 			}
 			if(!groupArgumentCriteria.isEmpty()){
 				groupsCriteria.add(concatWithAndOperator(groupArgumentCriteria));
@@ -107,28 +124,6 @@ public class QueryFactoryImpl implements QueryFactory {
 		}
 		
 		return criteria;
-	}
-
-	private Map<String, PeopleAssignments> restrictTaskByUserGroup(
-			Map<String, PeopleAssignments> posibbleAssigments, UserData userData) {
-		Map<String, PeopleAssignments> result = Maps.newHashMap();
-		
-		for(String task : posibbleAssigments.keySet()){
-			PeopleAssignments peopleAssignments = posibbleAssigments.get(task);
-			
-			for(final PeopleAssignment peopleAssignment : peopleAssignments.getPotentialOwners()){
-				Object any = CollectionUtils.find(userData.getGroups(), new Predicate() {
-					public boolean evaluate(Object object) {
-						return ((UserGroupData)object).getName().equals(peopleAssignment.getFrom().getLogicalPeopleGroup());
-					}
-				});
-				if(any != null){
-					result.put(task, peopleAssignments);
-					continue;
-				}
-			}
-		}
-		return result;
 	}
 
 	@Override

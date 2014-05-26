@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://bpel4mobile.com/schemas" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://bpel4mobile.com/schemas" targetNamespace="http://bpel4mobile.com/schemas">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://bpel4mobile.com/schemas/example/verifyService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://bpel4mobile.com/schemas/example/verifyService" targetNamespace="http://bpel4mobile.com/schemas/example/verifyService">
   <wsdl:types>
-    <xs:schema xmlns:b4m="http://bpel4mobile.com/schemas" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bpel4mobile.com/schemas">
+    <xs:schema xmlns:b4m="http://bpel4mobile.com/schemas/example/verifyService" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://bpel4mobile.com/schemas/example/verifyService">
 	    <xs:element name="VerifyTaskRequest">
 		    <xs:complexType>
 			    <xs:sequence>

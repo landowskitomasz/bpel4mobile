@@ -22,7 +22,11 @@ public class UserDataProviderImpl extends AbstractUserDataProvider {
 		UserGroupData userGroupData = new UserGroupData();
 		userGroupData.setName("cleaningLadies");
 		userGroupData.getArguments().put("correspondingFloor", 1);
+		
+		UserGroupData supervisorGroup = new UserGroupData();
+		supervisorGroup.setName("supervisors");
 		user.getGroups().add(userGroupData);
+		user.getGroups().add(supervisorGroup);
 		return user;
 	}
 

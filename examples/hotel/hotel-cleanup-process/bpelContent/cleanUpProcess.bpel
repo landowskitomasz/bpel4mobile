@@ -6,9 +6,11 @@
          suppressJoinFailure="yes"
          xmlns:tns="http://bpel4mobile.com/example/hotel/schemas"
          xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
-         xmlns:ns="http://bpel4mobile.com/schemas" xmlns:ns1="http://www.w3.org/2001/XMLSchema">
+         xmlns:ns="http://bpel4mobile.com/schemas" xmlns:ns1="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns2="http://bpel4mobile.com/schemas/example/verifyService">
     <!-- Import the client WSDL -->
-    <bpel:import namespace="http://bpel4mobile.com/schemas" location="cleanUpService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"></bpel:import>
+    <bpel:import namespace="http://bpel4mobile.com/schemas" location="cleanUpService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/">
+    </bpel:import>
     <bpel:import location="cleanUpProcessArtifacts.wsdl" namespace="http://bpel4mobile.com/example/hotel/schemas" 
 	        importType="http://schemas.xmlsoap.org/wsdl/" />
 	        
@@ -48,8 +50,13 @@
         <bpel:variable name="cleanUpServicePLResponse" messageType="ns:TaskResponse"></bpel:variable>
         <bpel:variable name="cleanUpServicePLRequest" messageType="ns:CleanUpTaskRequest"></bpel:variable>
         <bpel:variable name="clientRequest" messageType="tns:cleanUpTaskCallbackRequest"></bpel:variable>
-        <bpel:variable name="verifyTaskPLRequest" messageType="ns:VerifyTaskRequest"></bpel:variable>
-        <bpel:variable name="verifyTaskPLResponse" messageType="ns:TaskResponse"></bpel:variable>
+        
+        
+        
+        
+        <bpel:variable name="verifyTaskPLResponse1" messageType="ns2:TaskResponse"></bpel:variable>
+        <bpel:variable name="verifyTaskPLRequest1" messageType="ns2:VerifyTaskRequest"></bpel:variable>
+        <bpel:variable name="clientRequest1" messageType="tns:verifyTaskCallbackRequest"></bpel:variable>
     </bpel:variables>
 
     <!-- ================================================================= -->         
@@ -59,6 +66,7 @@
     <!-- ================================================================= -->         
     <bpel:correlationSets>
         <bpel:correlationSet name="cleanUpTask" properties="tns:taskUUID"></bpel:correlationSet>
+        <bpel:correlationSet name="verifyTask" properties="tns:verifyTaskUUID"></bpel:correlationSet>
     </bpel:correlationSets>
     <bpel:sequence name="main"><!-- Receive input from requestor. 
              Note: This maps to operation defined in cleanUpProcess.wsdl 
@@ -158,41 +166,46 @@
             </bpel:correlations>
         </bpel:receive>
         <bpel:assign validate="no" name="prepareVerifyTaskRequest">
+            
             <bpel:copy>
-                <bpel:from><bpel:literal><tns:VerifyTaskRequest xmlns:tns="http://bpel4mobile.com/schemas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-					  <tns:callbackUrl>tns:callbackUrl</tns:callbackUrl>
-					  <tns:request>
-					    <tns:deadline>2001-12-31T12:00:00</tns:deadline>
-					    <tns:cleanUpPerformer>tns:cleanUpPerformer</tns:cleanUpPerformer>
-					    <tns:room>
-					      <tns:id>0</tns:id>
-					      <tns:number>0</tns:number>
-					      <tns:floor>0</tns:floor>
-					      <tns:category>
-					        <tns:name>tns:name</tns:name>
-					        <tns:standard>0</tns:standard>
-					      </tns:category>
-					    </tns:room>
-					  </tns:request>
-					</tns:VerifyTaskRequest>
-					</bpel:literal></bpel:from>
-                <bpel:to variable="verifyTaskPLRequest" part="VerifyTaskRequest"></bpel:to>
+                <bpel:from><bpel:literal><tns:VerifyTaskRequest xmlns:tns="http://bpel4mobile.com/schemas/example/verifyService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <tns:callbackUrl>tns:callbackUrl</tns:callbackUrl>
+  <tns:request>
+    <tns:deadline>2001-12-31T12:00:00</tns:deadline>
+    <tns:cleanUpPerformer>tns:cleanUpPerformer</tns:cleanUpPerformer>
+    <tns:room>
+      <tns:id>0</tns:id>
+      <tns:number>0</tns:number>
+      <tns:floor>0</tns:floor>
+      <tns:category>
+        <tns:name>tns:name</tns:name>
+        <tns:standard>0</tns:standard>
+      </tns:category>
+    </tns:room>
+  </tns:request>
+</tns:VerifyTaskRequest>
+</bpel:literal></bpel:from>
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1"></bpel:to>
             </bpel:copy>
             <bpel:copy>
                 <bpel:from part="payload" variable="input">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:deadline]]></bpel:query>
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[tns:deadline]]>
+                    </bpel:query>
                 </bpel:from>
-                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[ns:request/ns:deadline]]></bpel:query>
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[ns2:request/ns2:deadline]]>
+                    </bpel:query>
                 </bpel:to>
             </bpel:copy>
             <bpel:copy>
                 <bpel:from part="payload" variable="input">
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:room/tns:id]]></bpel:query>
                 </bpel:from>
-                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1">
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
-                        <![CDATA[ns:request/ns:room/ns:id]]>
+                        <![CDATA[ns2:request/ns2:room/ns2:id]]>
                     </bpel:query>
                 </bpel:to>
             </bpel:copy>
@@ -200,44 +213,67 @@
                 <bpel:from part="payload" variable="input">
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:room/tns:number]]></bpel:query>
                 </bpel:from>
-                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[ns:request/ns:room/ns:number]]></bpel:query>
-                </bpel:to>
-            </bpel:copy>
-            <bpel:copy>
-                <bpel:from part="payload" variable="input">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:room/tns:floor]]></bpel:query>
-                </bpel:from>
-                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[ns:request/ns:room/ns:floor]]></bpel:query>
-                </bpel:to>
-            </bpel:copy>
-            <bpel:copy>
-                <bpel:from part="payload" variable="input">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:room/tns:category/tns:name]]></bpel:query>
-                </bpel:from>
-                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[ns:request/ns:room/ns:category/ns:name]]></bpel:query>
-                </bpel:to>
-            </bpel:copy>
-            <bpel:copy>
-                <bpel:from part="payload" variable="input">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:room/tns:category/tns:standard]]></bpel:query>
-                </bpel:from>
-                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
-                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[ns:request/ns:room/ns:category/ns:standard]]></bpel:query>
-                </bpel:to>
-            </bpel:copy>
-             <bpel:copy>
-                <bpel:from partnerLink="client" endpointReference="myRole"></bpel:from>
-                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest">
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1">
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
-                        <![CDATA[ns:callbackUrl]]>
+                        <![CDATA[ns2:request/ns2:room/ns2:number]]>
+                    </bpel:query>
+                </bpel:to>
+            </bpel:copy>
+            <bpel:copy>
+                <bpel:from part="payload" variable="input">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[tns:room/tns:floor]]>
+                    </bpel:query>
+                </bpel:from>
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[ns2:request/ns2:room/ns2:floor]]>
+                    </bpel:query>
+                </bpel:to>
+            </bpel:copy>
+            <bpel:copy>
+                <bpel:from part="payload" variable="input">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[tns:room/tns:category/tns:name]]>
+                    </bpel:query>
+                </bpel:from>
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[ns2:request/ns2:room/ns2:category/ns2:name]]>
+                    </bpel:query>
+                </bpel:to>
+            </bpel:copy>
+            <bpel:copy>
+                <bpel:from part="payload" variable="input">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[tns:room/tns:category/tns:standard]]>
+                    </bpel:query>
+                </bpel:from>
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[ns2:request/ns2:room/ns2:category/ns2:standard]]>
+                    </bpel:query>
+                </bpel:to>
+            </bpel:copy>
+            <bpel:copy>
+                <bpel:from partnerLink="client" endpointReference="myRole"></bpel:from>
+                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1">
+                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+                        <![CDATA[ns2:callbackUrl]]>
                     </bpel:query>
                 </bpel:to>
             </bpel:copy>
         </bpel:assign>
-        <bpel:invoke name="createVerifyTask" partnerLink="verifyTaskPL" operation="VerifyTask" portType="ns:verifyServicePort" inputVariable="verifyTaskPLRequest" outputVariable="verifyTaskPLResponse"></bpel:invoke>
+        <bpel:invoke name="createVerifyTask" partnerLink="verifyTaskPL" operation="VerifyTask" portType="ns2:verifyServicePort" inputVariable="verifyTaskPLRequest1" outputVariable="verifyTaskPLResponse1">
+            <bpel:correlations>
+                <bpel:correlation set="verifyTask" initiate="yes" pattern="response"></bpel:correlation>
+            </bpel:correlations>
+        </bpel:invoke>
+        <bpel:receive name="recieveVerifyTaskResult" partnerLink="client" operation="verifyTaskCallback" portType="tns:cleanUpProcess" variable="clientRequest1">
+            <bpel:correlations>
+                <bpel:correlation set="verifyTask" initiate="no"></bpel:correlation>
+            </bpel:correlations>
+        </bpel:receive>
         <bpel:assign validate="no" name="Assign">
             <bpel:copy>
                 <bpel:from><bpel:literal><tns:cleanUpResponse xmlns:tns="http://bpel4mobile.com/example/hotel/schemas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -265,6 +301,7 @@
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:status]]></bpel:query>
                 </bpel:to>
             </bpel:copy>
+            
         </bpel:assign>
         <bpel:invoke name="callbackClient" partnerLink="client" portType="tns:cleanUpProcessCallback" operation="onResult" inputVariable="output" />
     

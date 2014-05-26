@@ -22,7 +22,7 @@
 	<sws:dynamic-wsdl id="verifyService"                                                    
 	    portTypeName="verifyServicePort"                                                        
 	    locationUri="http://localhost:8282/hotel-cleanup-mobile-middleware/ws/verifyService"                                                       
-	    targetNamespace="http://bpel4mobile.com/schemas">                               
+	    targetNamespace="http://bpel4mobile.com/schemas/example/verifyService">                               
 	  <sws:xsd location="/WEB-INF/schema/verify-request.xsd"/>                                                  
 	</sws:dynamic-wsdl>
 </beans>
