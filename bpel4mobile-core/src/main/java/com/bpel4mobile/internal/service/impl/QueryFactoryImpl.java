@@ -128,7 +128,7 @@ public class QueryFactoryImpl implements QueryFactory {
 
 	@Override
 	public Query tasksInProgresByUserQuery(UserData userData) {
-		Query query = new Query(Criteria.where(Task.ASSIGNEEE_FIELD).is(userData.getUsername()).and(Task.STATE_FIELD).is(State.climed));
+		Query query = new Query(Criteria.where(Task.ASSIGNEE_FIELD).is(userData.getUsername()).and(Task.STATE_FIELD).is(State.climed));
 		excludeSystemFields(query);
 		return query;
 	}

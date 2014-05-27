@@ -5,6 +5,8 @@ public class TaskResult<T> {
 	private String callbackUrl;
 	
 	private String taskUUID;
+
+    private String resolver;
 	
 	private T result;
 
@@ -31,5 +33,12 @@ public class TaskResult<T> {
 	public void setCallbackUrl(String callbackUrl) {
 		this.callbackUrl = callbackUrl;
 	}
-	
+
+    public String getResolver() {
+        return resolver;
+    }
+
+    public void setResolver(String resolver) {
+        this.resolver = resolver;
+    }
 }

@@ -5,12 +5,12 @@
     <artifactId>hotel-management-system</artifactId>
     <packaging>war</packaging>
     <version>0.1.0.BUILD-SNAPSHOT</version>
-    <name>hotel</name>
+    <name>BPEL 4 MOBILE :: EXAMPLE :: HOTEL :: MANAGEMENT</name>
     <properties>
         <aspectj.version>1.7.0.RC1</aspectj.version>
         <java.version>1.6</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <roo.version>1.2.2.RELEASE</roo.version>
+        <roo.version>1.2.5.RELEASE</roo.version>
         <slf4j.version>1.6.4</slf4j.version>
         <spring.version>3.1.1.RELEASE</spring.version>
     </properties>
@@ -157,17 +157,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.2.0.Final</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-impl</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>4.3.1.Final</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -202,7 +192,7 @@
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.3</version>
+            <version>1.4</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -290,7 +280,27 @@
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901.jdbc3</version>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-core</artifactId>
+            <version>3.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-rdbms</artifactId>
+            <version>3.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-api-jpa</artifactId>
+            <version>3.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.1.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
@@ -299,28 +309,13 @@
         </dependency>
         <dependency>
             <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-core</artifactId>
-            <version>3.0.10</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-rdbms</artifactId>
-            <version>3.0.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-api-jpa</artifactId>
-            <version>3.0.9</version>
+            <artifactId>datanucleus-api-jdo</artifactId>
+            <version>3.1.3</version>
         </dependency>
         <dependency>
             <groupId>javax.jdo</groupId>
             <artifactId>jdo-api</artifactId>
             <version>3.0</version>
-        </dependency>
-    <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>1.1.0.RELEASE</version>
         </dependency>
     </dependencies>
     <build>
@@ -462,14 +457,14 @@
                 <version>8.1.4.v20120524</version>
                 <configuration>
                     <webAppConfig>
-                        <contextPath>/${project.name}</contextPath>
+                        <contextPath>/hotel</contextPath>
                     </webAppConfig>
                 </configuration>
             </plugin>
         <plugin>
                 <groupId>org.datanucleus</groupId>
                 <artifactId>maven-datanucleus-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.1.3</version>
                 <configuration>
                         <fork>false</fork>
                         <log4jConfiguration>${basedir}/src/main/resources/log4j.properties</log4jConfiguration>
@@ -490,12 +485,12 @@
                     <dependency>
                         <groupId>org.datanucleus</groupId>
                         <artifactId>datanucleus-core</artifactId>
-                        <version>3.0.10</version>
+                        <version>3.1.3</version>
                     </dependency>
                     <dependency>
                         <groupId>org.datanucleus</groupId>
                         <artifactId>datanucleus-api-jpa</artifactId>
-                        <version>3.0.9</version>
+                        <version>3.1.3</version>
                     </dependency>
                 </dependencies>
             </plugin>

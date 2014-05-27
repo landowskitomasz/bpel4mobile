@@ -14,6 +14,8 @@ privileged aspect Room_Roo_Jpa_ActiveRecord {
     @PersistenceContext
     transient EntityManager Room.entityManager;
     
+    public static final List<String> Room.fieldNames4OrderClauseFilter = java.util.Arrays.asList("number", "floor", "category", "state");
+    
     public static final EntityManager Room.entityManager() {
         EntityManager em = new Room().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
@@ -28,6 +30,17 @@ privileged aspect Room_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT o FROM Room o", Room.class).getResultList();
     }
     
+    public static List<Room> Room.findAllRooms(String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Room o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, Room.class).getResultList();
+    }
+    
     public static Room Room.findRoom(Long id) {
         if (id == null) return null;
         return entityManager().find(Room.class, id);
@@ -35,6 +48,17 @@ privileged aspect Room_Roo_Jpa_ActiveRecord {
     
     public static List<Room> Room.findRoomEntries(int firstResult, int maxResults) {
         return entityManager().createQuery("SELECT o FROM Room o", Room.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    }
+    
+    public static List<Room> Room.findRoomEntries(int firstResult, int maxResults, String sortFieldName, String sortOrder) {
+        String jpaQuery = "SELECT o FROM Room o";
+        if (fieldNames4OrderClauseFilter.contains(sortFieldName)) {
+            jpaQuery = jpaQuery + " ORDER BY " + sortFieldName;
+            if ("ASC".equalsIgnoreCase(sortOrder) || "DESC".equalsIgnoreCase(sortOrder)) {
+                jpaQuery = jpaQuery + " " + sortOrder;
+            }
+        }
+        return entityManager().createQuery(jpaQuery, Room.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
     @Transactional

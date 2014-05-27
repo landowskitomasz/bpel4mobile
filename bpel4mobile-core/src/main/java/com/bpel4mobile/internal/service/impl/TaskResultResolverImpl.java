@@ -54,13 +54,13 @@ public class TaskResultResolverImpl implements TaskResultResolver {
 		
 		DOMResult domResult = new DOMResult();
 		taskResultMarshaller.marshal(result.getResult(), domResult);
-		domResult = wrapResultWithTaskData(domResult, result.getTaskUUID(), taskIdentifier);
+		domResult = wrapResultWithTaskData(domResult, result.getTaskUUID(), result.getResolver(), taskIdentifier);
 		
 		log.info("Responding to process callback: " + result.getCallbackUrl());
 		wsTemplate.sendSourceAndReceiveToResult(result.getCallbackUrl(), new DOMSource(domResult.getNode()), new DOMResult());
 	}
 	
-	private DOMResult wrapResultWithTaskData(DOMResult domResult, String taskUUID, String taskIdentifier) {
+	private DOMResult wrapResultWithTaskData(DOMResult domResult, String taskUUID, String resolver, String taskIdentifier) {
 		
 		Node nodeToWrap = domResult.getNode().getFirstChild();
 		
@@ -75,12 +75,15 @@ public class TaskResultResolverImpl implements TaskResultResolver {
 		Document document = builder.newDocument();
 		Element taskResultElement = document.createElementNS(namespace, taskIdentifier + "Result");
 		Element taskUUIDElement = document.createElementNS(namespace, "taskUUID");
+        Element taskResolverElement = document.createElementNS(namespace, "resolver");
+        taskResolverElement.setTextContent(resolver);
 		Element resultElement = document.createElementNS(namespace, "result");
 		
 		taskUUIDElement.setTextContent(taskUUID);
 		for(int i = 0; i< nodeToWrap.getChildNodes().getLength() ; ++i){
 			resultElement.appendChild(document.importNode(nodeToWrap.getChildNodes().item(i), true));
 		}
+        taskResolverElement.appendChild(taskResolverElement);
 		taskResultElement.appendChild(taskUUIDElement);
 		taskResultElement.appendChild(resultElement);
 		document.appendChild(taskResultElement);

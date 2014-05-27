@@ -91,7 +91,7 @@ public class MobileRequestDispatcherImpl implements MobileRequestDispatcher{
 		Preconditions.checkState(userData.getUsername().equals(task.getAssignee()), "Task is not assigned to you.");
 		// TODO: check if user still has access
 		
-		taskResultResolver.resolveTask(taskName, wrappResultByTaskData((Task<?, Object>)task, result, task.getResult().getClass()));
+		taskResultResolver.resolveTask(taskName, wrapResultByTaskData((Task<?, Object>) task, result, task.getResult().getClass()));
 		
 		task.setCompleteDate(new Date());
 		task.setState(State.completed);
@@ -100,7 +100,7 @@ public class MobileRequestDispatcherImpl implements MobileRequestDispatcher{
 		return true;
 	}
 	
-	private <R> TaskResult<R> wrappResultByTaskData(Task<?, Object> task, String result, Class<R> resultClass){
+	private <R> TaskResult<R> wrapResultByTaskData(Task<?, Object> task, String result, Class<R> resultClass){
 		TaskResult<R> taskResult = new TaskResult<R>();
 		try {
 			taskResult.setResult(mapper.readValue(result, resultClass));
@@ -109,6 +109,7 @@ public class MobileRequestDispatcherImpl implements MobileRequestDispatcher{
 		}
 		taskResult.setCallbackUrl(task.getCallbackUrl());
 		taskResult.setTaskUUID(task.getUuid());
+        taskResult.setResolver(task.getAssignee());
 		Object resultObject = taskResult.getResult();
 		task.setResult(resultObject);
 		return taskResult;

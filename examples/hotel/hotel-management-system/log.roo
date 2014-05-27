@@ -50,3 +50,18 @@ repository jpa --entity ~.entity.Category --interface ~.repository.CategoryRepos
 repository jpa --entity ~.entity.RoomReservation --interface ~.repository.roomReservationRepository
 quit
 // Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2014-05-08 23:04:04
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-05-25 13:14:10
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-05-25 13:14:30
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-05-25 13:17:27
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-05-25 13:18:11
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-05-25 13:24:23
+jpa setup --provider HIBERNATE --database POSTGRES --userName postgres --password postgres123 --databaseName hotel
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-05-25 13:24:48
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-05-25 13:33:15
+jpa setup --database POSTGRES --userName postgres --password postgres123 --databaseName hotel --provider HIBERNATE 
+jpa setup --database POSTGRES --userName postgres --password postgres123 --databaseName hotel --provider DATANUCLEUS
+exit
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-05-25 13:33:52

@@ -20,7 +20,7 @@ public class Task <T, R> {
 
 	public static final String STATE_FIELD = "state";
 
-	public static final String ASSIGNEEE_FIELD = "assignee";
+	public static final String ASSIGNEE_FIELD = "assignee";
 
 	private String name;
 	

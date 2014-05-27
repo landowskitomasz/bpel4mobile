@@ -3,9 +3,9 @@
 
 package com.bpel4mobile.example.hotel.web;
 
-import com.bpel4mobile.example.hotel.entity.Category;
 import com.bpel4mobile.example.hotel.entity.Room;
 import com.bpel4mobile.example.hotel.entity.RoomState;
+import com.bpel4mobile.example.hotel.repository.CategoryRepository;
 import com.bpel4mobile.example.hotel.service.RoomService;
 import com.bpel4mobile.example.hotel.web.RoomController;
 import java.io.UnsupportedEncodingException;
@@ -26,6 +26,9 @@ privileged aspect RoomController_Roo_Controller {
     
     @Autowired
     RoomService RoomController.roomService;
+    
+    @Autowired
+    CategoryRepository RoomController.categoryRepository;
     
     @RequestMapping(method = RequestMethod.POST, produces = "text/html")
     public String RoomController.create(@Valid Room room, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
@@ -52,15 +55,15 @@ privileged aspect RoomController_Roo_Controller {
     }
     
     @RequestMapping(produces = "text/html")
-    public String RoomController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+    public String RoomController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, @RequestParam(value = "sortFieldName", required = false) String sortFieldName, @RequestParam(value = "sortOrder", required = false) String sortOrder, Model uiModel) {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("rooms", roomService.findRoomEntries(firstResult, sizeNo));
+            uiModel.addAttribute("rooms", Room.findRoomEntries(firstResult, sizeNo, sortFieldName, sortOrder));
             float nrOfPages = (float) roomService.countAllRooms() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("rooms", roomService.findAllRooms());
+            uiModel.addAttribute("rooms", Room.findAllRooms(sortFieldName, sortOrder));
         }
         return "rooms/list";
     }
@@ -94,7 +97,7 @@ privileged aspect RoomController_Roo_Controller {
     
     void RoomController.populateEditForm(Model uiModel, Room room) {
         uiModel.addAttribute("room", room);
-        uiModel.addAttribute("categorys", Category.findAllCategorys());
+        uiModel.addAttribute("categorys", categoryRepository.findAll());
         uiModel.addAttribute("roomstates", Arrays.asList(RoomState.values()));
     }
     

@@ -49,15 +49,15 @@ privileged aspect CategoryController_Roo_Controller {
     }
     
     @RequestMapping(produces = "text/html")
-    public String CategoryController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model uiModel) {
+    public String CategoryController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, @RequestParam(value = "sortFieldName", required = false) String sortFieldName, @RequestParam(value = "sortOrder", required = false) String sortOrder, Model uiModel) {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
             final int firstResult = page == null ? 0 : (page.intValue() - 1) * sizeNo;
-            uiModel.addAttribute("categorys", categoryRepository.findAll(new org.springframework.data.domain.PageRequest(firstResult / sizeNo, sizeNo)).getContent());
+            uiModel.addAttribute("categorys", Category.findCategoryEntries(firstResult, sizeNo, sortFieldName, sortOrder));
             float nrOfPages = (float) categoryRepository.count() / sizeNo;
             uiModel.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            uiModel.addAttribute("categorys", categoryRepository.findAll());
+            uiModel.addAttribute("categorys", Category.findAllCategorys(sortFieldName, sortOrder));
         }
         return "categorys/list";
     }
