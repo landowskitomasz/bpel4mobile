@@ -57,6 +57,7 @@
         <bpel:variable name="verifyTaskPLResponse1" messageType="ns2:TaskResponse"></bpel:variable>
         <bpel:variable name="verifyTaskPLRequest1" messageType="ns2:VerifyTaskRequest"></bpel:variable>
         <bpel:variable name="clientRequest1" messageType="tns:verifyTaskCallbackRequest"></bpel:variable>
+        <bpel:variable name="verificationStatus" type="ns1:string"></bpel:variable>
     </bpel:variables>
 
     <!-- ================================================================= -->         
@@ -67,17 +68,19 @@
     <bpel:correlationSets>
         <bpel:correlationSet name="cleanUpTask" properties="tns:taskUUID"></bpel:correlationSet>
         <bpel:correlationSet name="verifyTask" properties="tns:verifyTaskUUID"></bpel:correlationSet>
-    </bpel:correlationSets>
-    <bpel:sequence name="main"><!-- Receive input from requestor. 
+    </bpel:correlationSets>
+    <bpel:sequence name="main">
+        <!-- Receive input from requestor. 
              Note: This maps to operation defined in cleanUpProcess.wsdl 
-             -->
-        <bpel:receive name="receiveInput" partnerLink="client" portType="tns:cleanUpProcess" operation="initiate" variable="input" createInstance="yes" />
+             --><bpel:receive name="receiveInput" partnerLink="client" portType="tns:cleanUpProcess" operation="initiate" variable="input" createInstance="yes" />
         
         <!-- Asynchronous callback to the requester.
              Note: the callback location and correlation id is transparently handled 
              using WS-addressing.
              -->
-        <bpel:assign validate="no" name="prepareCleanUpTaskRequest">
+        <bpel:repeatUntil name="RepeatUntil">
+            <bpel:sequence>
+                <bpel:assign validate="no" name="prepareCleanUpTaskRequest">
             <bpel:copy>
                 <bpel:from><bpel:literal><tns:CleanUpTaskRequest xmlns:tns="http://bpel4mobile.com/schemas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 					  <tns:callbackUrl>tns:callbackUrl</tns:callbackUrl>
@@ -154,20 +157,19 @@
                 </bpel:to>
             </bpel:copy>
         </bpel:assign>
-        <bpel:invoke name="createCleanUpTask" partnerLink="cleanUpServicePL" operation="CleanUpTask" portType="ns:cleanUpServicePort" inputVariable="cleanUpServicePLRequest" outputVariable="cleanUpServicePLResponse">
+                <bpel:invoke name="createCleanUpTask" partnerLink="cleanUpServicePL" operation="CleanUpTask" portType="ns:cleanUpServicePort" inputVariable="cleanUpServicePLRequest" outputVariable="cleanUpServicePLResponse">
+                <bpel:correlations>
+	                <bpel:correlation set="cleanUpTask" initiate="join" pattern="response"></bpel:correlation>
+	            </bpel:correlations>
+        
+                </bpel:invoke>
+                <bpel:receive name="recieveCleanUpTaskResult" partnerLink="client" operation="cleanUpTaskCallback" portType="tns:cleanUpProcess" variable="clientRequest">
             <bpel:correlations>
-                <bpel:correlation set="cleanUpTask" initiate="yes" pattern="response"></bpel:correlation>
+                <bpel:correlation set="cleanUpTask" initiate="no"></bpel:correlation>    
             </bpel:correlations>
-        </bpel:invoke>
-        <bpel:receive name="recieveCleanUpTaskResult" partnerLink="client" operation="cleanUpTaskCallback" portType="tns:cleanUpProcess" variable="clientRequest">
-            <bpel:correlations>
-                <bpel:correlation set="cleanUpTask" initiate="no"></bpel:correlation>
-                
-            </bpel:correlations>
-        </bpel:receive>
-        <bpel:assign validate="no" name="prepareVerifyTaskRequest">
-            
-            <bpel:copy>
+        
+                </bpel:receive>
+                <bpel:assign validate="no" name="prepareVerifyTaskRequest"><bpel:copy>
                 <bpel:from><bpel:literal><tns:VerifyTaskRequest xmlns:tns="http://bpel4mobile.com/schemas/example/verifyService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <tns:callbackUrl>tns:callbackUrl</tns:callbackUrl>
   <tns:request>
@@ -199,6 +201,17 @@
                     </bpel:query>
                 </bpel:to>
             </bpel:copy>
+            
+                <bpel:copy>
+	                <bpel:from part="parameters" variable="clientRequest">
+	                    <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:resolver]]></bpel:query>
+	                </bpel:from>
+	                <bpel:to part="VerifyTaskRequest" variable="verifyTaskPLRequest1">
+		                <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">
+		                        <![CDATA[ns2:request/ns2:cleanUpPerformer]]>
+	                    </bpel:query>
+	                </bpel:to>
+	            </bpel:copy>
             <bpel:copy>
                 <bpel:from part="payload" variable="input">
                     <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:room/tns:id]]></bpel:query>
@@ -263,18 +276,37 @@
                     </bpel:query>
                 </bpel:to>
             </bpel:copy>
-        </bpel:assign>
-        <bpel:invoke name="createVerifyTask" partnerLink="verifyTaskPL" operation="VerifyTask" portType="ns2:verifyServicePort" inputVariable="verifyTaskPLRequest1" outputVariable="verifyTaskPLResponse1">
-            <bpel:correlations>
-                <bpel:correlation set="verifyTask" initiate="yes" pattern="response"></bpel:correlation>
+        
+                </bpel:assign>
+                <bpel:invoke name="createVerifyTask" partnerLink="verifyTaskPL" operation="VerifyTask" portType="ns2:verifyServicePort" inputVariable="verifyTaskPLRequest1" outputVariable="verifyTaskPLResponse1"><bpel:correlations>
+                <bpel:correlation set="verifyTask" initiate="join" pattern="response"></bpel:correlation>
             </bpel:correlations>
-        </bpel:invoke>
-        <bpel:receive name="recieveVerifyTaskResult" partnerLink="client" operation="verifyTaskCallback" portType="tns:cleanUpProcess" variable="clientRequest1">
-            <bpel:correlations>
+        
+                </bpel:invoke>
+                <bpel:receive name="recieveVerifyTaskResult" partnerLink="client" operation="verifyTaskCallback" portType="tns:cleanUpProcess" variable="clientRequest1"><bpel:correlations>
                 <bpel:correlation set="verifyTask" initiate="no"></bpel:correlation>
             </bpel:correlations>
-        </bpel:receive>
-        <bpel:assign validate="no" name="Assign">
+        
+                </bpel:receive>
+                <bpel:assign validate="no" name="retrievVerificationStatus">
+                    <bpel:copy>
+                        <bpel:from part="parameters" variable="clientRequest1">
+                            <bpel:query queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[tns:result/tns:status]]></bpel:query>
+                        </bpel:from>
+                        <bpel:to variable="verificationStatus"></bpel:to>
+                    </bpel:copy>
+                    
+                </bpel:assign>
+            </bpel:sequence>
+            <bpel:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[$verificationStatus = 'success']]></bpel:condition>
+        </bpel:repeatUntil>
+        
+        
+        
+        
+        
+        
+        <bpel:assign validate="no" name="prepareResponse">
             <bpel:copy>
                 <bpel:from><bpel:literal><tns:cleanUpResponse xmlns:tns="http://bpel4mobile.com/example/hotel/schemas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <tns:status>tns:status</tns:status>
@@ -304,6 +336,7 @@
             
         </bpel:assign>
         <bpel:invoke name="callbackClient" partnerLink="client" portType="tns:cleanUpProcessCallback" operation="onResult" inputVariable="output" />
+    
     
     </bpel:sequence>
 </bpel:process>

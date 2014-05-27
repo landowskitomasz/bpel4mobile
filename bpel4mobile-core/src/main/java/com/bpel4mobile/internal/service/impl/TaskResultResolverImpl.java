@@ -83,7 +83,7 @@ public class TaskResultResolverImpl implements TaskResultResolver {
 		for(int i = 0; i< nodeToWrap.getChildNodes().getLength() ; ++i){
 			resultElement.appendChild(document.importNode(nodeToWrap.getChildNodes().item(i), true));
 		}
-        taskResolverElement.appendChild(taskResolverElement);
+		taskResultElement.appendChild(taskResolverElement);
 		taskResultElement.appendChild(taskUUIDElement);
 		taskResultElement.appendChild(resultElement);
 		document.appendChild(taskResultElement);
