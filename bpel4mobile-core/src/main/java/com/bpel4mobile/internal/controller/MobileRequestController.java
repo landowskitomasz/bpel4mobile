@@ -9,6 +9,8 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bpel4mobile.internal.bean.UserData;
-import com.bpel4mobile.internal.bean.UserGroupData;
 import com.bpel4mobile.internal.service.MobileRequestDispatcher;
 import com.bpel4mobile.internal.service.UserDataProvider;
 
@@ -39,7 +40,7 @@ public class MobileRequestController {
 		mapper.setSerializationInclusion(Inclusion.NON_NULL);
 	}
 	
-	private UserData getTestUserData(){
+	private UserData getUserData(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
 		String password = (String) auth.getCredentials();
@@ -51,7 +52,7 @@ public class MobileRequestController {
 	@ResponseBody
 	public String getTaskForUser() throws JsonGenerationException, JsonMappingException, IOException{
 		
-		UserData user = getTestUserData();
+		UserData user = getUserData();
 		
 		return mapper.writeValueAsString(mobileRequestDispatcher.findUserTasks(user));
 	}
@@ -68,7 +69,7 @@ public class MobileRequestController {
 			throw new IllegalArgumentException(e);
 		}
 		
-		UserData user = getTestUserData();
+		UserData user = getUserData();
 		
 		mobileRequestDispatcher.clime(request.getTaskName(), request.getTaskUUID(), user);
 	}
@@ -84,7 +85,7 @@ public class MobileRequestController {
 			throw new IllegalArgumentException(e);
 		}
 		
-		UserData user = getTestUserData();
+		UserData user = getUserData();
 		
 		mobileRequestDispatcher.release(request.getTaskName(), request.getTaskUUID(), user);
 	}
@@ -99,10 +100,16 @@ public class MobileRequestController {
 		} catch (Exception e) {
 			throw new IllegalArgumentException(e);
 		}
-		
-		UserData user = getTestUserData();
+
+		UserData user = getUserData();
 		
 		mobileRequestDispatcher.resolve(request.getTaskName(), request.getTaskUUID(), request.getResult(), user);
 	}
+
+    @RequestMapping(value="authenticate", method=RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Void> authenticate() {
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 	
 }
