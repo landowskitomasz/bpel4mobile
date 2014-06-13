@@ -59,17 +59,8 @@
         <bpel:variable name="clientRequest1" messageType="tns:verifyTaskCallbackRequest"></bpel:variable>
         <bpel:variable name="verificationStatus" type="ns1:string"></bpel:variable>
     </bpel:variables>
-
-    <!-- ================================================================= -->         
-    <!-- ORCHESTRATION LOGIC                                               -->
-    <!-- Set of activities coordinating the flow of messages across the    -->
-    <!-- services integrated within this business process                  -->
-    <!-- ================================================================= -->         
-    <bpel:correlationSets>
-        <bpel:correlationSet name="cleanUpTask" properties="tns:taskUUID"></bpel:correlationSet>
-        <bpel:correlationSet name="verifyTask" properties="tns:verifyTaskUUID"></bpel:correlationSet>
-    </bpel:correlationSets>
     <bpel:sequence name="main">
+    
         <!-- Receive input from requestor. 
              Note: This maps to operation defined in cleanUpProcess.wsdl 
              --><bpel:receive name="receiveInput" partnerLink="client" portType="tns:cleanUpProcess" operation="initiate" variable="input" createInstance="yes" />
@@ -79,7 +70,15 @@
              using WS-addressing.
              -->
         <bpel:repeatUntil name="RepeatUntil">
-            <bpel:sequence>
+            <bpel:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[$verificationStatus = 'success']]></bpel:condition>
+		    <bpel:scope isolated="yes">
+			    <bpel:correlationSets>
+			        <bpel:correlationSet name="cleanUpTask" properties="tns:taskUUID"></bpel:correlationSet>
+			        <bpel:correlationSet name="verifyTask" properties="tns:verifyTaskUUID"></bpel:correlationSet>
+			    </bpel:correlationSets>
+			    
+			     <bpel:sequence>
+            
                 <bpel:assign validate="no" name="prepareCleanUpTaskRequest">
             <bpel:copy>
                 <bpel:from><bpel:literal><tns:CleanUpTaskRequest xmlns:tns="http://bpel4mobile.com/schemas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -298,14 +297,9 @@
                     
                 </bpel:assign>
             </bpel:sequence>
-            <bpel:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"><![CDATA[$verificationStatus = 'success']]></bpel:condition>
+			    
+		    </bpel:scope>
         </bpel:repeatUntil>
-        
-        
-        
-        
-        
-        
         <bpel:assign validate="no" name="prepareResponse">
             <bpel:copy>
                 <bpel:from><bpel:literal><tns:cleanUpResponse xmlns:tns="http://bpel4mobile.com/example/hotel/schemas" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
