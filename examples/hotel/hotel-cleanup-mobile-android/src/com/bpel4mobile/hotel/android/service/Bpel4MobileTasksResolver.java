@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class Bpel4MobileTasksResolver {
 
-    public static final String URL = "http://192.168.0.10:8282/hotel-cleanup-mobile-middleware/mobile/bpel4mobile/rest/";
+    public static final String URL = "http://192.168.0.11:8282/hotel-cleanup-mobile-middleware/mobile/bpel4mobile/rest/";
 
     private final AccountManager accountManager;
 
@@ -32,6 +32,7 @@ public class Bpel4MobileTasksResolver {
         completeRequest.setTaskName(taskName);
         completeRequest.setTaskUUID(taskUUID);
         completeRequest.setResult(result);
+
         return post(URL + "resolve", user, completeRequest);
     }
 

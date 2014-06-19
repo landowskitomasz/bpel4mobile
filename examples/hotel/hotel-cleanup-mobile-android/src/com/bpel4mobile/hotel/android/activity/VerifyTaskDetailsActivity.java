@@ -2,6 +2,7 @@ package com.bpel4mobile.hotel.android.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -137,6 +138,7 @@ public class VerifyTaskDetailsActivity extends Activity {
 
             @Override
             protected void onPostExecute(Boolean result) {
+                ContentResolver.requestSync(sessionManager.getCurrentUser(), "com.bpel4mobile.hotel.android.syncdata.provider", Bundle.EMPTY);
                 dialog.dismiss();
                 if(result) {
                     Task task = findTask(taskUUID);

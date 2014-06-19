@@ -62,6 +62,14 @@ public class TasksListAdapter extends ArrayAdapter<Task> {
             Log.e(this.getClass().getName(), "Unknown task.");
         }
 
+        if(Task.TaskState.completed.equals(task.getState())){
+            holder.colorRectangle.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
+        } else if (Task.TaskState.climed.equals(task.getState())){
+            holder.colorRectangle.setBackgroundColor(getContext().getResources().getColor(R.color.green));
+        } else {
+            holder.colorRectangle.setBackgroundColor(getContext().getResources().getColor(R.color.white));
+        }
+
         Room room = task.getRequest().getRoom();
         holder.room.setText("" + room.getNumber());
         holder.floor.setText("" + room.getFloor());

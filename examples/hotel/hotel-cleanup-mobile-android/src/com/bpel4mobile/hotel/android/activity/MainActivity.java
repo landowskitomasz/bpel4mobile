@@ -1,25 +1,23 @@
 package com.bpel4mobile.hotel.android.activity;
 
+import java.util.List;
+
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SyncStatusObserver;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.FragmentActivity;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.bpel4mobile.hotel.android.R;
 import com.bpel4mobile.hotel.android.adapter.TasksListAdapter;
 import com.bpel4mobile.hotel.android.model.*;
 import com.bpel4mobile.hotel.android.service.SessionManager;
-
-import java.util.List;
 
 public class MainActivity extends FragmentActivity {
 
@@ -54,12 +52,15 @@ public class MainActivity extends FragmentActivity {
         });
         loadTasksList();
 
-        ContentResolver.addStatusChangeListener(1, new SyncStatusObserver() {
+        ContentResolver.addStatusChangeListener(ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE, new SyncStatusObserver() {
+
             @Override
             public void onStatusChanged(int i) {
+                Log.i(MainActivity.class.getName(), "Sync status changed.");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i(MainActivity.class.getName(), "Reload invoked.");
                         loadTasksList();
                     }
                 });
