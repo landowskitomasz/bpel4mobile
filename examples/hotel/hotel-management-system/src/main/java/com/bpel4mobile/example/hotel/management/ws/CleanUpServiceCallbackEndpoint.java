@@ -1,33 +1,44 @@
 package com.bpel4mobile.example.hotel.management.ws;
 
-import com.bpel4mobile.example.hotel.management.model.CleanUpStatus;
-import com.bpel4mobile.example.hotel.management.model.Room;
-import com.bpel4mobile.example.hotel.management.repository.RoomRepository;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.bpel4mobile.example.hotel.management.service.RoomCleanUpService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
-import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 @Endpoint
 public class CleanUpServiceCallbackEndpoint {
+	
+	private static Logger logger = Logger.getLogger(CleanUpServiceCallbackEndpoint.class.getName());
 
     public static final String NAMESPACE = "http://bpel4mobile.com/example/hotel/schemas";
 
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomCleanUpService cleanUpService;
 
     @PayloadRoot(namespace = NAMESPACE, localPart = "cleanUpResponse")
-    @ResponsePayload
-    public void handleHolidayRequest(@RequestPayload CleanUpResponse request) throws Exception {
+    public void handleHolidayRequest(@RequestPayload Element request) throws Exception {
+    	logger.info("Process callback invoked");
 
-        if(CleanUpResponse.ProcessResponseStatus.success.equals(request.getStatus())){
-            Room room = roomRepository.getOne(request.getRoom().getId());
-            if(room != null){
-                room.setStatus(CleanUpStatus.finished);
-                roomRepository.save(room);
-            }
-        }
+    	try{
+	    	NodeList statusNode = request.getElementsByTagNameNS(NAMESPACE, "status");
+	    	
+	    	NodeList roomNode = request.getElementsByTagNameNS(NAMESPACE, "room");
+	    	Node roomIdNode = ((Element)roomNode.item(0)).getElementsByTagNameNS(NAMESPACE, "id").item(0);
+	    	
+	    	int id = Integer.parseInt(roomIdNode.getTextContent());
+	    	
+	    	cleanUpService.completeRoom(id, statusNode.item(0).getTextContent());
+    	} catch(Exception e){
+    		logger.log(Level.WARNING, "Unable to complete room.", e);
+    	}
 
     }
 }

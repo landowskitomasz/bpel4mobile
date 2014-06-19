@@ -234,7 +234,7 @@
 
     <service name="cleanUpProcessServiceCallback">
         <port binding="tns:cleanUpProcessCallbackBinding" name="cleanUpProcessPortCallbackPort">
-    		<soap:address location="http://localhost:8181/hotel/ws/cleanUpServiceCallback"/>
+    		<soap:address location="http://localhost:8181/hotel-management-system/ws/cleanUpServiceCallback"/>
         </port>
     </service>
 </definitions>

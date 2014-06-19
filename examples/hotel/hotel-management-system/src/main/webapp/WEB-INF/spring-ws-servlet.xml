@@ -7,7 +7,7 @@
   http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <context:component-scan base-package="com.bpel4mobile.example.hotel.ws"/>
+    <context:component-scan base-package="com.bpel4mobile.example.hotel.management" />
 
     <sws:annotation-driven/>
     <sws:dynamic-wsdl id="cleanUpServiceCallback"

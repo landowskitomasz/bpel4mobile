@@ -1,9 +1,6 @@
 package com.bpel4mobile.example.hotel.management.model;
 
-import com.bpel4mobile.example.hotel.management.ws.CleanUpServiceCallbackEndpoint;
-
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
 
 @Entity
 public class Room {
@@ -11,7 +8,6 @@ public class Room {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @XmlElement(namespace= CleanUpServiceCallbackEndpoint.NAMESPACE, name="id")
     private int id;
 
     @Column
@@ -28,7 +24,7 @@ public class Room {
     @Enumerated
     private CleanUpStatus status;
 
-    public int getId() {
+    public int getId() { 
         return id;
     }
 

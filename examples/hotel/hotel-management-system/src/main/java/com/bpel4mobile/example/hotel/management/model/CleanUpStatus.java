@@ -1,10 +1,7 @@
 package com.bpel4mobile.example.hotel.management.model;
 
-/**
- * Created by tomaszlandowski on 15.06.2014.
- */
 public enum CleanUpStatus {
-    inProgress("W trakcie"), finished("Zakonczono");
+    inProgress("W trakcie"), finished("Zakonczono"), failed("B³¹d");
 
     private final String name;
 
