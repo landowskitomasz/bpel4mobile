@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xmlns:sws="http://www.springframework.org/schema/web-services"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:sws="http://www.springframework.org/schema/web-services"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
   http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-  
-  <context:component-scan base-package="com.bpel4mobile.example.hotel.ws"/>
-  
-  <sws:annotation-driven/>
-	<sws:dynamic-wsdl id="cleanUpServiceCallback"                                                           
-	    portTypeName="Hotel"                                                        
-	    locationUri="http://localhost:8080/hotel/ws/cleanUpServiceCallback"                                                       
-	    targetNamespace="http://bpel4mobile.com/example/hotel/schemas">                               
-	  <sws:xsd location="/WEB-INF/spring/schema/cleanup-process.xsd"/>                                                  
-	</sws:dynamic-wsdl>
+
+    <context:component-scan base-package="com.bpel4mobile.example.hotel.ws"/>
+
+    <sws:annotation-driven/>
+    <sws:dynamic-wsdl id="cleanUpServiceCallback"
+                      portTypeName="Hotel"
+                      locationUri="http://localhost:8181/hotel-management-system/ws/cleanUpServiceCallback"
+                      targetNamespace="http://bpel4mobile.com/example/hotel/schemas">
+        <sws:xsd location="/WEB-INF/schema/cleanup-process.xsd"/>
+    </sws:dynamic-wsdl>
 </beans>

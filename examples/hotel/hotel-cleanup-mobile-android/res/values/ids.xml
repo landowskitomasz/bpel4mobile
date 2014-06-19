@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="progress_dialog_title" type="id">Proszę czekaj...</item>
+    <item name="clime_task_progress" type="id">Trwa rozpoczynanie zadania.</item>
+    <item name="complete_task_progress" type="id">Trwa konczenie zadania.</item>
+    <item name="logging_in_progress" type="id">Trwa logowanie.</item>
+</resources>
