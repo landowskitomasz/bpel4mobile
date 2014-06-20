@@ -84,12 +84,9 @@ public class QueryFactoryImpl implements QueryFactory {
 			UserGroupData groupData = findUserGroupData(userData.getGroups(), peopleAssignment.getFrom().getLogicalPeopleGroup());
 			
 			List<Criteria> groupArgumentCriteria = Lists.newArrayList();
-			if(peopleAssignment.getFrom().getArguments().isEmpty()){
-				
-				for(Argument argument : peopleAssignment.getFrom().getArguments()){
-					groupArgumentCriteria.add(evaluateExpression(argument.getExpression().trim(),
-							groupData.getArguments().get(argument.getName())));
-				}
+			for(Argument argument : peopleAssignment.getFrom().getArguments()){
+				groupArgumentCriteria.add(evaluateExpression(argument.getExpression().trim(),
+				groupData.getArguments().get(argument.getName())));
 			}
 			if(!groupArgumentCriteria.isEmpty()){
 				groupsCriteria.add(concatWithAndOperator(groupArgumentCriteria));

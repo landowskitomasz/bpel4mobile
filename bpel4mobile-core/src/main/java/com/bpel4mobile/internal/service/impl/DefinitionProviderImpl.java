@@ -14,6 +14,7 @@ import javax.xml.transform.stream.StreamSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.bpel4mobile.internal.definition.Deadlines;
 import com.bpel4mobile.internal.definition.HumanInteractions;
 import com.bpel4mobile.internal.definition.LogicalPeopleGroups;
 import com.bpel4mobile.internal.definition.PeopleAssignments;
@@ -32,6 +33,8 @@ public class DefinitionProviderImpl implements DefinitionProvider {
 	private Map<String, PeopleAssignments> taskPosibleAssignments = Maps.newHashMap();
 	
 	private Map<String, Task> tasks = Maps.newHashMap();
+	
+	private Map<String, Deadlines> deadlines = Maps.newHashMap();
 	
 	@PostConstruct
 	public void loadHumanInteractions(){
@@ -52,6 +55,9 @@ public class DefinitionProviderImpl implements DefinitionProvider {
 			
 			for(Task task : humanInteractions.getTasks().getTask()){
 				tasks.put(task.getName(), task);
+				if(task.getDeadlines() != null){
+					deadlines.put(task.getName(), task.getDeadlines());
+				}
 				taskPosibleAssignments.put(task.getName(), task.getPeopleAssignments());
 			}
 		} catch (JAXBException e) {
@@ -83,21 +89,9 @@ public class DefinitionProviderImpl implements DefinitionProvider {
 	}
 
 
-	
-	/*PeopleAssignments peopleAssignments = new PeopleAssignments();
-	PotentialOwners potentialOwners = new PotentialOwners();
-	
-	PeopleAssignment peopleAssignment = new PeopleAssignment();
-	From from = new From();
-	from.setLogicalPeopleGroup("projectManagers");
-	Argument argument = new Argument();
-	argument.setName("username");
-	argument.setExpression("eq:request/employee");
-	from.getArguments().add(argument);
-	peopleAssignment.setFrom(from);
-	potentialOwners.getPeopleAssigment().add(peopleAssignment);
-	peopleAssignments.setPotentialOwners(potentialOwners);
-	
-	Map<String,PeopleAssignments> result = Maps.newHashMap();
-	result.put("holidayRequestTask", peopleAssignments);*/
+	@Override
+	public Map<String, Deadlines> getTasksDeadLines() {
+		return deadlines;
+	}
+
 }

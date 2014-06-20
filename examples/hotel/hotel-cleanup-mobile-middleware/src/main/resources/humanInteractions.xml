@@ -13,7 +13,7 @@
 	</htd:logicalPeopleGroups>
 	<htd:tasks>
 		<htd:task name="cleanUpTask">
-			<htd:priority>1</htd:priority>
+			<htd:priority>5</htd:priority>
 			<htd:peopleAssignments>
 				<htd:potentialOwners>
 					<htd:from logicalPeopleGroup="cleaningLadies">
@@ -21,10 +21,47 @@
 					</htd:from>
 				</htd:potentialOwners>
 			</htd:peopleAssignments>
+			
+			<htd:deadlines>
+				    <htd:startDeadline>
+				        <htd:for>1m</htd:for>
+				        <htd:escalation name="notifyAboutNewCleanUpTask">
+				            <!--  htd:condition>
+				            </htd:condition-->
+				            <htd:notification name="newTaskNotification">
+				                <htd:peopleAssignments>
+				                    <htd:recipients>
+				                        <htd:from logicalPeopleGroup="cleaningLadies">
+											<htd:argument name="correspondingFloor">request/room/floor</htd:argument>
+										</htd:from>
+									</htd:recipients>
+								</htd:peopleAssignments>
+				            </htd:notification>
+				        </htd:escalation>
+				    </htd:startDeadline>
+				    <htd:completionDeadline>
+				        <htd:for>10m</htd:for>
+				        <htd:escalation  name="raisePriorityTwiceForApartment">
+				             <htd:condition>
+					            {'request.room.category.standard': 1}
+					        </htd:condition>
+				            <htd:raisePriority value="2" />
+				        </htd:escalation>
+				    </htd:completionDeadline>
+				    <htd:completionDeadline>
+				        <htd:for>10m</htd:for>
+				        <htd:escalation  name="raisePriorityOnceForApartment">
+					        <htd:condition>
+					            {'request.room.category.standard': 2}
+					        </htd:condition>
+				            <htd:raisePriority value="3" />
+				        </htd:escalation>
+				    </htd:completionDeadline>
+				</htd:deadlines>
 		</htd:task>
 		
 		<htd:task name="verifyTask">
-			<htd:priority>1</htd:priority>
+			<htd:priority>5</htd:priority>
 			<htd:peopleAssignments>
 				<htd:potentialOwners>
 					<htd:from logicalPeopleGroup="supervisors" />

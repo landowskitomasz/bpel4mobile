@@ -8,7 +8,7 @@ import com.bpel4mobile.ws.service.AbstractUserDataProvider;
 
 @Service
 public class UserDataProviderImpl extends AbstractUserDataProvider {
-
+	
 	@Override
 	public boolean authenticate(String username, String password) {
 		return "Tomasz".equals(username) && "password".equals(password);

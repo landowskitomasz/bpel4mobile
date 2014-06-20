@@ -8,6 +8,8 @@ public class Task {
     protected String priority;
     
     protected PeopleAssignments peopleAssignments;
+    
+    protected Deadlines deadlines;
 
     protected String name;
   
@@ -36,5 +38,14 @@ public class Task {
 
     public void setName(String value) {
         this.name = value;
+    }
+    
+    @XmlElement(name="deadlines", namespace = WS_HT_Namespace.URL)
+    public Deadlines getDeadlines() {
+        return deadlines;
+    }
+    
+    public void setDeadlines(Deadlines deadlines){
+    	this.deadlines = deadlines;
     }
 }

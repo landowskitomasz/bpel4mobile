@@ -11,6 +11,7 @@
 	    	/WEB-INF/root-context.xml
 	    	classpath*:bpel4mobile-core-context.xml
 	    	classpath*:bpel4mobile-security-context.xml
+	    	classpath*:bpel4mobile-escalation-context.xml
 	    </param-value>
 	</context-param>
 	
