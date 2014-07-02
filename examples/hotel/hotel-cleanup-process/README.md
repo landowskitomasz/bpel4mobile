@@ -15,10 +15,12 @@ In this module there is one technology used - BPEL.
 ### IMPLEMENTATION
 // TODO: 
 
-## CORRELATION
+![Room clean up BPEL process](/examples/hotel/readme-assets/bpelProcess.png?raw=true "Room clean up BPEL process")
+
+#### CORRELATION
 // TODO: 
 
-## SCOPE
+#### SCOPE
 // TODO: 
 
 ### HOW TO RUN IT

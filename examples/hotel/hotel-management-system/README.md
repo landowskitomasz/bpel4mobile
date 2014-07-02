@@ -35,8 +35,14 @@ mvn clean install
 This command will build war file in 'target' directory. Then you can use this file to run application using any lightweight java application server like tomcat. There is also another way to start application, you can simple run following command from console, which will download jetty application server to your computer and run it on port 8282. 
 
 ```python
-mvn jetty:run -Djetty.port=8282
+mvn jetty:run -Djetty.port=8181
 ```
 
-This is really important to start application on port 8282 because further applications created in hotel example will look for Hotel Management System on this port.  
+Application will be avalable from url:
+
+```python
+http://localhost:8181/hotel-management-system/list.html
+```
+
+This is really important to start application on port 8181 because further applications created in hotel example will look for Hotel Management System on this port.  
 
