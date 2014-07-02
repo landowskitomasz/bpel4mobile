@@ -20,24 +20,23 @@ To save clean up requests application use in memory database, it means that when
 
 As I recently wrote in web.xml there is dispatcher servlet defined, which redirects user request to controllers. Generally when user wrote url to our application in the browser, the browser will send HTTP GET request which will be handled by dispatcher servlet. This servlet will find destination controller using it RequestMaping annotation. Controller receives the request, and will respond with html page. In this application there is only one controller, called MainController. This controller provide three methods, one for show list of request from database, second one for show form to start process and last one to handle form POST request. 
 
-List and form are not really interesting they just gets some data from database. More interesting method that handle form request. This method gets data from http request and invokes startProcess method from CleanUpService class. startProcess method, prepare data to send, serialize it to XML using Jaxb2Marshaller and invokes web service using WebServiceTemplate class provided by Spring framework. 
+List and form are not really interesting ,they just gets some data from database and responed with html pages. More interesting method is one that handle form request. This method gets data from http request and invokes startProcess method from CleanUpService class. 'startProcess' method, prepare data to send, serialize it to XML using Jaxb2Marshaller and invokes BPEL process access point web service using WebServiceTemplate class provided by Spring framework. 
 
-Last thing which need to be cleaned is receiving callback from BPEL process. Is I mentioned before in web.xml there is also spring-ws servlet. This servlets works really similar to dispatcher servlet, it handle http requests and redirect them to web service endpoint classes. In our example there is one end point defined - CleanUpServiceCallbackEndpoint. In this class there is one method implemented called handleHolidayRequest, this method handles the web service invocation, in few words, this method reads data received by web service and change clean up task status. 
-
+Last thing which need to be cleaned is implementation of receiving callback from BPEL process. As I mentioned before in web.xml there is also spring-ws servlet. This servlet works really similar to dispatcher servlet, it handle http requests and redirect them to web service endpoint class. In our example there is only one end point defined - CleanUpServiceCallbackEndpoint. In this class there is one method implemented called handleHolidayRequest, this method handles the web service request, in few words, this method reads data received by web service and change clean up task status. 
 
 ### HOW TO RUN IT
 
-In this example I use maven - the tool that automate application build process. To build application all you have to do is installing maven on your machine and running following command in console from project directory. 
+In this example I use maven - the tool that automate application build process. To build application all you have to do is installing maven on your machine and run following command in console from project directory. 
 
 ```python
 mvn clean install
 ```
 
-This command will build war file in 'target' directory. Then you can use this file to run application using any lightweight java application server like tomcat. There is also another way to run application, you can simple run following command from console, which will download jetty server to your computer and run it on port 8282. 
+This command will build war file in 'target' directory. Then you can use this file to run application using any lightweight java application server like tomcat. There is also another way to start application, you can simple run following command from console, which will download jetty application server to your computer and run it on port 8282. 
 
 ```python
 mvn jetty:run -Djetty.port=8282
 ```
 
-This is really important to run application on port 8282 because further applications created in hotel example will look for hotel management system on this port.  
+This is really important to start application on port 8282 because further applications created in hotel example will look for Hotel Management System on this port.  
 
