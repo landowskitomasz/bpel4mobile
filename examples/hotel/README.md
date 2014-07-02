@@ -1,7 +1,7 @@
 BPEL 4 MOBILE - HOTEL EXAMPLE
 ===========
 
-This example demonstrates how to use bpel4mobile project to implement hotel room clean up process. The process is quite simple and everyone can understand it. There are a few actors in this example and the process 'implements' interaction between this actors. 
+This example demonstrates how to use bpel4mobile project to implement hotel room clean up process. The process is quite simple and everyone can understand it. There are a few actors in this example and the process 'implements' interaction between them. 
 
 ### BPMN 
 
