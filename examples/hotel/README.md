@@ -27,11 +27,11 @@ Great we already made a decision, what next?
 
 The next step is defining sub projects which all together will implement whole process. 
 
-* Hotel management system - This will be simple web application which will provide user interace to start room clean up, this application will also show whole process result. 
+* [Hotel management system](/examples/hotel/hotel-management-system) - This will be simple web application which will provide user interace to start room clean up, this application will also show whole process result. 
 
-* BPEL process - this will be one peace of implementation of clean up service responsible for recieving clean up request from hotel management system and also will communication with mobile middleware . 
+* [BPEL process](hotel-cleanup-process) - this will be one peace of implementation of clean up service responsible for recieving clean up request from hotel management system and also will communication with mobile middleware . 
 
-* BPEL 4 PEOPLE middleware - the second peace of hotel clean up service, responsible for delivering clean up tasks to people. 
+* [BPEL 4 PEOPLE middleware](hotel-cleanup-mobile-middleware) - the second peace of hotel clean up service, responsible for delivering clean up tasks to people. 
 
-* Android application - this will be the Supervisor and Cleaning Lady application. It will recive list of rooms to clean up and allove users to perform clean up or verify operations. 
+* [Android application](hotel-cleanup-mobile-android) - this will be the Supervisor and Cleaning Lady application. It will recive list of rooms to clean up and allove users to perform clean up or verify operations. 
 
