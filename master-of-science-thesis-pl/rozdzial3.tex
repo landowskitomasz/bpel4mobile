@@ -1,0 +1,48 @@
+\chapter{Analiza aplikacji na platformy mobilne}
+\label{cha:analizaAplikacjiMobilnych}
+
+Wzrost popularności smartphonów oraz urządzeń przenośnych takich jak tablet wpłynął na powstanie specyficznej klasy systemów informatycznych zwanych aplikacjami mobilnymi. Aplikacje mobilne cechuje ukierunkowanie na rozwiązywanie wąskiego rodzaju problemów przy pomocy urządzenia dostępnego dla użytkownika niemal 24h na dobę. Szczególną popularność zyskały aplikacje mobilne ukierunkowane na użytkowników (TODO jak nazwać użytkownika typu powszechny Jan Kowalski). Coraz większą popularność zyskują również aplikacje biznesowe ukierunkowane np. na wymianę danych pomiędzy pracownikami przedsiębiorstwa w celu rozwiązania konkretnego zadania. 
+
+%---------------------------------------------------------------------------
+\section{Rodzaje aplikacji mobilnych}
+\label{sec:rodzajeAplikacjiMobilnych}
+
+Ze względu na rodzaj zastosowania aplikacje mobilne można sklasyfikować w następujący sposób:
+
+\begin{itemize}
+\item Samodzielne aplikacje -- aplikacje wykorzystujące tylko i wyłącznie lokalne zasoby urządzenia, korzystające z lokalnej bazy danych bez połączenia z systemami zewnętrznym, często nie wymagające połączenie do internetu. Dobrym przykładem takiej aplikacji może być prosty notatki.  
+\item Aplikacje klienckie -- są to aplikacje bazujące na komunikacji z systemami zewnętrznymi przy pomocy jakiegokolwiek interfejsu komunikacyjnego,  najczęściej połączenia HTTP. Zazwyczaj aplikacje te wykorzystują również lokalną bazę danych umożliwiając użytkownikom pracę z aplikacji w przypadku braku połączenia z systemem zewnętrznym.
+\item Internetowe -- najczęściej strony www, aplikacje  te nie wykorzystują lokalnych zasobów urządzeń mobilnych, ich rolą jest udostępnienie prostego interfejsu użytkownika systemu dla użytkowników aplikacji mobilnych.
+\item Gry  -- szczególny przypadek samodzielnych aplikacji ukierunkowanych głównie na wykorzystanie lokalnych zasobów urządzenie w celach rozrywkowych, szczególnie eksploatowana w tego typu aplikacjach jest karta graficzna urządzenia.
+\end{itemize}
+
+%---------------------------------------------------------------------------
+\section{Tryby online/offline}
+\label{sec:trybyAplikacjiMobilnych}
+Najbardziej docenianym rodzajem aplikacji mobilnych z punktu widzenia biznesu są aplikacje klienckie. W przypadku tych aplikacji szalenie istotny jest problem połączenia z systemami zewnętrznymi. Wyróżniamy tutaj dwa tryby pracy aplikacji:
+
+\begin{itemize}
+\item Tryb online -- urządzenie udostępnia przynajmniej jeden typ komunikacji bezprzewodowej (Wi-fi, Bluetooth, łącza podczerwieni (IrDa), GPRS). W trybie online aplikacje mobilne mają bezpośredni dostęp do zewnętrznych i zdalnych źródeł danych, innych urządzeń mobilnych lub stacjonarnych systemów komputerowych.   
+\item Tryb offline -- urządzenie ma bezpośredni dostęp tylko do lokalnie przechowywanych informacji. Dane te mogą być jednak synchronizowane z innymi urządzeniami w czasie krótkich sesji komunikacyjnych. Wymiana danych podczas synchronizacji może następować w obu kierunkach. 
+\end{itemize}
+
+%---------------------------------------------------------------------------
+\section{Cechy specyficzne dla aplikacji mobilnych }
+\label{sec:cechyAplikacjiMobilnych}
+Opisując aplikacje mobilnie nie można zapomnieć o cechach specyficznych, które są szalenie ważne z punktu widzenia projektanta i programisty aplikacji mobilnych. To właśnie dzięki tym cechom aplikacje mobilne posiadają tę a nie inną specyfikę:
+
+\begin{itemize}
+\item Ograniczone zasoby sprzętowe -- urządzenie przenośnie pod względem zasobów sprzętowych nigdy nie zastąpią komputerów stacjonarnych a tym bardziej urządzeń serwerowych. Właśnie ze względu na tę cechę aplikacje mobilne ukierunkowane są na rozwiązywanie małych - jednostkowych problemów. Projektant aplikacji mobilnych powinien szczególnie zwrócić uwagę na ten aspekt w przypadku projektowania interfejsu do komunikacji z systemami zewnętrznymi, aplikacje mobilne powinny wykorzystywać lekkie interfejsy komunikacyjne typu REST, aby jak najmniej obciążać kartę sieciową urządzenia. 
+\item Uproszczony interfejs użytkownika dostosowany do ekranów dotykowych -- cecha ta jest bardzo ważna głównie dla projektanta interfejsu użytkownika, ale ma również znaczący wpływ na rodzaj zadań rozwiązywanych za pomocą tych aplikacji.  
+\item Przerwy w działaniu aplikacji -- aplikacje mobilne w przeciwieństwie do innych rodzajów systemów są szczególnie narażone na przerwy w działaniu, najprostszym przykładem może być rozmowa telefoniczna przychodząca w trakcie pracy z aplikacją. Najczęściej w takich przypadkach aplikacje przechodzą w tryb uśpienia i nie ma pewności czy praca zostanie wznowiona. Programiści powinny pamiętać o zapamiętywaniu poszczególnych stanów aplikacji aby użytkownik nie tracił wykonanej pracy. 
+\item Dostęp do GEO lokalizacji -- aplikacje mobilne oprócz ograniczeń posiadają również wiele cech dodatkowych wyróżniających je wśród innych systemów, jedną z nich jest dostęp do GEO lokalizacji.  Funkcjonalność ta bardzo szeroko wykorzystywana jest przez systemu zwane Context Aware Middleware. 
+\item Dostęp do aparatu/kamery -- jest to kolejna cecha rozszerzająca możliwości aplikacji mobilnych, może być wykorzystana np. jako narzędzie do skanowania kodów kreskowych, albo sposób dokumentacji pracy wykonanej przez użytkownika systemów mobilnych. 
+\item Specyficzna architektura dla różnych systemów operacyjnych -- bardzo wiele cech aplikacji mobilnych jest wspólna w przypadku wszystkich systemów operacyjnych dostępnych na rynku, trzeba mieć jednak świadomość, że jest również wiele cech specyficznych dla różnych platform mobilnych. 
+\end{itemize}
+
+%---------------------------------------------------------------------------
+\section{Komunikaty Push}
+\label{sec:push}
+Ze względu na zmienne warunki w dostępie do mediów komunikacyjnych, aplikacji mobilne wykorzystują w głównej mierze komunikacje pull, (czyli pobieranie informacji na żądanie) z systemami zewnętrznymi. Najpopularniejsze platformy mobilne jak Android, iOS oraz Windows Phone udostępniają również alternatywny sposób komunikacji - push. 
+
+Komunikacja push odbywa się jednak zawsze za pośrednictwem serwisów udostępnianych przez platformy mobilne do tego celu. Komunikacja ta posiada wiele ograniczeń a już na pewno najważniejszym z nich jest brak pewności że komunikat zostanie w ogóle dostarczony. Komunikacja push powinna być zatem wykorzystywana jedynie do notyfikacji użytkownika o jakimś zdarzeniu a nie do przesyłania informacji kluczowych dla działania aplikacji. 
