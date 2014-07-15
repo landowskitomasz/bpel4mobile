@@ -1,14 +1,13 @@
 \chapter{BPEL „inteligentne” narzędzie integracyjne}
 \label{cha:bpel}
 
-BPEL (Business Process Execution Language) a właściwie pełna nazwa WS-BPEL,  której rozwinięcie to Web Services Business Process Execution Language jest językiem opartym o składnię XML, służącym do wykonywania procesów biznesowych w środowisku  usług sieciowych. Język BPEL jest ustandaryzowany przez oranizacje OASIS (Organization for the Advancement of Structured Information Standards). 
+BPEL (\textit{Business Process Execution Language}) a właściwie pełna nazwa WS-BPEL,  której rozwinięcie to \textit{Web Services Business Process Execution Language} jest językiem opartym o składnię XML, służącym do wykonywania procesów biznesowych w środowisku  usług sieciowych. Język BPEL jest ustandaryzowany przez oranizacje OASIS (\textit{Organization for the Advancement of Structured Information Standards}). 
 
-Organizacja OASIS definiuje język BPEL jako: Umożliwiający użytkownikom opis aktywności procesów biznesowych jako usługi sieciowe oraz definicję w jaki sposób usługi te mogę być połączone między sobą w celu wykonania zadania. [3]
+Organizacja OASIS definiuje język BPEL jako: \textit{Umożliwiający użytkownikom opis aktywności procesów biznesowych jako usługi sieciowe oraz definicję w jaki sposób usługi te mogę być połączone między sobą w celu wykonania zadania.} [3]
 
-Jak argumentuje OASIS, język BPEL powstał z konieczności stworzenia dodatkowej warstwy integracyjnej, która wykorzysta potencjał dostarczony przez usługi sieciowe oraz procesy biznesowe. Dotychczasowy model komunikacji udostępniany przez usługi sieciowe był niewystarczający, głównie z powodu braku zachowania stanu podczas prostej komunikacji żądanie-odpowiedź.  Komunikacja ponadto była głównie jednokierunkowa. Model komunikacji dla biznesu wymagał natomiast sekwencyjnej wymiany wiadomości pomiędzy wieloma węzłami, operacje wykonywane na węzłach mogły trwać bardzo długo, dlatego istnieje również konieczność obsługi tego typu procesów przy pomocy zapamiętywania stanu, oraz asynchronicznego wywoływania serwisów. [4]
+Jak argumentuje OASIS, język BPEL powstał z konieczności stworzenia dodatkowej warstwy integracyjnej, która wykorzysta potencjał dostarczony przez usługi sieciowe oraz procesy biznesowe. Warto tutaj wspomnieć o historii powstania BPEL. Microsoft i IBM dostrzegając potrzebę stworzenia technologii pozwalającej definiować przepływ wywołań usług sieciowych stworzyli osobne, ale bardzo podobne języki, służące do tego celu, nazwane WSFL (\textit{Web Service Flow Language}) oraz Xlang. W miare wzrostu popularności BPM zdecydowali się połączyć siły aby stworzyć wspólny standard (opisanych za pomocą WSDL. Zarówno Microsoft jak i IBM (zresztą nie tylko oni) dostrzegli, że architektura SOA (\textit{Service Oriented Architecture}) wymaga wprowadzenia czegoś co pozwoli składać klocki jakimi są usługi sieciowe w jedną zgrabną całość i właściwie to było genezą powstania BPEL'a. 
 
-
-
+Dotychczasowy model komunikacji udostępniany przez usługi sieciowe był niewystarczający, głównie z powodu braku zachowania stanu podczas prostej komunikacji żądanie-odpowiedź.  Komunikacja ponadto była głównie jednokierunkowa. Model komunikacji dla biznesu wymagał natomiast sekwencyjnej wymiany wiadomości pomiędzy wieloma węzłami, operacje wykonywane na węzłach mogły trwać bardzo długo, dlatego istnieje również konieczność obsługi tego typu procesów przy pomocy zapamiętywania stanu, oraz asynchronicznego wywoływania serwisów. [4]
 
 %---------------------------------------------------------------------------
 
@@ -60,7 +59,7 @@ Najbardziej popularne środowiska uruchomieniowe BPEL to:
 \item WebSphere Process Server
 \end{itemize}
 
-Do celów niniejszej pracy magisterskiej zostanie wykorzystany Apache ODE (Apache Orchestration Director Engine). Jest to narzędzie rozwijane przez społeczność Open Source, zgodne ze standardem WS-BPEL. Silnik Apache ODE został zaimplementowany przy wykorzystaniu języka Java, jest on w rzeczywistości standardową aplikacją webową uruchamianą na serwerach aplikacyjnych Java np. na serwerze Tomcat. 
+Do celów niniejszej pracy magisterskiej zostanie wykorzystany Apache ODE (\textit{Apache Orchestration Director Engine}). Jest to narzędzie rozwijane przez społeczność Open Source, zgodne ze standardem WS-BPEL. Silnik Apache ODE został zaimplementowany przy wykorzystaniu języka Java, jest on w rzeczywistości standardową aplikacją webową uruchamianą na serwerach aplikacyjnych Java np. na serwerze Tomcat. 
 
 %---------------------------------------------------------------------------
 
