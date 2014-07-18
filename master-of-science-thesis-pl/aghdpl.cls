@@ -106,7 +106,7 @@ Supervisor: & {\itshape \@supervisor}\\
 \vspace*{1mm}
 
 {\sffamily\Large\itshape \@titleEN}
-\vspace*{38mm}
+\vspace*{35mm}
 \end{center}
 
 \noindent

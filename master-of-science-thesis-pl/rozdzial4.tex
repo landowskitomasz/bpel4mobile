@@ -3,11 +3,11 @@
 
 BPEL (\textit{Business Process Execution Language}) a właściwie pełna nazwa WS-BPEL,  której rozwinięcie to \textit{Web Services Business Process Execution Language} jest językiem opartym o składnię XML, służącym do wykonywania procesów biznesowych w środowisku  usług sieciowych. Język BPEL jest ustandaryzowany przez oranizacje OASIS (\textit{Organization for the Advancement of Structured Information Standards}). 
 
-Organizacja OASIS definiuje język BPEL jako: \textit{Umożliwiający użytkownikom opis aktywności procesów biznesowych jako usługi sieciowe oraz definicję w jaki sposób usługi te mogę być połączone między sobą w celu wykonania zadania.} [3]
+Organizacja OASIS definiuje język BPEL jako: \textit{Umożliwiający użytkownikom opis aktywności procesów biznesowych jako usługi sieciowe oraz definicję w jaki sposób usługi te mogę być połączone między sobą w celu wykonania zadania.} ~\cite{OASISweb}
 
 Jak argumentuje OASIS, język BPEL powstał z konieczności stworzenia dodatkowej warstwy integracyjnej, która wykorzysta potencjał dostarczony przez usługi sieciowe oraz procesy biznesowe. Warto tutaj wspomnieć o historii powstania BPEL. Microsoft i IBM dostrzegając potrzebę stworzenia technologii pozwalającej definiować przepływ wywołań usług sieciowych stworzyli osobne, ale bardzo podobne języki, służące do tego celu, nazwane WSFL (\textit{Web Service Flow Language}) oraz Xlang. W miare wzrostu popularności BPM zdecydowali się połączyć siły aby stworzyć wspólny standard (opisanych za pomocą WSDL. Zarówno Microsoft jak i IBM (zresztą nie tylko oni) dostrzegli, że architektura SOA (\textit{Service Oriented Architecture}) wymaga wprowadzenia czegoś co pozwoli składać klocki jakimi są usługi sieciowe w jedną zgrabną całość i właściwie to było genezą powstania BPEL'a. 
 
-Dotychczasowy model komunikacji udostępniany przez usługi sieciowe był niewystarczający, głównie z powodu braku zachowania stanu podczas prostej komunikacji żądanie-odpowiedź.  Komunikacja ponadto była głównie jednokierunkowa. Model komunikacji dla biznesu wymagał natomiast sekwencyjnej wymiany wiadomości pomiędzy wieloma węzłami, operacje wykonywane na węzłach mogły trwać bardzo długo, dlatego istnieje również konieczność obsługi tego typu procesów przy pomocy zapamiętywania stanu, oraz asynchronicznego wywoływania serwisów. [4]
+Dotychczasowy model komunikacji udostępniany przez usługi sieciowe był niewystarczający, głównie z powodu braku zachowania stanu podczas prostej komunikacji żądanie-odpowiedź.  Komunikacja ponadto była głównie jednokierunkowa. Model komunikacji dla biznesu wymagał natomiast sekwencyjnej wymiany wiadomości pomiędzy wieloma węzłami, operacje wykonywane na węzłach mogły trwać bardzo długo, dlatego istnieje również konieczność obsługi tego typu procesów przy pomocy zapamiętywania stanu, oraz asynchronicznego wywoływania serwisów. ~\cite{OASISBPELSpec}
 
 %---------------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ Dotychczasowy model komunikacji udostępniany przez usługi sieciowe był niewys
 \label{sec:bpelOrchestration}
 BPEL jest językiem orkiestracji usług sieciowych, a nie choreografii. Podstawowa różnica polega na tym, że w choreografii usługi współpracują ze sobą bezpośrednio. W orkiestracji usługa komunikuje się wyłącznie z menedżerem orkiestracji (w tym przypadku: maszyna BPEL), który wie, gdzie i jak przekazać dalej komunikaty. Nie musi tym samym znać innych usług biorących udział w procesie. 
 
-Korzyści płynące z tego, że BPEL jest warstwa orkiestracji to [5]:
+Korzyści płynące z tego, że BPEL jest warstwa orkiestracji to ~\cite{wiao}:
 
 \begin{itemize}
 \item podejście integracyjne do komunikacji pomiędzy aplikacjami, które uniezależnia aplikacje od siebie,  
@@ -42,6 +42,7 @@ Korzyści płynące z tego, że BPEL jest warstwa orkiestracji to [5]:
 
 \section{Silniki uruchomieniowe WS-BPEL}
 \label{sec:bpelEngines}
+
 WS-BPLE dostarcza jedynie opisu w jaki sposób proces ma przebiegać oraz z jakimi usługami ma się komunikować, potrafi również zdefiniować proste operacje proceduralne jak tworzenie zmiennych, operacje przypisania, warunki czy pętle. Język sam w sobie jednak nie ma zbyt wielkiej wartości bez odpowiedniego środowiska uruchomieniowego. Procesy BPEL można traktować jako skrypty interpretowane, wykonywane przez maszyny procesów biznesowych w środowisku zgodnym ze standardem BPEL. 
 
 Najbardziej popularne środowiska uruchomieniowe BPEL to:
@@ -65,6 +66,7 @@ Do celów niniejszej pracy magisterskiej zostanie wykorzystany Apache ODE (\text
 
 \section{Podsumowanie}
 \label{sec:bpelSummary}
+
 Należy pamiętać, że język BPEL nie jest jedynym słusznym rozwiązaniem służącym do implementacji procesów biznesowych. Bardzo często  zdarza się, że projektanci systemów IT, którzy preferują podejście top-down design (pl. projektowanie od góry do dołu), zaczynając projektować system IT przy pomocy notacji BPMN. Następnie zaś próbują przełożyć modele procesów biznesowych na kod wykonywalny w postaci BPEL. Nie jest to jednak słuszne podejście. Procesy BPMN zawierają często bardzo wiele szczegółów opisujących zachowanie samych operacji jednostkowych, natomiast pomijają szczegóły techniczne dotyczące usług sieciowych.  Zazwyczaj okazuje się, że usługa sieciowa która została by wygenerowana z diagramu BPMN w ogóle nie istnieje, a jej stworzenie może być mało sensowne.
 
 Niestety nazwa BPEL jest w tym przypadku nie do końca trafna, ponieważ sugeruje, że BPEL jest językiem służącym do implementacji procesów biznesowych. W rzeczywistości jednak BPEL należy traktować jako narzędzie integracyjne. Narzędzie to ma służyć do definicji przebiegu komunikacji pomiędzy usługami sieciowymi, przy pomocy idei procesów biznesowych. Jest bardzo ważnym aby BPEL był stosowany właśnie w takich przypadkach, pozwoli to uniknąć poważnych błędów projektowych wynikających z zastosowania nieodpowiednich narzędzi.  
