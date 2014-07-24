@@ -18,3 +18,8 @@ hs_err_pid*
 target/
 *.iml
 *.zip
+
+# latex temporary files
+*.log
+*.aux
+*.toc

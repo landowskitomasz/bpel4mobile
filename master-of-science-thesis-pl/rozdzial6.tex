@@ -25,9 +25,11 @@ Specyfikacja opiewa w szereg bardzo ciekawych pomysłów integracji interakcji u
 
 \subsection{WS-HumanTask}
 
-Bezpośrednio powiązany  z rozszerzeniem BPEL4people jest temat usług sieciowych dla ludzi.  
+Bezpośrednio powiązany  z rozszerzeniem BPEL4people jest temat usług sieciowych dla ludzi, które są wykorzystywane przez to rozszerzenie.
 
-// TODO:
+WS-HumanTask są usługami sieciowymi 'implementowanymi' przez ludzi. Pozwalają na integrację ludzi z aplikacjami zorientowanymi na usługi (SOA). Specyfikacja udostępnia dwa interfejsy do komunikacjami z zadaniami. Pierwszy z nich jest przeznaczony dla automatów czyli aplikacji rozproszonych, drugi natomiast jest przeznaczony dla ludzi i pozwala na operacje zadaniami.  
+Zadania opisane w specyfikacji posiadają przypisania do konkretnych grup docelowych. Przypisania te definiują kto powinien być uprawniony do operacji na tych zadaniach. Specyfikacja definiuje również meta dane dotyczące zadań pozwalające na określenie w jaki sposób zadania mają być prezentowane na różnych urządzeniach. Zadanie mogą również definiować reakcje na terminy ostateczne ich wykonania, w postaci mechanizmu eskalacji. 
+
 
 \subsection{Implementacje}
 
@@ -89,7 +91,18 @@ Interfejs ten powinien przede wszystkim rozwiązywać podstawowy problem występ
 Znając poszczególne statusy nadszedł czas na określenie interfejsu komunikacyjnego z aplikacjami mobilnymi. Ponieważ wśród aplikacji mobilnych najbardziej popularnym medium komunikacyjnym jest połączenie sieciowe na pewno najrozsądniejszym pomysłem będzie z niego skorzystanie. Jak wspomniano w rozdziale ~\ref{cha:analizaAplikacjiMobilnych}, podczas projektowania aplikacji mobilnych należy zwrócić uwagę na to aby wybierane technologie nie obciążały zbytnio ograniczonego pod względem zasobów urządzenia mobilnego. Dobrym wyborem w takim wypadku będzie REST. 
 
 \subsubsection{Usługi sieciowe RESTFul}
-// TODO
+
+REST (ang. Representational State Transfer) jest wzorcem narzucającym dobre praktyki tworzenia architektury aplikacji rozproszonych. Usługi sieciowe RESTFul  są usługami zaimplementowanymi na bazie protokołu HTTP i głównych zasad REST. ~\cite{rest}
+Podstawą architektury REST jest zasób, zasób jest tutaj traktowany nie tylko jako jakiś byt, który można pobrać z aplikacji internetowej za pomocą protokołu HTTP. Zasobem w architekturze REST są również usługi udostępniane przez aplikacje internetowe.  
+
+Kolejnym z głównych założeń architektury REST jest wykorzystanie metod udostępnianych przez protokół HTTP do definicji operacji wykonywanych na danym zasobie. Protokół HTTP oprócz najbardziej popularnych metod jak GET i POST udostępnia również całą gamę pozostałych metod. W architekturze REST oprócz tych dwóch najpopularniejszych bardzo często wykorzystywane są również PUT oraz DELETE. Znaczenie poszczególnych metod w kontekście operacji na zasobie może przedstawiać się następująco:
+\begin{itemize}
+\item GET -- pobranie danych
+\item POST -- dodawanie danych
+\item PUT -- edycja danych
+\item DELETE -- usuwanie danych 
+\end{itemize}
+
 
 \subsubsection{Definicja interfejsu}
 
@@ -142,15 +155,48 @@ Odpowiedzią na postawione wymagania są dokumentowe bazy danych. Przechowują o
 
 Przykładowy dokument bazy danych MongoDB może przedstawiać się następująco:
 
-// TODO
+\begin{lstlisting}[caption=Zadanie w postaci dokumentu MongoDB.,numbers=left]
+{	
+	uuid : '6942cd9b-3b3b-49bd-9b18-de68384bd22a',
+	name : 'createWarehouseDocument',
+	state : '',
+	createDate : '2014-07-24',
+	priority: 3,
+	request : {
+		document :{
+			type: 'inbound',
+			company : {
+				name : 'AGH',
+				address : {
+					city: 'Krakow',
+					streat : 'al. A. Mickiewicza',
+					number: '30',
+					country: 'Polska'
+				}
+			},
+			positions: [...]
+		}
+	}
+}
+\end{lstlisting}
 
-Zapytanie wyciągające wszystkie dokumenty dla których wartość argumentu ... jest równa ... przedstawia się następująco:
 
-// TODO
+Przedstawiony wyżej dokument jest przykładem zadania którego celem jest stworzenie odpowiedniego dokumentu magazynowego. Możemy sobie wyobrazić sytuację, że dokumenty dla kontrahentów z poszczególnych krajów są tworzone przez różnych użytkowników. Przykładowe zapytanie znajdujące wszystkie zadania dla użytkownika obsługującego Polskę wyglądało by następująco. 
 
-W przypadku relacyjnej bazy danych powyższa struktura wymagała by stworzenie ... tabel a zapytanie które dałby by dokładnie taki sam rezultat wyglądało by następująco:
+\begin{lstlisting}[caption=Zapytanie MongoDB.]
+{'request.document.company.address.country': 'Polska'}
+\end{lstlisting}
 
-// TODO
+W przypadku relacyjnej bazy danych powyższa struktura wymagała by stworzenie sześciu tabel a zapytanie które dałby by dokładnie taki sam rezultat wyglądało by następująco:
+
+\begin{lstlisting}[caption=Zapytanie SQL.]
+SELECT * FROM Tasks t 
+	JOIN Request r ON t.id = r.task_id
+	JOIN Document d ON r.id = d.request_id
+	JOIN Company c ON d.id = c.document_id
+	JOIN Address a ON c.id = a.company_id
+WHERE a.country = 'Polska';
+\end{lstlisting}
 
 \subsection{Maven}
 Kolejna technologią wykorzystaną do realizacji idei przestawionej w niniejszej pracy magisterskiej jest Maven. Wykorzystanie tej technologii wynika z decyzji wykorzystania języka Java. Maven jest narzędziem wspomagającym budowanie projektów stworzonych w języku Java. Odpowiada on za skompletowania wszystkich wymaganych bibliotek zdefiniowanych w odpowiednim pliku konfiguracyjnym - pom.xml. Biblioteki te pobierane są ze specjalnie przygotowanych do tego celu repozytoriów dostępnych w sieci, na lokalną maszynę. Biblioteki te są następnie wykorzystywane w procesie budowania plików wynikowych.  
@@ -241,3 +287,11 @@ Rysunek ~\ref{fig:climeTaskFlow} przedstawia diagram przypisania konkretnego zad
 \end{figure}
 
 Na rysunku ~\ref{fig:resolveTaskFlow} przedstawiono ostatni rodzaj funkcjonalności jakim jest obsługa rozwiązania zadania. Decyzja o rozwiązaniu również pochodzi od strony aplikacji mobilnej i a funkcjonalność ją obsługująca udostępniona jest za pomocą REST API. Tak jak w poprzednich przypadkach przed rozpoczęciem przetwarzania żądania następuje autentykacja oraz pobranie informacji o użytkowniku. Następnie pobierane zostaje zadanie z repozytorium, ustawiany rezultat oraz zmieniany status. Rezultat następnie zostaje odesłany do procesu biznesowego przez klasę TaskResultResolver. Jeśli odesłanie rezultatu zakończy się sukcesem zadanie z odpowiednio ustawionym statusem i rezultatem zostaje zapisane do bazy danych.
+
+
+%---------------------------------------------------------------------------
+
+%\section{Notyfikacje}
+%\label{sec:notifications}
+
+%// TODO
