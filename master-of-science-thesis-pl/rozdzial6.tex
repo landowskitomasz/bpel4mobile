@@ -1,7 +1,7 @@
 \chapter{Propozycja wykorzystania warstwy pośredniej}
 \label{cha:middleware}
 
-W rozdziale poprzednim, podczas analizy sposobu działania klienckich aplikacji mobilnych, wyciągnięto wniosek, że najbardziej odpowiednim miejscem do wykorzystania procesów biznesowych, będą aplikacje back end'owe. Stwierdzono również, że w celu realizacji takiego rozwiązania konieczne jest zastosowanie dodatkowej warstwy pośredniej, realizującej komunikacje aplikacji mobilnych z procesami biznesowymi. Głównym powodem stosowania warstwy pośredniej jest brak możliwości udostępnienie przez aplikacje mobilne, usług sieciowych z którymi proces mógłby się komunikować. 
+W rozdziale poprzednim  podczas analizy sposobu działania klienckich aplikacji mobilnych, wyciągnięto wniosek, że najbardziej odpowiednim miejscem do wykorzystania procesów biznesowych, będą aplikacje back end'owe. Stwierdzono również, że w celu realizacji takiego rozwiązania konieczne jest zastosowanie dodatkowej warstwy pośredniej, realizującej komunikacje aplikacji mobilnych z procesami biznesowymi. Głównym powodem stosowania warstwy pośredniej jest brak możliwości udostępnienia przez aplikacje mobilne, usług sieciowych z którymi proces mógłby się komunikować. 
 
 \begin{figure}[h]
 \centerline{\includegraphics[scale=0.5]{middlewareConceptDiagram}}
@@ -9,17 +9,18 @@ W rozdziale poprzednim, podczas analizy sposobu działania klienckich aplikacji 
 \label{fig:middlewareConceptDiagram}
 \end{figure}
 
-Na rysunku~\ref{fig:middlewareConceptDiagram}. przedstawiono poglądowy schemat działania opisanego powyżej rozwiązania, ma on na celu lepsze zobrazowanie problemu i wyłonienie funkcjonalności, które warstwa pośrednia musi realizować. Na schemacie można dostrzec trzy rodzaje systemów, środowisko uruchomieniowe dla procesów biznesowych, warstwę pośrednią oraz aplikację mobilną. Strzałki umieszczone na schemacie przedstawiają kierunki komunikacji pomiędzy poszczególnymi systemami.  Komunikacja między aplikacją mobilną a warstwą pośrednią zawsze odbywa się z inicjatywy aplikacji mobilnej, jest to związane ze specyfiką dostępu aplikacji do mediów komunikacyjnych.  Wynika z tego, że jedną z funkcjonalności, które musi  realizować warstwa pośrednia jest buforowanie żądań pochodzących z procesów biznesowych do momentu aż aplikacja mobilna się po nie zgłosi sama. 
-Aplikacje mobilne są specyficzne pod jeszcze jednym względem - poszczególne instancje aplikacji uruchamiane są zawsze na urządzeniach personalnych. Bardzo mocny akcent zatem kładziony jest tutaj na samych użytkowników. Gdy przyglądniemy się procesowi BPEL to możemy dostrzec, że wątek ludzki jest  tutaj zupełnie pomijany. Proces komunikuje się z usługą sieciową jedynie w celu rozwiązanie jakiegoś konkretnego zadania i zazwyczaj oczekuje na rezultat
+Na rysunku~\ref{fig:middlewareConceptDiagram}. przedstawiono poglądowy schemat działania opisanego powyżej rozwiązania. Diagram ma na celu lepsze zobrazowanie problemu i wyłonienie funkcjonalności, które warstwa pośrednia musi realizować. Na schemacie można dostrzec trzy rodzaje systemów: środowisko uruchomieniowe dla procesów biznesowych, warstwę pośrednią oraz aplikację mobilną. Strzałki umieszczone na schemacie przedstawiają kierunki komunikacji pomiędzy poszczególnymi systemami.  Komunikacja między aplikacją mobilną a warstwą pośrednią zawsze odbywa się z inicjatywy aplikacji mobilnej, jest to związane ze specyfiką dostępu aplikacji do mediów komunikacyjnych. Wynika z tego, że jedną z funkcjonalności które musi  realizować warstwa pośrednia jest buforowanie żądań pochodzących z procesów biznesowych do momentu aż aplikacja mobilna się po nie zgłosi sama. 
+
+Aplikacje mobilne są specyficzne pod jeszcze jednym względem - poszczególne instancje aplikacji uruchamiane są zawsze na urządzeniach personalnych. Bardzo mocny akcent zatem kładziony jest tutaj na samych użytkowników. Gdy przyglądniemy się procesowi BPEL to możemy dostrzec, że wątek ludzki jest w nich zupełnie pomijany. Proces komunikuje się z usługą sieciową jedynie w celu rozwiązania jakiegoś konkretnego zadania i zazwyczaj oczekuje na rezultat.
 
 %---------------------------------------------------------------------------
 
 \section{BPEL4People}
 \label{sec:BPEL4People}
 
-Jak wspomniano powyżej procesy WS-BPEL traktują użytkowników po macoszemu, skupiają się przede wszystkim na sekwencji wykonywania kolejnych operacji. Problem dostrzegli projektanci z zespołów IBM oraz SAP, a proponowaną przez nich odpowiedzią jest powstanie rozszerzenia do BPEL nazwanego BPEL4People.  
+Jak wspomniano powyżej procesy WS-BPEL traktują użytkowników po macoszemu, skupiają się przede wszystkim na sekwencji wykonywania kolejnych operacji. Problem dostrzegli projektanci z zespołów IBM oraz SAP, a proponowaną przez nich odpowiedzią jest powstanie rozszerzenia do BPEL nazwanego \textit{BPEL4People}.  
 
-Twórcy standardu argumentują powstanie kolejnej specyfikacji koniecznością uwzględnienia aspektu ludzkiego w procesach BPEL. Podają szereg przykładów, w których interakcja procesu z człowiekiem jest konieczna. Jednym z przykładów jest konieczność dokonywania decyzji akceptacji lub odrzucenia wyniku jakiejś operacji. Innym przykładem jest wprowadzanie dodatkowych danych niezbędnych dla procesu za pomocą formularzy. \cite[str. 4]{bpel4People}
+Twórcy standardu argumentują powstanie kolejnej specyfikacji koniecznością uwzględnienia aspektu ludzkiego w procesach BPEL. Podają szereg przykładów, w których interakcja procesu z człowiekiem jest konieczna. Jednym z przykładów jest konieczność dokonywania decyzji akceptacji lub odrzucenia wyniku jakiejś operacji. Innym przykładem jest wprowadzanie dodatkowych danych niezbędnych do kontynuacji wykonania procesu, za pomocą formularzy. \cite[str. 4]{bpel4People}
 
 Specyfikacja opiewa w szereg bardzo ciekawych pomysłów integracji interakcji użytkowników z  procesami BPEL. Porusza problem przejścia pomiędzy serwisami dostosowanymi dla ludzi a serwisami zautomatyzowanymi, zwraca uwagę na  problem monitorowania zadań przeznaczonych dla ludzi, opisuje problem terminów ostatecznych wykonania zadań oraz eskalacji w przypadku ich przekroczenia.\cite[str. 6]{bpel4People}
 
@@ -27,23 +28,22 @@ Specyfikacja opiewa w szereg bardzo ciekawych pomysłów integracji interakcji u
 
 Bezpośrednio powiązany  z rozszerzeniem BPEL4people jest temat usług sieciowych dla ludzi, które są wykorzystywane przez to rozszerzenie.
 
-WS-HumanTask są usługami sieciowymi 'implementowanymi' przez ludzi. Pozwalają na integrację ludzi z aplikacjami zorientowanymi na usługi (SOA). Specyfikacja udostępnia dwa interfejsy do komunikacjami z zadaniami. Pierwszy z nich jest przeznaczony dla automatów czyli aplikacji rozproszonych, drugi natomiast jest przeznaczony dla ludzi i pozwala na operacje zadaniami.  
-Zadania opisane w specyfikacji posiadają przypisania do konkretnych grup docelowych. Przypisania te definiują kto powinien być uprawniony do operacji na tych zadaniach. Specyfikacja definiuje również meta dane dotyczące zadań pozwalające na określenie w jaki sposób zadania mają być prezentowane na różnych urządzeniach. Zadanie mogą również definiować reakcje na terminy ostateczne ich wykonania, w postaci mechanizmu eskalacji. 
-
+\textit{WS-HumanTask} są usługami sieciowymi 'implementowanymi' przez ludzi. Pozwalają na integrację ludzi z aplikacjami zorientowanymi na usługi (SOA). Specyfikacja udostępnia dwa interfejsy do komunikacjami z zadaniami. Pierwszy z nich jest przeznaczony dla automatów czyli aplikacji rozproszonych, drugi natomiast jest przeznaczony dla ludzi i pozwala na operacje zadaniami.  
+Zadania opisane w specyfikacji posiadają przypisania do konkretnych grup docelowych. Przypisania te definiują kto powinien być uprawniony do operacji na zadaniach. Specyfikacja definiuje również meta dane dotyczące zadań, pozwalające na określenie w jaki sposób zadania mają być prezentowane na różnych urządzeniach. Zadanie mogą również definiować reakcje na terminy ostateczne ich wykonania, w postaci mechanizmu eskalacji. 
 
 \subsection{Implementacje}
 
-Z punku widzenia proponowanego w niniejszej pracy magisterskiej rozwiązanie zastosowanie BPEL4People rozwiązuje szereg problemów związanych ze spersonalizowaną specyfiką aplikacji mobilnych. Kolejne instancje aplikacji można utożsami z użytkownikami. Warstwa pośrednia udostępniałaby w takim podejściu WS-HT, z którymi komunikowałby się proces BPEL4People. Niestety rzeczywistość w tym przypadku okazuje się brutalna. Rozszerzenie do BPEL jeśli nie zostaje zaimplementowane jest bezwartościowe. W przypadku BPEL4People mimo tego że standard istnieje już 9 lat, nie został jeszcze wdrożony w żadnym z popularnych środowisk uruchomieniowych.  
+Z punku widzenia proponowanego w niniejszej pracy magisterskiej rozwiązanie zastosowanie BPEL4People rozwiązuje szereg problemów związanych ze spersonalizowaną specyfiką aplikacji mobilnych. Kolejne instancje aplikacji mobilnych można utożsami z użytkownikami. Warstwa pośrednia udostępniałaby w takim podejściu WS-HT, z którymi komunikowałby się proces \textit{BPEL4People}. Niestety rzeczywistość w tym przypadku okazuje się brutalna. Rozszerzenie do BPEL jeśli nie zostaje zaimplementowane jest bezwartościowe. W przypadku BPEL4People mimo tego że standard istnieje już 9 lat, nie został jeszcze wdrożony w żadnym z popularnych środowisk uruchomieniowych.  
 Warstwa pośrednia powinna więc, samodzielnie uwzględniać aspekt ludzki pomijany przez procesy WS-BPEL. 
 
-Mimo braku implementacji można dostrzec pewne korzyści płynące z powstania rozszerzenia BPEL4People. Jest nimi z pewnością szereg pomysłów dotyczących rozwiązania problemu dystrybucji żądań pochodzących z procesów WS-BPEL między różnymi użytkownikami. W niniejszej pracy magisterskiej niejednokrotnie skorzystamy z tej wiedzy. 
+Mimo braku implementacji można dostrzec pewne korzyści płynące z powstania rozszerzenia BPEL4People. Są nimi z pewnością pomysły dotyczące rozwiązania problemu dystrybucji żądań pochodzących z procesów WS-BPEL między różnymi użytkownikami. W niniejszej pracy magisterskiej niejednokrotnie skorzystamy z tej wiedzy. 
 
 %---------------------------------------------------------------------------
 
 \section{Zadania}
 \label{sec:tasks}
 
-Pierwszym z pomysłów zaczerpniętych z BPEL4People jest pomysł na traktowanie kolejnych żądań pochodzących z procesów WS-BPEL jako zadań, a aplikacji mobilnych jako zespołu specjalistów potrafiących rozwiązać te zadania. Podejście to rozwiązuje problem konieczności buforowania żądań procesu ze względu na komunikacje pull od strony aplikacji mobilnej. 
+Pierwszym z pomysłów zaczerpniętych z \textit{BPEL4People} jest pomysł na traktowanie kolejnych żądań pochodzących z procesów WS-BPEL jako zadań, a aplikacji mobilnych jako zespołu specjalistów potrafiących rozwiązać te zadania. Podejście to rozwiązuje problem konieczności buforowania żądań procesu ze względu na komunikacje pull od strony aplikacji mobilnej. 
 
 \begin{figure}[h]
 \centerline{\includegraphics[scale=0.5]{middlewareTasksConceptDiagram}}
@@ -51,10 +51,10 @@ Pierwszym z pomysłów zaczerpniętych z BPEL4People jest pomysł na traktowanie
 \label{fig:middlewareTasksConceptDiagram}
 \end{figure}
 
-Na rysunku~\ref{fig:middlewareTasksConceptDiagram}. przedstawiono poglądowy schemat wykorzystania zadań w warstwie pośredniej. Strzałkami przerywanymi został oznaczony podstawowy cykl życia zadania. Po otrzymaniu żądanie od procesu BPEL warstwa pośrednia utworzy nowe zadanie i zapisze go w bazie danych. Aplikacje mobilne korzystając z lekkiego interfejsu komunikacyjnego będą potrafiły wyciągać zadania z bazy danych w celu ich rozwiązania. Po rozwiązaniu zadania, następować będzie wysłanie odpowiedzi do procesu biznesowego. 
+Na rysunku~\ref{fig:middlewareTasksConceptDiagram}. przedstawiono poglądowy schemat wykorzystania zadań w warstwie pośredniej. Strzałkami przerywanymi został oznaczony podstawowy cykl życia zadania. Po otrzymaniu żądanie od procesu BPEL warstwa pośrednia utworzy nowe zadanie i zapisze go w bazie danych. Aplikacje mobilne korzystając z lekkiego interfejsu komunikacyjnego, będą potrafiły pobierać zadania z bazy danych w celu ich rozwiązania. Po rozwiązaniu zadania, następować będzie wysłanie odpowiedzi do procesu biznesowego. 
 
 \subsection{Dystrybucja zadań}
-Przedstawiony powyżej schemat nie jest jednak kompletny. Oczywistym jest, że aby proces biznesowy miał sens powinien wykonywać więcej niż jedną operację, dla każdej operacji w proponowanym rozwiązaniu istnieć będzie zupełnie inna klasa zadań. Nie trudno dojść do wniosku, że każda z tych klas obsługiwana może być przez zupełnie różne grupy użytkowników. Na przykład niemal w każdym przedsiębiorstwie zadania dyrektora są kompletnie inne od zadań zwykłego pracownika, ale są one między sobą w jakiś sposób powiązane na przykład występują w tym samym procesie. Wnioskiem z tego płynącym jest konieczność wprowadzenia w warstwie pośredniej mechanizmu przydzielania zadań poszczególnym użytkownikom. W przypadku tym ponownie rozszerzenie BPEL4People przewidziało ten problem i zaproponowało rozwiązanie. Wprowadza ono do każdej klasy zadań, definicje grupy docelowych adresatów. 
+Przedstawiony powyżej schemat nie jest jednak kompletny. Oczywistym jest, że aby proces biznesowy miał sens powinien wykonywać więcej niż jedną operację, dla każdej operacji w proponowanym rozwiązaniu istnieć będzie zupełnie inna klasa zadań. Nie trudno dojść do wniosku, że każda z tych klas obsługiwana może być przez zupełnie różne grupy użytkowników. Na przykład niemal w każdym przedsiębiorstwie zadania dyrektora są kompletnie inne od zadań zwykłego pracownika, ale są one między sobą w jakiś sposób powiązane na przykład występują w tym samym procesie. Wnioskiem z tego płynącym jest konieczność wprowadzenia w warstwie pośredniej mechanizmu przydzielania zadań poszczególnym użytkownikom. W przypadku tym ponownie rozszerzenie \textit{BPEL4People} przewidziało ten problem i zaproponowało rozwiązanie. Wprowadza ono do każdej klasy zadań, definicje grupy docelowych adresatów. 
 
 \begin{figure}[h]
 \centerline{\includegraphics[scale=0.5]{middlewareUserDataProviderConceptDiagram}}
@@ -62,27 +62,27 @@ Przedstawiony powyżej schemat nie jest jednak kompletny. Oczywistym jest, że a
 \label{fig:middlewareUserDataProviderConceptDiagram}
 \end{figure}
 
-Na rysunku ~\ref{fig:middlewareUserDataProviderConceptDiagram}. przedstawiono schemat warstwy pośredniej uzupełniony o zarządzanie użytkownikami. Aplikacje mobilne podczas rozwiązywania zadań będą przedstawiać się przy pomocy nazwy użytkownika. Przed pobraniem zadań z bazy danych dostawca danych o użytkownikach dostarczy informacji niezbędnych do określenia zadań specyficznych dla danego użytkownika. Sposób ten zapewni, że zadania należące do dyrektora przedsiębiorstwa nie trafią do zwykłych pracowników. 
+Na rysunku ~\ref{fig:middlewareUserDataProviderConceptDiagram} przedstawiono schemat warstwy pośredniej uzupełniony o zarządzanie użytkownikami. Aplikacje mobilne podczas rozwiązywania zadań będą przedstawiać się przy pomocy nazwy użytkownika. Przed pobraniem zadań z bazy danych dostawca danych o użytkownikach dostarczy informacji niezbędnych do określenia zadań specyficznych dla danego użytkownika. Sposób ten zapewni, że zadania należące do dyrektora przedsiębiorstwa nie trafią do zwykłych pracowników. 
 
-Zastosowanie dodatkowej warstwy nazwanej Dostawcą danych o użytkownikach jest tutaj celowe, i będzie wymagać osobnej implementacji dla różnych rodzajów metod przechowywania danych o użytkownikach. Nie koniecznie użytkownicy musza pochodzi z systemu katalogowego takiego jak LDAP. Możliwości przechowywania danych o użytkownikach jest bardzo wiele, dla prostych systemów lista użytkowników może być nawet predefiniowana.
+Zastosowanie dodatkowej warstwy nazwanej \textit{Dostawcą danych o użytkownikach} jest tutaj celowe, i będzie wymagać osobnej implementacji dla różnych rodzajów metod przechowywania danych o użytkownikach. Nie koniecznie użytkownicy musza pochodzi z systemu katalogowego takiego jak LDAP. Możliwości przechowywania danych o użytkownikach jest bardzo wiele, dla prostych systemów lista użytkowników może być nawet predefiniowana.
 
 \subsubsection{Context aware middleware}
-Dodatkowym atutem udostępnienia możliwości implementacji dostawcy jest możliwość integracji adaptera z systemami zwanymi Context aware middleware. 
+Dodatkowym atutem udostępnienia możliwości implementacji dostawcy jest możliwość integracji adaptera z systemami zwanymi \textit{Context aware middleware}. 
 
-Context aware middleware jest oprogramowaniem które za pomocą danych dostarczanych z możliwie jak największej ilości źródł, stara się rozwiązać zadany problem. Rozwiązanie to bardzo szerokie zastosowanie znajduje głównie w aplikacjach mobilnych, dlatego że kontekst w przypadku tych aplikacji zmienia się bardzo dynamicznie. Architektura skupia się przede wszystkim na dostarczeniu informacji opisujących takie wymiary jak: - miejsce, Gdzie ? - czas, Kiedy? - stan np. Jaka jest temperatura otoczenia? - podmiot, Kto?
+\textit{Context aware middleware} jest oprogramowaniem które za pomocą danych dostarczanych z możliwie jak największej ilości źródł, stara się rozwiązać zadany problem. Rozwiązanie to bardzo szerokie zastosowanie znajduje głównie w aplikacjach mobilnych, dlatego że kontekst w przypadku tych aplikacji zmienia się bardzo dynamicznie. Architektura skupia się przede wszystkim na dostarczeniu informacji opisujących takie wymiary jak: - miejsce, Gdzie ? - czas, Kiedy? - stan np. Jaka jest temperatura otoczenia? - podmiot, Kto?
 
-Bazując na tych danych stara się rozwiązywać dany problem w najbardziej optymalny sposób, np. przydzielając zadania osobie która jest najbliżej, która jest najmniej obciążona, która jest aktualnie w pracy itd.
+Bazując na tych danych stara się rozwiązywać dany problem w najbardziej optymalny sposób, na przykład przydzielając zadania osobie która jest najbliżej, która jest najmniej obciążona, która jest aktualnie w pracy itd.
 
-Aby zastosować Context aware middleware w warstwie pośredniej wystarczy odpowiednia implementacja dostawcy danych o użytkownikach. Uzyskamy dzięki takiemu rozwiązaniu potężne narzędzie potrafiące dystrybuować zadania w bardzo optymalny sposób zapewniając ich szybką realizację.  
+Aby zastosować \textit{Context aware middleware} w warstwie pośredniej wystarczy odpowiednia implementacja dostawcy danych o użytkownikach. Uzyskamy dzięki takiemu rozwiązaniu potężne narzędzie potrafiące dystrybuować zadania w bardzo optymalny sposób zapewniając ich szybką realizację.  
 
 \subsection{REST API}
 
 Interfejs komunikacji warstwy pośredniej od strony procesów biznesowych został wymuszony przez specyfikację BPEL. Aby skompletować projekt warstwy pośredniej konieczne jest zdefiniowanie interfejsu komunikacyjnego od strony aplikacji mobilnych. 
 
-Interfejs ten powinien przede wszystkim rozwiązywać podstawowy problem występujący podczas rozwiązywania zadań przez wielu użytkowników jakim są konflikty. Nie może on dopuścić do sytuacji w której jedno zadanie byłoby rozwiązywanie przez wielu użytkowników jednocześnie. W celu rozwiązanie tego problemu konieczne jest wprowadzenie statusów zadań. W proponowanej warstwie pośredniej będą występowały następujące statusy zadania:
+Interfejs ten powinien przede wszystkim rozwiązywać podstawowy problem, występujący podczas rozwiązywania zadań przez wielu użytkowników jakim są konflikty. Nie może on dopuścić do sytuacji w której jedno zadanie byłoby rozwiązywanie przez wielu użytkowników jednocześnie. W celu rozwiązanie tego problemu konieczne jest wprowadzenie statusów zadań. W proponowanej warstwie pośredniej będą występowały następujące statusy zadania:
 
 \begin{itemize}
-\item gotowe do wykonania (ang. ready) -- zadanie zostanie oznaczone tym statusem tuż po utworzeniu zadania. Użytkownik aplikacji mobilnych poszukując zadań do wykonania otrzyma listę zadań oznaczonych właśnie tym statusem. 
+\item gotowe do wykonania (ang. ready) -- zadanie zostanie oznaczone tym statusem tuż po utworzeniu. Użytkownik aplikacji mobilnych szukając zadań do wykonania otrzyma listę zadań oznaczonych właśnie tym statusem. 
 \item przypisane (ang. climed) -- status ten oznacza, że któryś z użytkowników zadeklarował chęć jego wykonania. Będzie ono od tej pory dostępne tylko dla tego użytkownika. Pozostali użytkownicy poszukujący zadań do wykonania go nie zobaczą. 
 \item rozwiązane (ang. completed) -- statusem tym oznaczone będą zadania zrealizowane z sukcesem, których rezultat został odesłany do procesu biznesowego. 
 \item błąd podczas rozwiązywania (ang. failed) -- statusem tym oznaczone zostaną wszystkie zadania, podczas których rozwiązania wystąpił problem techniczny. 
