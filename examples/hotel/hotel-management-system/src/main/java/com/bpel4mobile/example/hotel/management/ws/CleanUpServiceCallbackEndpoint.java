@@ -24,7 +24,7 @@ public class CleanUpServiceCallbackEndpoint {
     private RoomCleanUpService cleanUpService;
 
     @PayloadRoot(namespace = NAMESPACE, localPart = "cleanUpResponse")
-    public void handleHolidayRequest(@RequestPayload Element request) throws Exception {
+    public void handleProcessResult(@RequestPayload Element request) throws Exception {
     	logger.info("Process callback invoked");
 
     	try{
