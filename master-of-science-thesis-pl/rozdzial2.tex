@@ -1,7 +1,7 @@
 \chapter{Zestawienie modelowania procesów biznesowych ze specyfiką aplikacji mobilnych}
 \label{cha:bpmVSMobileApplications}
 
-Tematem niniejszej pracy magisterskiej jest analiza możliwości adaptacji środowisk uruchomieniowych dla logiki biznesowej na platformach mobilnych. Temat jest szeroki, zarówno środowiska uruchomieniowe dla logiki biznesowej jak i platformy mobilne mogą być rozumiane w różny sposób, dlatego na początku niezbędne jest uściślenie kilku kwestii. Środowiska uruchomieniowe dla logiki biznesowej w niniejszej pracy magisterskiej rozumiane będą przez technologię Modelowania Procesów Biznesowych. W przypadku platform mobilnych największa uwaga zostanie poświęcona najbardziej popularnej, opartej na systemie operacyjnym Unix platformie mobilnej - Android. Aby przejść do zestawienia tych dwóch technologii niezbędne jest ich poznanie i zrozumienie, dlatego w kolejnych sekcjach niniejszego rozdziału zostaną opisane wyżej wymienione technologii.
+Tematem niniejszej pracy magisterskiej jest analiza możliwości adaptacji środowisk uruchomieniowych dla logiki biznesowej na platformach mobilnych. Temat jest szeroki, zarówno środowiska uruchomieniowe dla logiki biznesowej jak i platformy mobilne mogą być rozumiane w różny sposób, dlatego na początku niezbędne jest uściślenie kilku kwestii. Środowiska uruchomieniowe dla logiki biznesowej w niniejszej pracy magisterskiej rozumiane będą przez technologię Modelowania Procesów Biznesowych. W przypadku platform mobilnych największa uwaga zostanie poświęcona najbardziej popularnej, opartej na systemie operacyjnym \textit{Unix} platformie mobilnej - \textit{Android}. Aby przejść do zestawienia tych dwóch technologii niezbędne jest ich poznanie i zrozumienie, dlatego w kolejnych sekcjach niniejszego rozdziału zostaną opisane wyżej wymienione technologii.
 
 
 %---------------------------------------------------------------------------
@@ -22,16 +22,16 @@ W literaturze pojęcie modelowania oraz zarządzanie procesami biznesowymi w kon
 \item monitorowanie,
 \item kontrola
 \end{itemize}
-zautomatyzowanych oraz niezautomatyzowanych procesów biznesowych.~\cite{EAOBPMWeb}
+zautomatyzowanych oraz niezautomatyzowanych procesów biznesowych~\cite{EAOBPMWeb}.
 
-W środowisku IT zdarza się, że BPM traktowany jest jako osobna klasa systemów informatycznych, obok ERP, MES, CRM itd. Z punktu widzenia przedstawionej wyżej definicji trudno zgodzić się z takim podejściem, można jednak zauważyć że BPM de facto może zostać wykorzystany do realizacji każdego z wymienionych rodzajów oprogramowania lub posłużyć jako narzędzie integrujące wyżej wymienione klasy systemów, w celu stworzenia globalnego systemu zarządzania przedsiębiorstwem. ~\cite{wiBPMA}
+W środowisku IT zdarza się, że BPM traktowany jest jako osobna klasa systemów informatycznych, obok ERP, MES, CRM itd. Z punktu widzenia przedstawionej wyżej definicji trudno zgodzić się z takim podejściem, można jednak zauważyć że BPM de facto może zostać wykorzystany do realizacji każdego z wymienionych rodzajów oprogramowania lub posłużyć jako narzędzie integrujące wyżej wymienione klasy systemów, w celu stworzenia globalnego systemu zarządzania przedsiębiorstwem~\cite{wiBPMA}.
 
-\subsection{Projektowanie BPM}
+\subsection{Projektowanie procesów biznesowych}
 \label{sec:projektowanieBPM}
 
-Zdecydowanie jednym z najistotniejszych etapów w tworzeniu systemu opartego o procesy biznesowe jest etap projektowania. Jednym z najbardziej popularnych narzędzi do tego celu jest BPMN (\textit{Buisness Process Modeling Notation}), które doczekało się już dwóch wersji. W kontekście niniejszej pracy magisterskiej notacja BPMN nie jest szczególnie ważna jednak została wspomniana ze względu na jej wykorzystanie w przykładach. Warto zwrócić uwagę  na fakt, że BPMN nie jest w żadnym stopniu implementacją, jest to jedynie sposób wizualizacji procesu za pomocą diagramu w postaci obrazka.
+Zdecydowanie jednym z najistotniejszych etapów w tworzeniu systemu opartego o procesy biznesowe jest etap projektowania. Jednym z najbardziej popularnych narzędzi do tego celu jest BPMN (\textit{Buisness Process Model and Notation}), które doczekało się już dwóch wersji. W kontekście niniejszej pracy magisterskiej notacja BPMN nie jest szczególnie ważna jednak została wspomniana ze względu na jej wykorzystanie w przykładach. Warto zwrócić uwagę  na fakt, że BPMN nie jest w żadnym stopniu implementacją, jest to jedynie sposób wizualizacji procesu za pomocą diagramu w postaci obrazka.
 
-\subsection{Wykonywanie BPM}
+\subsection{Wykonywanie procesów biznesowych}
 \label{sec:wykonywanieBPM}
 
 Jak zostało wspomniane na samym początku Modelowanie Procesów Biznesowych jest pojęciem ogólnym nie wskazującym konkretnej technologii, która ma posłużyć do wykonania procesów biznesowych. Z definicji można jednak wnioskować, że środowiskiem do wykonywania procesów biznesowych w przedsiębiorstwach na pewno nie powinna być prosta aplikacja desktopowa czy mobilna. Biorąc pod uwagę wachlarz zastosowań BPM nie trudno dojść do wniosku, że najbardziej odpowiednim środowiskiem dla procesów biznesowych są środowiska aplikacji rozproszonych. 
@@ -55,7 +55,7 @@ Ze względu na rodzaj zastosowania aplikacje mobilne można sklasyfikować w nas
 
 \begin{itemize}
 \item Samodzielne aplikacje -- aplikacje wykorzystujące tylko i wyłącznie lokalne zasoby urządzenia, korzystające z lokalnej bazy danych bez połączenia z systemami zewnętrznym, często nie wymagające połączenie do internetu. Dobrym przykładem takiej aplikacji może być prosty notatnik.  
-\item Aplikacje klienckie -- są to aplikacje bazujące na komunikacji z systemami zewnętrznymi przy pomocy jakiegokolwiek interfejsu komunikacyjnego,  najczęściej połączenia HTTP. Zazwyczaj aplikacje te wykorzystują również lokalną bazę danych umożliwiając użytkownikom pracę z aplikacji w przypadku braku połączenia z systemem zewnętrznym.
+\item Aplikacje klienckie -- są to aplikacje bazujące na komunikacji z systemami zewnętrznymi przy pomocy jakiegokolwiek interfejsu komunikacyjnego,  najczęściej połączenia HTTP. Zazwyczaj aplikacje te wykorzystują również lokalną bazę danych umożliwiając użytkownikom pracę z aplikacją w przypadku braku połączenia z systemem zewnętrznym.
 \item Internetowe -- najczęściej strony www, aplikacje  te nie wykorzystują lokalnych zasobów urządzeń mobilnych, ich rolą jest udostępnienie prostego interfejsu użytkownika systemu dla użytkowników aplikacji mobilnych.
 \item Gry  -- szczególny przypadek samodzielnych aplikacji ukierunkowanych głównie na wykorzystanie lokalnych zasobów urządzenie w celach rozrywkowych, szczególnie eksploatowana w tego typu aplikacjach jest karta graficzna urządzenia.
 \end{itemize}
@@ -79,15 +79,15 @@ Opisując aplikacje mobilnie nie można zapomnieć o cechach specyficznych, któ
 \item Ograniczone zasoby sprzętowe -- urządzenie przenośnie pod względem zasobów sprzętowych nigdy nie zastąpią komputerów stacjonarnych, a tym bardziej urządzeń serwerowych. Właśnie ze względu na tę cechę aplikacje mobilne ukierunkowane są na rozwiązywanie małych - jednostkowych problemów. Projektant aplikacji mobilnych powinien szczególnie zwrócić uwagę na ten aspekt w przypadku projektowania interfejsu do komunikacji z systemami zewnętrznymi. Asplikacje mobilne powinny wykorzystywać lekkie interfejsy komunikacyjne np. REST, aby jak najmniej obciążać kartę sieciową urządzenia. 
 \item Uproszczony interfejs użytkownika dostosowany do ekranów dotykowych -- cecha ta jest bardzo ważna głównie dla projektantów graficznych, ale ma również znaczący wpływ na rodzaj zadań rozwiązywanych za pomocą aplikacji mobilnych.  
 \item Przerwy w działaniu aplikacji -- aplikacje mobilne w przeciwieństwie do innych rodzajów systemów są szczególnie narażone na przerwy w działaniu. Najprostszym przykładem może być rozmowa telefoniczna przychodząca w trakcie pracy z aplikacją. Najczęściej w takich przypadkach aplikacje przechodzą w tryb uśpienia i nie ma pewności czy praca zostanie wznowiona. Programiści powinny pamiętać o zapamiętywaniu poszczególnych stanów aplikacji aby użytkownik nie tracił wykonanej pracy. 
-\item Dostęp do GEO lokalizacji -- aplikacje mobilne oprócz ograniczeń posiadają również wiele cech dodatkowych, wyróżniających je wśród innych systemów - jedną z nich jest dostęp do GEO lokalizacji.  Funkcjonalność ta bardzo szeroko wykorzystywana jest przez systemu zwane Context Aware Middleware. 
+\item Dostęp do geolokalizacji -- aplikacje mobilne oprócz ograniczeń posiadają również wiele cech dodatkowych, wyróżniających je wśród innych systemów - jedną z nich jest dostęp do  geolokalizacji.  Funkcjonalność ta bardzo szeroko wykorzystywana jest przez systemy zwane \textit{Context Aware Middleware}~\cite{ContextAwareMobility}. 
 \item Dostęp do aparatu/kamery -- jest to kolejna cecha rozszerzająca możliwości aplikacji mobilnych, może być wykorzystana na przykład jako narzędzie do skanowania kodów kreskowych, albo sposób dokumentacji pracy wykonanej przez użytkownika systemów mobilnych. 
-\item Specyficzna architektura dla różnych systemów operacyjnych -- bardzo wiele cech aplikacji mobilnych jest wspólna w przypadku wszystkich systemów operacyjnych dostępnych na rynku, trzeba mieć jednak świadomość, że jest również wiele cech specyficznych dla różnych platform mobilnych. 
+\item Specyficzna architektura dla różnych systemów operacyjnych -- przyglądając się najbardziej popularnym platformą mobilnym można odnaleźć bardzo wiele cech współnych, mimo wszystko platformy te korzystają zazwyczaj z różnych technologii do realizacji podobnych celów.
 \end{itemize}
 
 \subsection{Komunikaty Push}
 \label{sec:push}
 
-Ze względu na zmienne warunki w dostępie do mediów komunikacyjnych, aplikacji mobilne wykorzystują w głównej mierze komunikacje typu pull (pobieranie informacji na żądanie) to wymiany informacji z systemami zewnętrznymi. Najpopularniejsze platformy mobilne jak Android, iOS oraz Windows Phone udostępniają również alternatywny sposób komunikacji - push. 
+Ze względu na zmienne warunki w dostępie do mediów komunikacyjnych, aplikacji mobilne wykorzystują w głównej mierze komunikacje typu pull (pobieranie informacji na żądanie) to wymiany informacji z systemami zewnętrznymi. Najpopularniejsze platformy mobilne jak \textit{Android}, \textit{iOS} oraz \textit{Windows Phone} udostępniają również alternatywny sposób komunikacji - push. 
 
 Komunikacja push odbywa się jednak zawsze za pośrednictwem serwisów udostępnianych przez platformy mobilne do tego celu. Komunikacja ta posiada wiele ograniczeń, a już na pewno najważniejszym z nich jest brak pewności, że komunikat zostanie dostarczony. Komunikacja push powinna być zatem wykorzystywana jedynie do notyfikacji użytkownika o jakimś zdarzeniu, a nie do przesyłania informacji kluczowych dla działania aplikacji. 
 
@@ -98,11 +98,11 @@ Komunikacja push odbywa się jednak zawsze za pośrednictwem serwisów udostępn
 
 BPEL (\textit{Business Process Execution Language}), a właściwie pełna nazwa WS-BPEL,  której rozwinięcie to \textit{Web Services Business Process Execution Language} jest językiem opartym o składnię XML, służącym do wykonywania procesów biznesowych w środowisku usług sieciowych. Język BPEL jest ustandaryzowany przez oranizacje OASIS (\textit{Organization for the Advancement of Structured Information Standards}). 
 
-Organizacja OASIS definiuje język BPEL jako: \textit{Umożliwiający użytkownikom opis aktywności procesów biznesowych jako usługi sieciowe oraz definicję w jaki sposób usługi te mogę być połączone między sobą w celu wykonania zadania.} ~\cite{OASISweb}
+Organizacja OASIS definiuje język BPEL jako: \textit{Umożliwiający użytkownikom opis aktywności procesów biznesowych jako usługi sieciowe oraz definicję w jaki sposób usługi te mogę być połączone między sobą w celu wykonania zadania}~\cite{OASISweb}.
 
 Jak argumentuje OASIS, język BPEL powstał z konieczności stworzenia dodatkowej warstwy integracyjnej, która wykorzysta potencjał dostarczony przez usługi sieciowe oraz procesy biznesowe. Warto tutaj wspomnieć o historii powstania BPEL. Microsoft i IBM dostrzegając potrzebę stworzenia technologii pozwalającej definiować przepływ wywołań usług sieciowych stworzyli osobne, ale bardzo podobne języki nazwane WSFL (\textit{Web Service Flow Language}) oraz Xlang. W miare wzrostu popularności BPM zdecydowali się połączyć siły aby stworzyć wspólny standard, opisanych za pomocą WSDL. Zarówno Microsoft jak i IBM dostrzegli, że architektura SOA (\textit{Service Oriented Architecture}) wymaga wprowadzenia technologi, która pozwoli składać klocki jakimi są usługi sieciowe w jedną zgrabną całość.
 
-Dotychczasowy model komunikacji udostępniany przez usługi sieciowe był niewystarczający, głównie z powodu braku zachowania stanu podczas prostej komunikacji żądanie-odpowiedź.  Komunikacja ponadto była głównie jednokierunkowa. Model komunikacji dla biznesu wymagał natomiast sekwencyjnej wymiany wiadomości pomiędzy wieloma węzłami. Operacje wykonywane na węzłach mogły trwać bardzo długo, dlatego zainstaniała konieczność obsługi tego typu sytuacji przy pomocy asynchronicznego wywoływania serwisów. ~\cite{OASISBPELSpec}
+Dotychczasowy model komunikacji udostępniany przez usługi sieciowe był niewystarczający, głównie z powodu braku zachowania stanu podczas prostej komunikacji żądanie-odpowiedź.  Komunikacja ponadto była głównie jednokierunkowa. Model komunikacji dla biznesu wymagał natomiast sekwencyjnej wymiany wiadomości pomiędzy wieloma węzłami. Operacje wykonywane na węzłach mogły trwać bardzo długo, dlatego zainstaniała konieczność obsługi tego typu sytuacji przy pomocy asynchronicznego wywoływania serwisów~\cite{OASISBPELSpec}.
 
 \subsection{Cechy języka BPEL}
 \label{sec:bpelFeatures}
@@ -132,21 +132,21 @@ Korzyści płynące z tego, że BPEL jest warstwa orkiestracji to ~\cite{wiao}:
 \subsection{Silniki uruchomieniowe WS-BPEL}
 \label{sec:bpelEngines}
 
-WS-BPLE dostarcza jedynie opisu w jaki sposób proces ma przebiegać oraz z jakimi usługami ma się komunikować, potrafi również zdefiniować proste operacje proceduralne jak tworzenie zmiennych, operacje przypisania, warunki czy pętle. Język sam w sobie jednak nie ma zbyt wielkiej wartości bez odpowiedniego środowiska uruchomieniowego. Procesy BPEL można traktować jako skrypty interpretowane, wykonywane przez maszyny procesów biznesowych w środowisku zgodnym ze standardem BPEL. 
+WS-BPEL dostarcza jedynie opisu w jaki sposób proces ma przebiegać oraz z jakimi usługami ma się komunikować, potrafi również zdefiniować proste operacje proceduralne jak tworzenie zmiennych, operacje przypisania, warunki czy pętle. Język sam w sobie jednak nie ma zbyt wielkiej wartości bez odpowiedniego środowiska uruchomieniowego. Procesy BPEL można traktować jako skrypty interpretowane, wykonywane przez maszyny procesów biznesowych w środowisku zgodnym ze standardem BPEL. 
 
 Najbardziej popularne środowiska uruchomieniowe BPEL to:
 
 \begin{itemize}
-\item ActiveVOS 
-\item Apache ODE
-\item ExpressBPEL BPM
-\item BizTalk Server
-\item Open ESB
-\item Oracle BPEL Process Manager
-\item OW2 Orchestra
-\item Parasoft BPEL Maestro
-\item Petals BPEL Engine
-\item WebSphere Process Server
+\item \textit{ActiveVOS} 
+\item \textit{Apache ODE}
+\item \textit{ExpressBPEL BPM}
+\item \textit{BizTalk Server}
+\item \textit{Open ESB}
+\item \textit{Oracle BPEL Process Manager}
+\item \textit{OW2 Orchestra}
+\item \textit{Parasoft BPEL Maestro}
+\item \textit{Petals BPEL Engine}
+\item \textit{WebSphere Process Server}
 \end{itemize}
 
 Do celów niniejszej pracy magisterskiej zostanie wykorzystany Apache ODE (\textit{Apache Orchestration Director Engine}). Jest to narzędzie rozwijane przez społeczność otwartego oprogeamowania, zgodne ze standardem WS-BPEL. Silnik Apache ODE został zaimplementowany przy wykorzystaniu języka Java, jest on w rzeczywistości standardową aplikacją internetową uruchamianą na serwerach aplikacyjnych Java np. na serwerze Tomcat. 
@@ -161,7 +161,7 @@ Niestety nazwa BPEL jest w tym przypadku nie do końca trafna, ponieważ sugeruj
 
 %---------------------------------------------------------------------------
 
-\section{BPEL vs Aplikacje mobilne}
+\section{Zestawienie technologii BPEL z aplikacjami mobilnymi}
 \label{sec:bpelVSmobileApp}
 
 W rozdziałach poprzednich sporo uwagi zostało skupione na temacie modelowania procesów biznesowych. Został również przybliżony temat aplikacji mobilnych. Nadszedł czas aby odnieść się do tematu niniejszej pracy magisterskiej i spojrzeć na zestawienie tych dwóch technologii. 
@@ -173,7 +173,7 @@ W postawionym problemie jak zwykle kluczowym jest odpowiednie podejście do tema
 \subsection{Adaptacja środowisk uruchomieniowych na platformach mobilnych}
 \label{sec:adaptacjaProcesówNaPlatformyMobilne}
 
-Jednym z możliwych sposobów podejścia do tematu może być próba bezpośredniej adaptacji środowisk uruchomieniowych dla procesów biznesowych na platformach mobilnych. Bezpośrednia adaptacja w tym przypadku oznacza próbę uruchomienia jakiegoś lekkiego środowiska uruchomieniowego na smartphonie. Po krótkim zastanowieniu można powiedzieć, że pomysł może być realny w realizacji - zasoby sprzętowe smartphonów są coraz większe, języki programowania wykorzystywane do tworzenia aplikacji mobilnych są identyczne jak języki do tworzenia środowisk uruchomieniowych (Android - język Java, Windows Phone - język \texttt{C\#}). Gdy jednak kontynuujemy przemyślenia bardzo szybko natrafiamy na mur. Jak wspomniano w rozdziale~\ref{sec:analizaAplikacjiMobilnych}, komunikacja aplikacji mobilnych odbywa się przede wszystkim metodą pull, głównie ze względu na zmienne warunki dostępu do mediów komunikacyjnych. W jaki sposób zatem środowisko uruchomieniowe miałby odbierać komunikację z zewnątrz? Jest przecież jeszcze metoda push, dostarczana przez dostawców platform mobilnych. Skorzystanie z niej jest jednak złym pomysłem, ze względu na brak gwarancji dostarczenia komunikatu. Podejście adaptacyjne zatem nie jest dobrym pomysłem. 
+Jednym z możliwych sposobów podejścia do tematu może być próba bezpośredniej adaptacji środowisk uruchomieniowych dla procesów biznesowych na platformach mobilnych. Bezpośrednia adaptacja w tym przypadku oznacza próbę uruchomienia jakiegoś lekkiego środowiska uruchomieniowego na smartphonie. Po krótkim zastanowieniu można powiedzieć, że pomysł może być realny w realizacji - zasoby sprzętowe smartphonów są coraz większe, języki programowania wykorzystywane do tworzenia aplikacji mobilnych są identyczne jak języki do tworzenia środowisk uruchomieniowych (\textit{Android} - język Java, \textit{Windows Phone} - język \texttt{C\#}). Gdy jednak kontynuujemy przemyślenia bardzo szybko natrafiamy na mur. Jak wspomniano w rozdziale~\ref{sec:analizaAplikacjiMobilnych}, komunikacja aplikacji mobilnych odbywa się przede wszystkim metodą pull, głównie ze względu na zmienne warunki dostępu do mediów komunikacyjnych. W jaki sposób zatem środowisko uruchomieniowe miałby odbierać komunikację z zewnątrz? Jest przecież jeszcze metoda push, dostarczana przez dostawców platform mobilnych. Skorzystanie z niej jest jednak złym pomysłem, ze względu na brak gwarancji dostarczenia komunikatu. Podejście adaptacyjne zatem nie jest dobrym pomysłem. 
 
 
 \subsection{Wykorzystanie procesów biznesowych w systemach back end'owych}
@@ -183,7 +183,7 @@ Jak wspomniano wyżej najwięcej zastosowań dla procesów biznesowych w kontek�
 
 Podejście to można nazwać podejściem integracyjnym, w przypadku skorzystania z języka BPEL można sobie wyobrazić, że zrealizowany w ten sposób system back end'owy oprócz obsługi żądań aplikacji mobilnych mógłby komunikować się z innymi systemami przy wykorzystaniu usług sieciowych. Stworzony w ten sposób proces mógłby kontrolować przebieg komunikacji między aplikacjami mobilnymi traktując je jednocześnie na równi z innymi systemami.  Niestety kolejny raz mimo sensownego pomysłu występują problemy w realizacji, mało tego ograniczenie kolejny raz jest takie samo. Proces BPEL jak opisano w rozdziale~\ref{sec:bpel}, do komunikacji poszczególnych węzłów wykorzystuje usługi sieciowe udostępniające odpowiednie interfejsy WSDL. Aplikacje mobilne nie są w stanie jednak udostępnić takich usług. 
 
-W tym przypadku istnieje sposób na poradzenie sobie z tym problemem, można stworzyć pewnego rodzaju adapter w postaci aplikacji internetowej, będącej warstwą pośrednią między procesami BPEL a aplikacjami mobilnymi. Taka warstwa pośrednia miałby za zadanie z jednej strony udostępnienie usług sieciowych dla procesów biznesowych, a z drugiej strony realizowała by komunikacje z aplikacjami mobilnymi, w celu przekazania żądań pochodzących od procesów biznesowych. 
+W tym przypadku istnieje sposób na poradzenie sobie z tym problemem, można stworzyć pewnego rodzaju adapter w postaci aplikacji internetowej, będącej warstwą pośrednią między procesami BPEL a~aplikacjami mobilnymi. Taka warstwa pośrednia miałby za zadanie z jednej strony udostępnienie usług sieciowych dla procesów biznesowych, a z drugiej strony realizowała by komunikacje z aplikacjami mobilnymi, w celu przekazania żądań pochodzących od procesów biznesowych. 
 
 Opisanemu powyżej sposóbowi wykorzystania procesów biznesowych w aplikacjach mobilnych została poświęcona niniejsza praca, zostanie on dokładniej opisany w kolejnych rozdziałach.
 
