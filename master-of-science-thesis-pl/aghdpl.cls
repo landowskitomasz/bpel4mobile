@@ -4,7 +4,7 @@
 %          
 % Author:  Marcin Szpyrka     (mszpyrka@agh.edu.pl)
 %          Grzegorz J. Nalepa (gjn@agh.edu.pl)
-%          AGH University of Science and Technology, Kraków, POLAND
+%          AGH University of Science and Technology, Krakï¿½w, POLAND
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -57,7 +57,7 @@
 \def\thesistable{
 \begin{tabular}{p{45mm}l}
 Autor: & {\itshape \@author}\\[-1mm]
-Kierunek studiów: & {\itshape \@degreeprogramme}\\[-1mm]
+Kierunek studiï¿½w: & {\itshape \@degreeprogramme}\\[-1mm]
 Opiekun pracy: & {\itshape \@supervisor}\\
 \end{tabular}
 }
@@ -166,13 +166,13 @@ Supervisor: & {\itshape \@supervisor}\\
 \flushbottom
 
 %---------------------------------------------------------------------------
-% Ustawienia parametrów dla tytu³ów rozdzia³ów, podrozdzia³ów, itd.
+% Ustawienia parametrï¿½w dla tytuï¿½ï¿½w rozdziaï¿½ï¿½w, podrozdziaï¿½ï¿½w, itd.
 %---------------------------------------------------------------------------
 
 
 \titleformat{\chapter}[block]
 {\bfseries\LARGE}{\filright \LARGE\thechapter. }{0ex}{}
-%odstêpy: lewy, góra, dó³
+%odstï¿½py: lewy, gï¿½ra, dï¿½ï¿½
 \titlespacing{\chapter}{0pt}{17mm}{19mm}
 \titleformat{\section}[block]
 {\bfseries\Large}{\filright \Large\thesection. }{0ex}{}
@@ -185,7 +185,7 @@ Supervisor: & {\itshape \@supervisor}\\
 \titlespacing{\subsubsection}{7mm}{3mm}{1.5mm}
 
 %---------------------------------------------------------------------------
-% Ustawienia parametrów generowania spisu tre¶ci i spisu rysunków
+% Ustawienia parametrï¿½w generowania spisu treï¿½ci i spisu rysunkï¿½w
 %---------------------------------------------------------------------------
 
 \renewcommand{\cfttoctitlefont}{\bfseries\Large}
@@ -200,3 +200,34 @@ Supervisor: & {\itshape \@supervisor}\\
 \setlength{\cftparskip}{2pt}
 \setlength{\cftbeforechapskip}{0mm}
 \renewcommand{\cftchappagefont}{\normalsize}
+%---------------------------------------------------------------------------
+% Ustawienia parametrï¿½w listingÃ³w
+%---------------------------------------------------------------------------
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}

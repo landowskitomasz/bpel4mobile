@@ -1,7 +1,7 @@
 \chapter{Zestawienie modelowania procesów biznesowych ze specyfiką aplikacji mobilnych}
 \label{cha:bpmVSMobileApplications}
 
-Tematem niniejszej pracy magisterskiej jest analiza możliwości adaptacji środowisk uruchomieniowych dla logiki biznesowej na platformach mobilnych. Temat jest szeroki, zarówno środowiska uruchomieniowe dla logiki biznesowej jak i platformy mobilne mogą być rozumiane w różny sposób, dlatego na początku niezbędne jest uściślenie kilku kwestii. Środowiska uruchomieniowe dla logiki biznesowej w niniejszej pracy magisterskiej rozumiane będą przez technologię Modelowania Procesów Biznesowych. W przypadku platform mobilnych największa uwaga zostanie poświęcona najbardziej popularnej, opartej na systemie operacyjnym \textit{Unix} platformie mobilnej - \textit{Android}. Aby przejść do zestawienia tych dwóch technologii niezbędne jest ich poznanie i zrozumienie, dlatego w kolejnych sekcjach niniejszego rozdziału zostaną opisane wyżej wymienione technologii.
+Tematem niniejszej pracy magisterskiej jest analiza możliwości adaptacji środowisk uruchomieniowych dla logiki biznesowej na platformach mobilnych. Temat jest szeroki, zarówno środowiska uruchomieniowe dla logiki biznesowej jak i platformy mobilne mogą być rozumiane w różny sposób, dlatego na początku niezbędne jest uściślenie kilku kwestii. Środowiska uruchomieniowe dla logiki biznesowej w niniejszej pracy magisterskiej rozumiane będą przez technologię Modelowania Procesów Biznesowych. W przypadku platform mobilnych największa uwaga zostanie poświęcona najbardziej popularnej, opartej na systemie operacyjnym \textit{Unix} platformie mobilnej - \textit{Android}. Aby przejść do zestawienia tych dwóch technologii niezbędne jest ich poznanie i zrozumienie, dlatego w kolejnych sekcjach niniejszego rozdziału zostaną opisane wyżej wymienione technologie.
 
 
 %---------------------------------------------------------------------------
@@ -13,7 +13,7 @@ Modelowanie Procesów Biznesowych jest pojęciem bardzo ogólnym, nie zawiera w 
 \subsection{BPM}
 \label{sec:bpm}
 
-W literaturze pojęcie modelowania oraz zarządzanie procesami biznesowymi w kontekście przedsiębiorstw występuje pod skrótem BPM, którego angielskie rozwinięcie to Buisness Process Management (pl.  Zarządzanie Procesami Biznesowymi). Idea BPM jest bardzo popularna i szeroko rozwijana w środowisku IT, powstała nawet organizacja pod nazwą \textit{European Association of Buisness Process Managment} zajmująca się rozwojem i promocją BPM.  Na stronie internetowej organizacji znaleźć możemy oficjalną definicje BPM, która mówi, że w skład Zarządzania Procesami Biznesowymi wychodzi:
+W literaturze pojęcie modelowania oraz zarządzanie procesami biznesowymi w kontekście przedsiębiorstw występuje pod skrótem BPM, którego angielskie rozwinięcie to \textit{Buisness Process Management} (pl.  Zarządzanie Procesami Biznesowymi). Idea BPM jest bardzo popularna i szeroko rozwijana w środowisku IT, powstała nawet organizacja pod nazwą \textit{European Association of Buisness Process Managment} zajmująca się rozwojem i promocją BPM.  Na stronie internetowej organizacji znaleźć możemy oficjalną definicje BPM, która mówi, że w skład Zarządzania Procesami Biznesowymi wychodzi:
 \begin{itemize}
 \item projektowanie,
 \item wykonywanie,
@@ -29,13 +29,19 @@ W środowisku IT zdarza się, że BPM traktowany jest jako osobna klasa systemó
 \subsection{Projektowanie procesów biznesowych}
 \label{sec:projektowanieBPM}
 
-Zdecydowanie jednym z najistotniejszych etapów w tworzeniu systemu opartego o procesy biznesowe jest etap projektowania. Jednym z najbardziej popularnych narzędzi do tego celu jest BPMN (\textit{Buisness Process Model and Notation}), które doczekało się już dwóch wersji. W kontekście niniejszej pracy magisterskiej notacja BPMN nie jest szczególnie ważna jednak została wspomniana ze względu na jej wykorzystanie w przykładach. Warto zwrócić uwagę  na fakt, że BPMN nie jest w żadnym stopniu implementacją, jest to jedynie sposób wizualizacji procesu za pomocą diagramu w postaci obrazka.
+Zdecydowanie jednym z najistotniejszych etapów w tworzeniu systemu opartego o procesy biznesowe jest etap projektowania. Jednym z najbardziej popularnych narzędzi do tego celu jest BPMN (\textit{Buisness Process Model and Notation}), które doczekało się już dwóch wersji. W kontekście niniejszej pracy magisterskiej notacja BPMN nie jest szczególnie ważna jednak została wspomniana ze względu na jej wykorzystanie w przykładach. BPMN z jednej strony jest narzędziem do graficznego modelowania procesów biznesowych, jest to pewien standard, który z założenia ma być intuicyjny dla osób z poza środowiska IT. Z drugiej zaś strony istnieją narzędzia pozwalające za pomocą BPMN modelować procesy które są bezpośrednio uruchamiane na konkretnych platformach~\cite{BPMN}. 
+
+\begin{figure}[h]
+\centerline{\includegraphics[scale=0.8]{BPMN_example}}
+\caption{Przykładowy proces BPMN.}
+\label{fig:BPMN_example}
+\end{figure}
 
 \subsection{Wykonywanie procesów biznesowych}
 \label{sec:wykonywanieBPM}
 
 Jak zostało wspomniane na samym początku Modelowanie Procesów Biznesowych jest pojęciem ogólnym nie wskazującym konkretnej technologii, która ma posłużyć do wykonania procesów biznesowych. Z definicji można jednak wnioskować, że środowiskiem do wykonywania procesów biznesowych w przedsiębiorstwach na pewno nie powinna być prosta aplikacja desktopowa czy mobilna. Biorąc pod uwagę wachlarz zastosowań BPM nie trudno dojść do wniosku, że najbardziej odpowiednim środowiskiem dla procesów biznesowych są środowiska aplikacji rozproszonych. 
-Powyższe stwierdzenie potwierdza przegląd istniejących systemów uruchomieniowych dla procesów biznesowych. W ogromnej większości są to aplikacje webowe. 
+Powyższe stwierdzenie potwierdza przegląd istniejących systemów uruchomieniowych dla procesów biznesowych. W ogromnej większości są to aplikacje internetowe. 
 
 \subsection{Podsumowanie}
 \label{sec:podsumowanieBPM}
@@ -87,7 +93,7 @@ Opisując aplikacje mobilnie nie można zapomnieć o cechach specyficznych, któ
 \subsection{Komunikaty Push}
 \label{sec:push}
 
-Ze względu na zmienne warunki w dostępie do mediów komunikacyjnych, aplikacji mobilne wykorzystują w głównej mierze komunikacje typu pull (pobieranie informacji na żądanie) to wymiany informacji z systemami zewnętrznymi. Najpopularniejsze platformy mobilne jak \textit{Android}, \textit{iOS} oraz \textit{Windows Phone} udostępniają również alternatywny sposób komunikacji - push. 
+Ze względu na zmienne warunki w dostępie do mediów komunikacyjnych, aplikacji mobilne wykorzystują w głównej mierze komunikacje typu pull (pobieranie informacji na żądanie) do wymiany informacji z systemami zewnętrznymi. Najpopularniejsze platformy mobilne jak \textit{Android}, \textit{iOS} oraz \textit{Windows Phone} udostępniają również alternatywny sposób komunikacji - push. 
 
 Komunikacja push odbywa się jednak zawsze za pośrednictwem serwisów udostępnianych przez platformy mobilne do tego celu. Komunikacja ta posiada wiele ograniczeń, a już na pewno najważniejszym z nich jest brak pewności, że komunikat zostanie dostarczony. Komunikacja push powinna być zatem wykorzystywana jedynie do notyfikacji użytkownika o jakimś zdarzeniu, a nie do przesyłania informacji kluczowych dla działania aplikacji. 
 
@@ -96,7 +102,7 @@ Komunikacja push odbywa się jednak zawsze za pośrednictwem serwisów udostępn
 \section{BPEL „inteligentne” narzędzie integracyjne}
 \label{sec:bpel}
 
-BPEL (\textit{Business Process Execution Language}), a właściwie pełna nazwa WS-BPEL,  której rozwinięcie to \textit{Web Services Business Process Execution Language} jest językiem opartym o składnię XML, służącym do wykonywania procesów biznesowych w środowisku usług sieciowych. Język BPEL jest ustandaryzowany przez oranizacje OASIS (\textit{Organization for the Advancement of Structured Information Standards}). 
+BPEL (\textit{Business Process Execution Language}), a właściwie pełna nazwa WS-BPEL,  której rozwinięcie to \textit{Web Services Business Process Execution Language} jest językiem opartym o składnię xml, służącym do wykonywania procesów biznesowych w środowisku usług sieciowych. Język BPEL jest ustandaryzowany przez oranizacje OASIS (\textit{Organization for the Advancement of Structured Information Standards}). 
 
 Organizacja OASIS definiuje język BPEL jako: \textit{Umożliwiający użytkownikom opis aktywności procesów biznesowych jako usługi sieciowe oraz definicję w jaki sposób usługi te mogę być połączone między sobą w celu wykonania zadania}~\cite{OASISweb}.
 
@@ -110,7 +116,7 @@ Dotychczasowy model komunikacji udostępniany przez usługi sieciowe był niewys
 \begin{itemize}
 \item Definiowane procesy biznesowe komunikują się z usługami sieciowymi przy pomocy WSDL 1.1 i same są usługami sieciowymi opisanymi przez WSDL 1.1.  
 \item Do komunikacji pomiędzy usługami wykorzystywany jest protokół SOAP.
-\item Procesy zdefiniowane są w języku bazującym na XML.
+\item Procesy zdefiniowane są w języku bazującym na xml.
 \item BPEL dostarcza funkcji do wykonywania prostych manipulacji na danych.
 \item Posiada wsparcie do identyfikowania instancji procesów.
 \item Posiada wsparcie dla podstawowego cyklu życia procesu.
@@ -149,7 +155,7 @@ Najbardziej popularne środowiska uruchomieniowe BPEL to:
 \item \textit{WebSphere Process Server}
 \end{itemize}
 
-Do celów niniejszej pracy magisterskiej zostanie wykorzystany Apache ODE (\textit{Apache Orchestration Director Engine}). Jest to narzędzie rozwijane przez społeczność otwartego oprogeamowania, zgodne ze standardem WS-BPEL. Silnik Apache ODE został zaimplementowany przy wykorzystaniu języka Java, jest on w rzeczywistości standardową aplikacją internetową uruchamianą na serwerach aplikacyjnych Java np. na serwerze Tomcat. 
+Do celów niniejszej pracy magisterskiej zostanie wykorzystany Apache ODE (\textit{Apache Orchestration Director Engine}). Jest to narzędzie rozwijane przez społeczność otwartego oprogeamowania, zgodne ze standardem WS-BPEL. Silnik Apache ODE został zaimplementowany przy wykorzystaniu języka Java, jest on w rzeczywistości standardową aplikacją internetową uruchamianą na serwerach aplikacyjnych Java np. na serwerze Tomcat~\cite{ode}. 
 
 \subsection{Podsumowanie}
 \label{sec:bpelSummary}
